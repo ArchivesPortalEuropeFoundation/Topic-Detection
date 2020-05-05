@@ -1,0 +1,4 @@
+*.tsv
+*.json
+-checkpoint.ipynb
+*-checkpoint.ipynb

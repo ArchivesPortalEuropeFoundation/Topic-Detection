@@ -2,3 +2,4 @@
 *.json
 -checkpoint.ipynb
 *-checkpoint.ipynb
+word-embs

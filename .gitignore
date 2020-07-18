@@ -3,3 +3,6 @@
 -checkpoint.ipynb
 *-checkpoint.ipynb
 word-embs
+Taxonomies
+utils/.ipynb_checkpoints
+utils/__pycache__

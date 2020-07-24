@@ -1,5 +1,4 @@
 pandas
 numpy
 sklearn
-pickle
 gensim

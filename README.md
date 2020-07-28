@@ -3,6 +3,8 @@ Using machine learning approaches for automatic topic detection in a multilingua
 
 ## Setup Environment
 
+Clone the repository to a dedicated folder.
+
 Download and Install [Anaconda](https://www.anaconda.com/products/individual). [Jupyter](https://jupyter.org/) will come directly with it.
 
 Open Jupyter (as described in [here](https://jupyter.readthedocs.io/en/latest/running.html)) and browse to the cloned folder.

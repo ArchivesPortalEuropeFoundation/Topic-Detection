@@ -2,7 +2,7 @@
 *.json
 -checkpoint.ipynb
 *-checkpoint.ipynb
-word-embs
-Taxonomies
+*.vec
+*.xlsx
 utils/.ipynb_checkpoints
 utils/__pycache__

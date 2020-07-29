@@ -3,8 +3,8 @@ Using machine learning approaches for automatic topic detection in a multilingua
 
 Two main goals:
 
-tagging documents that have no topic associated, with one of the pre-defined topics
-given a user query, retrieve documents relevant for it
+1) tagging documents that have no topic associated, with one of the pre-defined topics
+2) given a user query, retrieve documents relevant for it
 
 ## Installation
 
@@ -36,4 +36,3 @@ Open the notebook named `CrossLingualClassification.ipynb`. To retrain the model
 ## Information Retrieval
 
 Open the notebook named  `InformationRetrieval.ipynb`. Run all cells to load the dataset, the embeddings and to be able to match a query in a given language to documents and topic-words in other languages.
-

@@ -1,6 +1,11 @@
 # Topic-Detection
 Using machine learning approaches for automatic topic detection in a multilingual environment.
 
+Two main goals:
+
+tagging documents that have no topic associated, with one of the pre-defined topics
+given a user query, retrieve documents relevant for it
+
 ## Installation
 
 ### 1. Setup Environment

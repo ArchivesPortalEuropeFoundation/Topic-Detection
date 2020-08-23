@@ -14,6 +14,10 @@ Clone the repository to a dedicated folder.
 
 Download and Install [Anaconda](https://www.anaconda.com/products/individual). [Jupyter](https://jupyter.org/) will come directly with it.
 
+Open the terminal and go to the repository folder (using `cd` and the path to the folder). For instance: `cd /Users/fnanni/Projects/Topic-Detection/`
+
+Run `pip install -r requirements.txt`
+
 Open Jupyter (as described in [here](https://jupyter.readthedocs.io/en/latest/running.html)) and browse to the cloned folder.
 
 ### 2. Download Cross-Lingual Word Embeddings

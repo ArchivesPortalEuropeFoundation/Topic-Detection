@@ -6,3 +6,4 @@
 *.xlsx
 utils/.ipynb_checkpoints
 utils/__pycache__
+dev-vm/*

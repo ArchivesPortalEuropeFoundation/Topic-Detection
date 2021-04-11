@@ -2,7 +2,6 @@ absl-py==0.11.0
 argon2-cffi==20.1.0
 async-generator==1.10
 backcall==0.2.0
-bert-sklearn @ file:///Users/fnanni/Projects/AtypicalAnimacy/models/language_models/bert_models/bert-sklearn
 bleach==3.2.1
 boto3==1.15.18
 botocore==1.18.18

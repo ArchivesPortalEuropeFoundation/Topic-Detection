@@ -1,6 +1,15 @@
 <form method="POST">
     <input name="text">
-    <input name="lang">
+
+    <select name= lang>
+        {% for lang in langs %}
+        <option value= "{{lang}}" SELECTED>{{lang}}</option>
+        {% endfor %}
+    </select>
+        
     <input name="n_res">
     <input type="submit">
+    {% include 'results.html' %}
+
+    
 </form>

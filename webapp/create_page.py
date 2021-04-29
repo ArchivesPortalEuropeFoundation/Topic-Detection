@@ -23,13 +23,17 @@ def my_form_post():
 
     text = flask.request.form['text']
     lang = flask.request.form['lang']
+    search_type = flask.request.form['type']
     n_res = int(flask.request.form['n_res'])
-    query_emb = nlp.text_embedding(text,lang)
-    ranking= nlp.search(index,query_emb,labels,doc_names,texts,n_res)
-    if query_emb:
-        query_emb = " ".join([str(x) for x in query_emb])
-    else:
-        query_emb = "nope"
+    if search_type == "concept":
+        query_emb = nlp.text_embedding(text,lang)
+        ranking= nlp.concept_search(index,query_emb,labels,doc_names,texts,n_res)
+    if search_type == "entity":
+        #for the moment hardcoded
+        allow_partial_match = True
+
+        ranking = nlp.entity_search(text,lang,labels,doc_names,texts,n_res,langs,allow_partial_match)
+
     return flask.render_template('my-form.html',  tables=[ranking.to_html(classes='data')], titles=ranking.columns.values)
 
 if __name__ == '__main__':

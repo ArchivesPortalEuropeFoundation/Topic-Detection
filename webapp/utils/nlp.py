@@ -1,12 +1,17 @@
 import faiss                  
 import pickle
+import wikipedia
 import pandas as pd
 from utils import nlp
 import nltk, string
 import numpy as np
 import pandas as pd
+from bs4 import BeautifulSoup
+from urllib.request import urlopen
+from urllib.parse import unquote,quote
 from gensim.models import KeyedVectors
 from sklearn.metrics.pairwise import cosine_similarity as cs
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 # for each language under study you need to download its related cross-lingual embeddings from here: https://github.com/facebookresearch/MUSEœ
 de_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.de.vec')
@@ -64,6 +69,27 @@ def cossim(v1,v2):
     else:
         return 0.0
 
+
+tfidf_vectorizer=TfidfVectorizer()
+
+def rank_by_freq(query,doc,allow_partial_match):
+    if allow_partial_match:
+        tfidf=tfidf_vectorizer.fit_transform([query,doc])
+        score = cs(tfidf)[0][1]
+        return score
+    else:
+        n = doc.lower().count(query.lower())
+        n = n/len(doc.split(" "))
+        return n
+
+def entity_processing(entity):
+    entity = entity.split("(")[0]
+    entity = entity.translate(str.maketrans('', '', string.punctuation))
+    entity = entity.strip()
+    return entity
+
+
+
 # for each document we create a document embedding and collect its topic label
 def prepare_collection(df):
     embs = []
@@ -89,7 +115,7 @@ def prepare_collection(df):
     selected_langs = list(selected_langs)
     return embs,labels,doc_names,selected_langs,texts
 
-def search(index,query_emb,labels,doc_names,texts,how_many_results):
+def concept_search(index,query_emb,labels,doc_names,texts,how_many_results):
     xq = np.array([query_emb]).astype('float32')
 
     D, I = index.search(xq, how_many_results)     # actual search
@@ -106,3 +132,31 @@ def build_index(embs,d):
     index = faiss.IndexFlatL2(d)   # build the index
     index.add(xb)                  # add vectors to the index
     return index
+
+def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_langs,allow_partial_match):
+    wikipedia.set_lang(lang)
+    res = wikipedia.search(entity)[0]
+    wiki_url = "https://"+lang+".wikipedia.org/wiki/"+quote(res.replace(" ","_"))
+    resource = urlopen(wiki_url)
+    content =  resource.read()
+
+    soup = BeautifulSoup(content)
+
+    translations = {el.get('lang'): unquote(el.get('href')).split("/")[-1].replace("_"," ") for el in soup.select('li.interlanguage-link > a')}
+
+    translations[lang] = entity
+
+
+    translations = {x:entity_processing(y) for x,y in translations.items() if x in selected_langs}
+
+    print (translations)
+
+    ranking = [[[doc_names[id_],labels[id_],texts[id_], rank_by_freq(query,texts[id_],allow_partial_match),selected_langs[id_]] for id_ in range(len(selected_langs)) if selected_langs[id_]==lang] for lang,query in translations.items() ]
+    ranking = [y for x in ranking for y in x if y[3]>0.0]
+    print ("Documents mentioning the entity '",entity,"' :", len(ranking),"among",len(labels),".")
+
+    ranking.sort(key=lambda x: x[3],reverse=True)
+    ranking = ranking[:how_many_results]
+    df = pd.DataFrame(ranking, columns=["Filename", "Labels", "Content", "Score"])
+    return df
+    

@@ -14,7 +14,7 @@ def index():
 @APP.route('/my-form')
 def my_form():
 
-    return flask.render_template('my-form.html',langs=langs)
+    return flask.render_template('my-form.html',langs=langs,message="")
 
 @APP.route('/my-form', methods=['POST'])
 def my_form_post():
@@ -27,14 +27,18 @@ def my_form_post():
     n_res = int(flask.request.form['n_res'])
     if search_type == "concept":
         query_emb = nlp.text_embedding(text,lang)
-        ranking= nlp.concept_search(index,query_emb,labels,doc_names,texts,n_res)
+        if query_emb:
+            ranking= nlp.concept_search(index,query_emb,labels,doc_names,texts,n_res)
+        else:
+            return flask.render_template('my-form.html',langs=langs,message="Concept not found in embedding space!")
+
     if search_type == "entity":
         #for the moment hardcoded
         allow_partial_match = True
-
         ranking = nlp.entity_search(text,lang,labels,doc_names,texts,n_res,langs,allow_partial_match)
-
-    return flask.render_template('my-form.html',  tables=[ranking.to_html(classes='data')], titles=ranking.columns.values)
+        if ranking.empty:
+            return flask.render_template('my-form.html',langs=langs,message="Entity mentions not found in corpus!")
+    return flask.render_template('my-form.html',  tables=[ranking.to_html(classes='data',index=False)], titles=ranking.columns.values,langs=langs)
 
 if __name__ == '__main__':
 

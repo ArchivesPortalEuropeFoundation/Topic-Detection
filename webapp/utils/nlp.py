@@ -74,6 +74,8 @@ tfidf_vectorizer=TfidfVectorizer()
 
 def rank_by_freq(query,doc,allow_partial_match):
     if allow_partial_match:
+        query = query.lower()
+        doc = doc.lower()
         tfidf=tfidf_vectorizer.fit_transform([query,doc])
         score = cs(tfidf)[0][1]
         return score
@@ -117,7 +119,6 @@ def prepare_collection(df):
 
 def concept_search(index,query_emb,labels,doc_names,texts,how_many_results):
     xq = np.array([query_emb]).astype('float32')
-
     D, I = index.search(xq, how_many_results)     # actual search
     res = {I[0][i]:D[0][i] for i in range(len(I[0]))}
     ranking = [[doc_names[i],labels[i],texts[i],1.0-d] for i,d in res.items()]
@@ -140,18 +141,16 @@ def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_l
     resource = urlopen(wiki_url)
     content =  resource.read()
 
-    soup = BeautifulSoup(content)
+    soup = BeautifulSoup(content,features="html.parser")
 
     translations = {el.get('lang'): unquote(el.get('href')).split("/")[-1].replace("_"," ") for el in soup.select('li.interlanguage-link > a')}
 
-    translations[lang] = entity
+    translations[lang] = entity.strip()
 
 
     translations = {x:entity_processing(y) for x,y in translations.items() if x in selected_langs}
 
-    print (translations)
-
-    ranking = [[[doc_names[id_],labels[id_],texts[id_], rank_by_freq(query,texts[id_],allow_partial_match),selected_langs[id_]] for id_ in range(len(selected_langs)) if selected_langs[id_]==lang] for lang,query in translations.items() ]
+    ranking = [[[doc_names[id_],labels[id_],texts[id_], rank_by_freq(query,texts[id_],allow_partial_match)] for id_ in range(len(selected_langs)) if selected_langs[id_]==lang] for lang,query in translations.items() ]
     ranking = [y for x in ranking for y in x if y[3]>0.0]
     print ("Documents mentioning the entity '",entity,"' :", len(ranking),"among",len(labels),".")
 

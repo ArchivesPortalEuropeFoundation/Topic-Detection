@@ -45,6 +45,8 @@ def my_form_post():
 @APP.route('/query', methods=['GET'])
 def query_api():
 
+    html = open('../interface/index.html','r').read()
+
     # we load the dataset
 
     text = flask.request.args['text']
@@ -55,24 +57,28 @@ def query_api():
         query_emb = nlp.text_embedding(text,lang)
         if query_emb:
             ranking= nlp.concept_search(index,query_emb,labels,doc_names,texts,n_res)
+            response = ranking.to_html(classes='data',index=False)
         else:
-            return "Concept not found in embedding space!"
+            response= "Concept not found in embedding space!"
 
     if search_type == "entity":
         #for the moment hardcoded
         allow_partial_match = True
         ranking = nlp.entity_search(text,lang,labels,doc_names,texts,n_res,langs,allow_partial_match)
         if ranking.empty:
-            return "Entity mentions not found in corpus!"
-    return ranking.to_html(classes='data',index=False)
+            response =  "Entity mentions not found in corpus!"
+        else:
+            response = ranking.to_html(classes='data',index=False)
+    html = html.replace("<table></table>",response)
 
+    return html
 
 
 if __name__ == '__main__':
 
     # we load the dataset
-#    with open('data/sample_dataset.pickle', 'rb') as f:
-    with open('data/dataset.pickle', 'rb') as f:
+    with open('data/sample_dataset.pickle', 'rb') as f:
+#    with open('data/dataset.pickle', 'rb') as f:
         df = pickle.load(f)  
     embs,labels,doc_names,langs,texts = nlp.prepare_collection(df)
     index = nlp.build_index(embs,300)

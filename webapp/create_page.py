@@ -77,8 +77,8 @@ def query_api():
 if __name__ == '__main__':
 
     # we load the dataset
-    with open('data/sample_dataset.pickle', 'rb') as f:
-#    with open('data/dataset.pickle', 'rb') as f:
+#    with open('data/sample_dataset.pickle', 'rb') as f:
+    with open('data/dataset.pickle', 'rb') as f:
         df = pickle.load(f)  
     embs,labels,doc_names,langs,texts = nlp.prepare_collection(df)
     index = nlp.build_index(embs,300)

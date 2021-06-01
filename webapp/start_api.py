@@ -1,6 +1,14 @@
 import flask
 import pickle
 from utils import nlp
+from argparse import ArgumentParser
+
+parser = ArgumentParser()
+parser.add_argument("-t", "--test", dest="test",
+                    help="select True for testmode, else False", default=False)
+
+args = parser.parse_args()
+
 # Create the application.
 APP = flask.Flask(__name__)
 
@@ -76,11 +84,23 @@ def query_api():
 
 if __name__ == '__main__':
 
-    # we load the dataset
-#    with open('data/sample_dataset.pickle', 'rb') as f:
-    with open('data/dataset.pickle', 'rb') as f:
-        df = pickle.load(f)  
-    embs,labels,doc_names,langs,texts = nlp.prepare_collection(df)
+    test = args.test
+    if test == "True":
+        print ('test mode: on!')
+
+        # we load the dataset
+        with open('data/sample_dataset.pickle', 'rb') as f:
+            df = pickle.load(f)  
+        model_dict = nlp.load_models(test=True)
+    
+    else:
+        print ('test mode: off.')
+
+        with open('data/dataset.pickle', 'rb') as f:
+            df = pickle.load(f)  
+        model_dict = nlp.load_models(test=False)
+
+    embs,labels,doc_names,langs,texts = nlp.prepare_collection(df,model_dict)
     index = nlp.build_index(embs,300)
     
     APP.debug=False

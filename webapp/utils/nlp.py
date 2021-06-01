@@ -13,26 +13,42 @@ from gensim.models import KeyedVectors
 from sklearn.metrics.pairwise import cosine_similarity as cs
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-# for each language under study you need to download its related cross-lingual embeddings from here: https://github.com/facebookresearch/MUSEœ
-de_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.de.vec')
-fr_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.fr.vec')
-en_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.en.vec')
-it_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.it.vec')
-fi_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.fi.vec')
-pl_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.pl.vec')
-sl_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.sl.vec')
-es_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.es.vec')
-he_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.he.vec')
-ru_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.ru.vec')
-sv_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.sv.vec')
+def load_models(test=False):
 
-# we just map the language with the word embeddings model
+    if test:
+        # for each language under study you need to download its related cross-lingual embeddings from here: https://github.com/facebookresearch/MUSEœ
+        de_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.de.vec')
+        fr_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.fr.vec')
+        en_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.en.vec')
+        it_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.it.vec')
+        fi_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.fi.vec')
+        pl_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.pl.vec')
+        sl_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.sl.vec')
+        es_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.es.vec')
+        he_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.he.vec')
+        ru_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.ru.vec')
+        sv_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.sv.vec')
+    else:
+        # for each language under study you need to download its related cross-lingual embeddings from here: https://github.com/facebookresearch/MUSEœ
+        de_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.de.vec')
+        fr_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.fr.vec')
+        en_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.en.vec')
+        it_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.it.vec')
+        fi_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.fi.vec')
+        pl_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.pl.vec')
+        sl_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.sl.vec')
+        es_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.es.vec')
+        he_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.he.vec')
+        ru_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.ru.vec')
+        sv_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.sv.vec')
 
-model_dict = {"es":es_model,"heb":he_model,"sv":sv_model,"rus":ru_model,"fr":fr_model,"en":en_model,"english":en_model,"de":de_model,"it":it_model,"fi":fi_model,"pl":pl_model,"sl":sl_model,"German":de_model,"English":en_model,"Finnish":fi_model,"French":fr_model,"Italian":it_model}
-#model_dict = {"it":it_model}
+    # we just map the language with the word embeddings model
 
+    model_dict = {"es":es_model,"heb":he_model,"sv":sv_model,"rus":ru_model,"fr":fr_model,"en":en_model,"english":en_model,"de":de_model,"it":it_model,"fi":fi_model,"pl":pl_model,"sl":sl_model,"German":de_model,"English":en_model,"Finnish":fi_model,"French":fr_model,"Italian":it_model}
+    #model_dict = {"it":it_model}
+    return model_dict
 
-def text_embedding(text,lang):
+def text_embedding(text,lang,model_dict):
     
     exclude = set(string.punctuation)
     exclude.add("-")
@@ -93,7 +109,7 @@ def entity_processing(entity):
 
 
 # for each document we create a document embedding and collect its topic label
-def prepare_collection(df):
+def prepare_collection(df,model_dict):
     embs = []
     labels = []
     doc_names = []
@@ -107,7 +123,7 @@ def prepare_collection(df):
 
         if lang in model_dict:
             text = row["unitTitle"] +" "+ row["titleProper"]+" "+ row["scopeContent"]
-            emb = text_embedding(text,lang)
+            emb = text_embedding(text,lang,model_dict)
             if emb:
                 embs.append(emb)
                 labels.append(label)

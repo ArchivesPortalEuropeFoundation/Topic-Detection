@@ -34,7 +34,7 @@ def my_form_post():
     search_type = flask.request.form['type']
     n_res = int(flask.request.form['n_res'])
     if search_type == "concept":
-        query_emb = nlp.text_embedding(text,lang)
+        query_emb = nlp.text_embedding(text,lang,model_dict)
         if query_emb:
             ranking= nlp.concept_search(index,query_emb,labels,doc_names,texts,n_res)
         else:

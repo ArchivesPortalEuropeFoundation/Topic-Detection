@@ -113,7 +113,7 @@ def prepare_collection(df,model_dict):
     embs = []
     labels = []
     doc_names = []
-    selected_langs = set()
+    langs = []
     texts = []
 
     for index, row in df.iterrows():
@@ -127,11 +127,10 @@ def prepare_collection(df,model_dict):
             if emb:
                 embs.append(emb)
                 labels.append(label)
-                selected_langs.add(lang)
+                langs.append(lang)
                 doc_names.append(title)
                 texts.append(text)
-    selected_langs = list(selected_langs)
-    return embs,labels,doc_names,selected_langs,texts
+    return embs,labels,doc_names,langs,texts
 
 def concept_search(index,query_emb,labels,doc_names,texts,how_many_results):
     xq = np.array([query_emb]).astype('float32')
@@ -163,10 +162,10 @@ def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_l
 
     translations[lang] = entity.strip()
 
-
     translations = {x:entity_processing(y) for x,y in translations.items() if x in selected_langs}
 
-    ranking = [[[doc_names[id_],labels[id_],texts[id_], rank_by_freq(query,texts[id_],allow_partial_match)] for id_ in range(len(selected_langs)) if selected_langs[id_]==lang] for lang,query in translations.items() ]
+    ranking = [[[doc_names[id_],labels[id_],texts[id_], rank_by_freq(query,texts[id_],allow_partial_match)] for id_ in range(len(texts)) if selected_langs[id_]==lang] for lang,query in translations.items() ]
+
     ranking = [y for x in ranking for y in x if y[3]>0.0]
     print ("Documents mentioning the entity '",entity,"' :", len(ranking),"among",len(labels),".")
 

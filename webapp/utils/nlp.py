@@ -164,7 +164,12 @@ def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_l
 
     translations = {x:entity_processing(y) for x,y in translations.items() if x in selected_langs}
 
-    ranking = [[[doc_names[id_],labels[id_],texts[id_], rank_by_freq(query,texts[id_],allow_partial_match)] for id_ in range(len(texts)) if selected_langs[id_]==lang] for lang,query in translations.items() ]
+    ranking = []
+    for id_ in range(len(texts)):
+        if selected_langs[id_] in translations:
+            query = translations[selected_langs[id_]]
+            r = [doc_names[id_],labels[id_],texts[id_], rank_by_freq(query,texts[id_],allow_partial_match)]
+            ranking.append(r)
 
     ranking = [y for x in ranking for y in x if y[3]>0.0]
     print ("Documents mentioning the entity '",entity,"' :", len(ranking),"among",len(labels),".")

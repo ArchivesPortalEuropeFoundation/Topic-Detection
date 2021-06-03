@@ -10,10 +10,10 @@ $_SESSION["n_res"] = isset($_POST['n_res']) ? $_POST['n_res'] : "10";
 
 $url= 'http://127.0.0.1:5000/query?';
 
-$data = array('lang' => $_POST['lang'],
-              'type' => $_POST['type'],
-              'text' => $_POST['text'],
-              'n_res' => $_POST['n_res']
+$data = array('lang' => $_SESSION['lang'],
+              'type' => $_SESSION['type'],
+              'text' => $_SESSION['text'],
+              'n_res' => $_SESSION['n_res']
             );
 
 $msg = http_build_query($data);

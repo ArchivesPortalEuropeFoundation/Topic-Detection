@@ -170,7 +170,7 @@ def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_l
             query = translations[selected_langs[id_]]
             r = [doc_names[id_],labels[id_],texts[id_], rank_by_freq(query,texts[id_],allow_partial_match)]
             ranking.append(r)
-
+    print (ranking)
     ranking = [y for x in ranking for y in x if y[3]>0.0]
     print ("Documents mentioning the entity '",entity,"' :", len(ranking),"among",len(labels),".")
 

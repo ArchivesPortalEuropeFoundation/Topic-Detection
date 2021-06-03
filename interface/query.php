@@ -6,7 +6,7 @@ session_start();
 $_SESSION["lang"] = $_POST['lang'];
 $_SESSION["type"] = $_POST['type'];
 $_SESSION["text"] = $_POST['text'];
-$_SESSION["n_res"] = $_POST['n_res'];
+$_SESSION["n_res"] = isset($_POST['n_res']) ? $_POST['n_res'] : "10";
 
 $url= 'http://127.0.0.1:5000/query?';
 

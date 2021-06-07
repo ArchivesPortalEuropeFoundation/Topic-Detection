@@ -50,7 +50,7 @@ def query_api():
         if ranking.empty:
             response =  "Entity mentions not found in corpus!"
         else:
-            response = ranking.to_html(classes='data',index=False, id = "results')
+            response = ranking.to_html(classes='data',index=False, id = 'results')
 
     html = html.replace("<table></table>",response)
 

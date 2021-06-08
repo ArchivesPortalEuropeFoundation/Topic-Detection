@@ -31,27 +31,31 @@ def query_api():
 
     # we load the dataset
 
-    text = flask.request.args['text']
+    query = flask.request.args['text']
     lang = flask.request.args['lang']
     search_type = flask.request.args['type']
     n_res = int(flask.request.args['n_res'])
     if search_type == "concept":
-        query_emb = nlp.text_embedding(text,lang,model_dict)
+        query_emb = nlp.text_embedding(query,lang,model_dict)
         if query_emb:
             ranking= nlp.concept_search(index,query_emb,labels,doc_names,texts,n_res)
-            response = ranking.to_html(classes='data',index=False)
+            response = ranking.to_html(classes='data',index=False, table_id = 'results')
         else:
             response= "Concept not found in embedding space!"
 
     if search_type == "entity":
         #for the moment hardcoded
         allow_partial_match = True
-        ranking = nlp.entity_search(text,lang,labels,doc_names,texts,n_res,langs,allow_partial_match)
+        ranking = nlp.entity_search(query,lang,labels,doc_names,texts,n_res,langs,allow_partial_match)
         if ranking.empty:
             response =  "Entity mentions not found in corpus!"
         else:
-            response = ranking.to_html(classes='data',index=False, id = 'results')
+            response = ranking.to_html(classes='data',index=False, table_id = 'results')
 
+    query_and_button = query + open("../interface/templates/query_and_button.txt","r").read()
+
+    html = html.replace("<query></query>","Your query: "+ query_and_button)
+    
     html = html.replace("<table></table>",response)
 
     return html

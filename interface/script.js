@@ -1,74 +1,30 @@
-jQuery.fn.table2CSV = function(options) {
-    var options = jQuery.extend({
-        separator: ',',
-        header: [],
-        delivery: 'popup' // popup, value
-    },
-    options);
-
-    var csvData = [];
-    var headerArr = [];
-    var el = this;
-
-    //header
-    var numCols = options.header.length;
-    var tmpRow = []; // construct header avalible array
-
-    if (numCols > 0) {
-        for (var i = 0; i < numCols; i++) {
-            tmpRow[tmpRow.length] = formatData(options.header[i]);
+// Quick and simple export target #table_id into a csv
+function download_table_as_csv(table_id, separator = ',') {
+    // Select rows from table_id
+    var rows = document.querySelectorAll('table#' + table_id + ' tr');
+    // Construct csv
+    var csv = [];
+    for (var i = 0; i < rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll('td, th');
+        for (var j = 0; j < cols.length; j++) {
+            // Clean innertext to remove multiple spaces and jumpline (break csv)
+            var data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, '').replace(/(\s\s)/gm, ' ')
+            // Escape double-quote with double-double-quote (see https://stackoverflow.com/questions/17808511/properly-escape-a-double-quote-in-csv)
+            data = data.replace(/"/g, '""');
+            // Push escaped string
+            row.push('"' + data + '"');
         }
-    } else {
-        $(el).filter(':visible').find('th').each(function() {
-            if ($(this).css('display') != 'none') tmpRow[tmpRow.length] = formatData($(this).html());
-        });
+        csv.push(row.join(separator));
     }
-
-    row2CSV(tmpRow);
-
-    // actual data
-    $(el).find('tr').each(function() {
-        var tmpRow = [];
-        $(this).filter(':visible').find('td').each(function() {
-            if ($(this).css('display') != 'none') tmpRow[tmpRow.length] = formatData($(this).html());
-        });
-        row2CSV(tmpRow);
-    });
-    if (options.delivery == 'popup') {
-        var mydata = csvData.join('\n');
-        return popup(mydata);
-    } else {
-        var mydata = csvData.join('\n');
-        return mydata;
-    }
-
-    function row2CSV(tmpRow) {
-        var tmp = tmpRow.join('') // to remove any blank rows
-        // alert(tmp);
-        if (tmpRow.length > 0 && tmp != '') {
-            var mystr = tmpRow.join(options.separator);
-            csvData[csvData.length] = mystr;
-        }
-    }
-    function formatData(input) {
-        // replace " with “
-        var regexp = new RegExp(/["]/g);
-        var output = input.replace(regexp, "“");
-        //HTML
-        var regexp = new RegExp(/\<[^\<]+\>/g);
-        var output = output.replace(regexp, "");
-        if (output == "") return '';
-        return '"' + output + '"';
-    }
-    function popup(data) {
-        var generator = window.open('', 'csv', 'height=400,width=600');
-        generator.document.write('<html><head><title>CSV</title>');
-        generator.document.write('</head><body >');
-        generator.document.write('<textArea cols=70 rows=15 wrap="off" >');
-        generator.document.write(data);
-        generator.document.write('</textArea>');
-        generator.document.write('</body></html>');
-        generator.document.close();
-        return true;
-    }
-};
+    var csv_string = csv.join('\n');
+    // Download it
+    var filename = 'export_' + table_id + '_' + new Date().toLocaleDateString() + '.csv';
+    var link = document.createElement('a');
+    link.style.display = 'none';
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv_string));
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}

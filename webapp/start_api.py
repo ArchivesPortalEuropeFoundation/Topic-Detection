@@ -52,9 +52,14 @@ def query_api():
         else:
             response = ranking.to_html(classes='data',index=False, table_id = 'results')
 
-    query_and_button = query + open("../interface/templates/query_and_button.txt","r").read()
+    download_button = open("../interface/templates/download_button.txt","r").read()
 
-    html = html.replace("<query></query>","Your query: "+ query_and_button)
+    html = html.replace(" SELECTED ","")
+    html = html.replace('placeholder="Your query"','placeholder="'+query+'"')
+    html = html.replace('<option value= "'+search_type+'">'+search_type+'</option>','<option value= "'+search_type+'" SELECTED >'+search_type+'</option>')
+    html = html.replace('<option value= "'+lang+'">'+lang+'</option>','<option value= "'+lang+'" SELECTED >'+lang+'</option>')
+    
+    html = html.replace("<query></query>",download_button)
     
     html = html.replace("<table></table>",response)
 

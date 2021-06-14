@@ -1,4 +1,8 @@
-<link rel="stylesheet" href="style.css">
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    </head>
+  <link rel="stylesheet" href="style.css">
 <script type="text/javascript" src="script.js" ></script>
 
 <form method="POST" action="query.php">
@@ -26,12 +30,17 @@
       <input name="n_res" type="number" value="10">
       <input type="submit">
       </br>
+      <button type="button" onclick="hideSearch()">Advanced Search</button>
+      <div id="advancedSearch"  style="display: none">
+        <input type="checkbox" id="fuzzy_entity" name="fuzzy_entity" value="fuzzy_entity">
+    <label for="advanced">Fuzzy Entity Search</label><br>
+    </div>
+      
+
+</form>
+    
       <p><query></query></p>   
       <!DOCTYPE html>
-  <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-  </head>
   <body>
   
    

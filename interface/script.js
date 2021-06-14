@@ -28,3 +28,12 @@ function download_table_as_csv(table_id, separator = ',') {
     link.click();
     document.body.removeChild(link);
 }
+
+function hideSearch() { 
+    var x = document.getElementById("advancedSearch");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }

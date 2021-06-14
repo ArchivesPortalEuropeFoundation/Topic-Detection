@@ -92,7 +92,7 @@ def cossim(v1,v2):
 tfidf_vectorizer=TfidfVectorizer()
 
 def rank_by_freq(query,doc,allow_partial_match):
-    if allow_partial_match:
+    if allow_partial_match == "True":
         query = query.lower()
         doc = doc.lower()
         tfidf=tfidf_vectorizer.fit_transform([query,doc])
@@ -175,20 +175,5 @@ def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_l
     ranking = ranking.head(how_many_results)
     ranking = ranking[ranking["Score"]>0.0]
 
-
-
-    # for id_ in range(len(texts)):
-    #     if selected_langs[id_] in translations:
-    #         query = translations[selected_langs[id_]]
-    #         r = [doc_names[id_],labels[id_],texts[id_], rank_by_freq(query,texts[id_],allow_partial_match)]
-    #         ranking.append(r)
-#   ranking = [[[doc_names[id_],labels[id_],texts[id_], rank_by_freq(query,texts[id_],allow_partial_match)] for id_ in range(len(texts)) if selected_langs[id_]==lang] for lang,query in translations.items() ]
-
-    #ranking = [x for x in ranking if x[3]>0.0]
-    #print ("Documents mentioning the entity '",entity,"' :", len(ranking),"among",len(labels),".")
-
-    #ranking.sort(key=lambda x: x[3],reverse=True)
-    #ranking = ranking[:how_many_results]
-    #df = pd.DataFrame(ranking, columns=["Filename", "Labels", "Content", "Score"])
     return ranking
     

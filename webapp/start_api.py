@@ -35,6 +35,8 @@ def query_api():
     lang = flask.request.args['lang']
     search_type = flask.request.args['type']
     n_res = int(flask.request.args['n_res'])
+    allow_partial_match = flask.request.args['fuzzy_entity']
+    
     if search_type == "concept":
         query_emb = nlp.text_embedding(query,lang,model_dict)
         if query_emb:
@@ -45,7 +47,6 @@ def query_api():
 
     if search_type == "entity":
         #for the moment hardcoded
-        allow_partial_match = True
         ranking = nlp.entity_search(query,lang,labels,doc_names,texts,n_res,langs,allow_partial_match)
         if ranking.empty:
             response =  "Entity mentions not found in corpus!"
@@ -55,7 +56,7 @@ def query_api():
     download_button = open("../interface/templates/download_button.txt","r").read()
 
     html = html.replace(" SELECTED ","")
-    html = html.replace('placeholder="Your query"','placeholder="'+query+'"')
+    html = html.replace('placeholder="Your query"','placeholder="Your query was: '+query+'"')
     html = html.replace('<option value= "'+search_type+'">'+search_type+'</option>','<option value= "'+search_type+'" SELECTED >'+search_type+'</option>')
     html = html.replace('<option value= "'+lang+'">'+lang+'</option>','<option value= "'+lang+'" SELECTED >'+lang+'</option>')
     

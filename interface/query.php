@@ -7,7 +7,7 @@ $_SESSION["lang"] = $_POST['lang'];
 $_SESSION["type"] = $_POST['type'];
 $_SESSION["text"] = $_POST['text'];
 $_SESSION["n_res"] = $_POST['n_res'];
-$_SESSION["fuzzy_entity"] = isset($_POST['fuzzy_entity']) ? "True" : "False";
+$_SESSION["broad_entity_search"] = isset($_POST['broad_entity_search']) ? "True" : "False";
 
 $url= 'http://127.0.0.1:5000/query?';
 
@@ -15,7 +15,7 @@ $data = array('lang' => $_SESSION['lang'],
               'type' => $_SESSION['type'],
               'text' => $_SESSION['text'],
               'n_res' => $_SESSION['n_res'],
-              'fuzzy_entity' => $_SESSION['fuzzy_entity']
+              'broad_entity_search' => $_SESSION['broad_entity_search']
 
             );
 

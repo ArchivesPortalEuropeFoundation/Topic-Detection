@@ -35,7 +35,7 @@ def query_api():
     lang = flask.request.args['lang']
     search_type = flask.request.args['type']
     n_res = int(flask.request.args['n_res'])
-    allow_partial_match = flask.request.args['fuzzy_entity']
+    broad_entity_search = flask.request.args['broad_entity_search']
     
     if search_type == "concept":
         query_emb = nlp.text_embedding(query,lang,model_dict)
@@ -47,7 +47,7 @@ def query_api():
 
     if search_type == "entity":
         #for the moment hardcoded
-        ranking = nlp.entity_search(query,lang,labels,doc_names,texts,n_res,langs,allow_partial_match)
+        ranking = nlp.entity_search(query,lang,labels,doc_names,texts,n_res,langs,broad_entity_search)
         if ranking.empty:
             response =  "Entity mentions not found in corpus!"
         else:

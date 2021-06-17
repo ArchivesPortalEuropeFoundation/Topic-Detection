@@ -1,5 +1,6 @@
 import faiss                  
 import pickle
+import pywikibot
 import wikipedia
 import nltk, string
 import numpy as np
@@ -91,17 +92,23 @@ def cossim(v1,v2):
 
 tfidf_vectorizer=TfidfVectorizer()
 
-def rank_by_freq(query,doc,allow_partial_match):
-    if allow_partial_match == "True":
-        query = query.lower()
-        doc = doc.lower()
-        tfidf=tfidf_vectorizer.fit_transform([query,doc])
-        score = cs(tfidf)[0][1]
-        return score
-    else:
-        n = doc.lower().count(query.lower())
-        n = n/len(doc.split(" "))
-        return n
+# def rank_by_freq(query,doc,allow_partial_match):
+#     if allow_partial_match == "True":
+#         query = query.lower()
+#         doc = doc.lower()
+#         tfidf=tfidf_vectorizer.fit_transform([query,doc])
+#         score = cs(tfidf)[0][1]
+#         return score
+#     else:
+#         n = doc.lower().count(query.lower())
+#         n = n/len(doc.split(" "))
+#         return n
+
+def rank_by_freq(candidates,doc):
+    candidates = set([x.lower() for x in candidates])
+    n = [doc.lower().count(query) for query in candidates]
+    n = sum(n)/len(doc.split(" "))
+    return n
 
 def entity_processing(entity):
     entity = entity.split("(")[0]
@@ -152,25 +159,37 @@ def build_index(embs,d):
     index.add(xb)                  # add vectors to the index
     return index
 
-def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_langs,allow_partial_match):
-    wikipedia.set_lang(lang)
-    res = wikipedia.search(entity)[0]
-    wiki_url = "https://"+lang+".wikipedia.org/wiki/"+quote(res.replace(" ","_"))
-    resource = urlopen(wiki_url)
-    content =  resource.read()
+def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_langs,broad_entity_search):
 
-    soup = BeautifulSoup(content,features="html.parser")
+    set_selected_langs = set(selected_langs)
 
-    translations = {el.get('lang'): unquote(el.get('href')).split("/")[-1].replace("_"," ") for el in soup.select('li.interlanguage-link > a')}
+    site = pywikibot.Site(lang, "wikipedia")
+    page = pywikibot.Page(site, entity)
+    item = pywikibot.ItemPage.fromPage(page)
+    item_dict = item.get()
 
-    translations[lang] = entity.strip()
+    wiki_labels = item_dict["labels"]
+    aliases = item_dict["aliases"]
 
-    translations = {x:entity_processing(y) for x,y in translations.items() if x in selected_langs}
+    langs = set(list(wiki_labels.keys()) + list(aliases.keys()))
+
+    candidates = set()
+    candidates.add(entity)
+
+    for lang in langs:
+        if broad_entity_search == "False" and lang not in set_selected_langs:
+            continue
+        if lang in wiki_labels:
+            candidates.add(wiki_labels[lang])
+        if lang in aliases:
+            for al in aliases[lang]:
+                candidates.add(al)
+
+    print (candidates)
 
     ranking = [[doc_names[id_],labels[id_],texts[id_],selected_langs[id_]] for id_ in range(len(texts))]
     ranking = pd.DataFrame(ranking, columns=["Filename", "Labels", "Content", "Lang"])
-    ranking = ranking[ranking['Lang'].isin(translations)]
-    ranking["Score"] = ranking.parallel_apply(lambda x: rank_by_freq(translations[x["Lang"]], x['Content'],allow_partial_match), axis=1)
+    ranking["Score"] = ranking.parallel_apply(lambda x: rank_by_freq(candidates, x['Content']), axis=1)
     ranking = ranking.sort_values('Score', ascending=False)
     ranking = ranking.head(how_many_results)
     ranking = ranking[ranking["Score"]>0.0]

@@ -1,0 +1,1 @@
+<p><a href="#" onclick="download_table_as_csv('results');">(Download results as CSV)</a></p>

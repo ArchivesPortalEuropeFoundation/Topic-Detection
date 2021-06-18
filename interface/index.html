@@ -1,0 +1,54 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    </head>
+  <link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="script.js" ></script>
+
+<form method="POST" action="query.php">
+      <input name="text" type="text" placeholder="Your query">
+  
+      <select name= lang>
+          
+          <option value= "en" SELECTED >en</option>
+          <option value= "de">de</option>
+          <option value= "es">es</option>
+          <option value= "fi">fi</option>
+          <option value= "fr">fr</option>
+          <option value= "he">he</option>
+          <option value= "it">it</option>
+          <option value= "pl">pl</option>
+          <option value= "ru">ru</option>
+          <option value= "sl">sl</option>
+          <option value= "sv">sv</option>
+          
+      </select>
+      <select name= "type">
+          <option value= "concept" SELECTED >concept</option>
+          <option value= "entity">entity</option>
+      </select>        
+      <input name="n_res" type="number" value="10">
+      <input type="submit">
+      </br>
+      <button type="button" onclick="hideSearch()">Advanced Search</button>
+      <div id="advancedSearch"  style="display: none">
+        <input type="checkbox" id="broad_entity_search" name="broad_entity_search" value="broad_entity_search">
+    <label for="advanced">Broad Entity Search</label><br>
+    </div>
+      
+
+</form>
+    
+      <p><query></query></p>   
+      <!DOCTYPE html>
+  <body>
+  
+   
+  <table></table>
+  
+  
+  </body>
+  </html>
+  
+      
+  </form>

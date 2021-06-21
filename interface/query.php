@@ -1,7 +1,21 @@
 <?php
-session_start();
-     
 
+ini_set('session.gc_maxlifetime', 10800);
+
+ini_set('session.gc_probability', 1);
+ini_set('session.gc_divisor', 100);
+
+
+$cred = file_get_contents("../cred.json");
+$cred = json_decode($cred, true);
+
+session_start();
+
+if (isset($cred[$_SESSION["email"]]) && password_verify($_SESSION["password"], $cred[$_SESSION["email"]]["pw"]))
+{
+$userName = $_SESSION["user"];
+$time = date('Y-m-d H:i:s');;
+  
 
 $_SESSION["lang"] = $_POST['lang'];
 $_SESSION["type"] = $_POST['type'];
@@ -30,6 +44,10 @@ $result = curl_exec($ch);
 
 echo $result;
 
-die();
-
+}
+else {
+  echo "incorrect login";
+  ob_end_flush();
+  die();        
+}      
 ?>

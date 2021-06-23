@@ -5,17 +5,27 @@ ini_set('session.gc_maxlifetime', 10800);
 ini_set('session.gc_probability', 1);
 ini_set('session.gc_divisor', 100);
 
-
-$cred = file_get_contents("../cred.json");
-$cred = json_decode($cred, true);
-
 session_start();
 
-if (isset($cred[$_SESSION["email"]]) && password_verify($_SESSION["password"], $cred[$_SESSION["email"]]["pw"]))
-{
+$url= 'http://127.0.0.1:6000/login?';
+
+$data = array(
+			'email' => $_SESSION["email"],
+			'pw' => $_SESSION["password"]
+			);
+
+$msg = http_build_query($data);
+
+$url .= $msg;
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+$result = curl_exec($ch);
+
+if (True == $result) {
 $time = date('Y-m-d H:i:s');;
   
-
 $_SESSION["lang"] = $_POST['lang'];
 $_SESSION["type"] = $_POST['type'];
 $_SESSION["text"] = $_POST['text'];

@@ -11,21 +11,32 @@ ini_set('session.gc_divisor', 100);
 
 session_start();
 
-$cred = file_get_contents("../cred.json");
-$cred = json_decode($cred, true);
-
-$_SESSION["email"] = strtolower($_POST['email']);
+$_SESSION["email"]  =$_POST['email'];
 $_SESSION["password"] = $_POST['password'];
 
-if (isset($cred[$_SESSION["email"]]) && password_verify($_SESSION["password"], $cred[$_SESSION["email"]]["pw"]))
-{
-  $_SESSION["user"] = $cred[$_SESSION["email"]]["user"];
-  
-header('Location: index.html');
-ob_end_flush();
-die();
+$url= 'http://127.0.0.1:6000/login?';
 
+$data = array(
+			'email' => $_SESSION["email"],
+			'pw' => $_SESSION["password"]
+			);
+
+$msg = http_build_query($data);
+
+$url .= $msg;
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+$result = curl_exec($ch);
+
+if (True == $result) {
+	echo $result;	
+	header('Location: index.html');
+	ob_end_flush();
+    die();
 }
+
 else {
             echo "incorrect login";
             ob_end_flush();

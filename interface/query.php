@@ -13,7 +13,6 @@ session_start();
 
 if (isset($cred[$_SESSION["email"]]) && password_verify($_SESSION["password"], $cred[$_SESSION["email"]]["pw"]))
 {
-$userName = $_SESSION["user"];
 $time = date('Y-m-d H:i:s');;
   
 

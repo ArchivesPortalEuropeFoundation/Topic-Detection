@@ -1,5 +1,7 @@
-import flask
+import json
 import pickle
+import flask
+import bcrypt
 from utils import nlp
 from argparse import ArgumentParser
 
@@ -66,6 +68,54 @@ def query_api():
 
     return html
 
+
+def get_hashed_password(plain_text_password):
+    # Hash a password for the first time
+    #   (Using bcrypt, the salt is saved into the hash itself)
+    return bcrypt.hashpw(plain_text_password, bcrypt.gensalt())
+
+def check_password(plain_text_password, hashed_password):
+    # Check hashed password. Using bcrypt, the salt is saved into the hash itself
+    return bcrypt.checkpw(plain_text_password, hashed_password)
+
+@APP.route('/registration', methods=['GET'])
+def registration():
+    f = open('../cred.json',"r")
+    cred = json.load(f)
+    f.close()
+    
+    # we load the dataset
+    user = flask.request.args['user']
+    email = flask.request.args['email']
+    pw = flask.request.args['pw']
+    pw = get_hashed_password(pw)
+    
+    if email not in cred:
+        cred[email] = {"user":user,"pw":pw}
+        with open('../cred.json', 'w') as f:
+            json.dump(cred, f)
+        return True
+    else:
+        return False
+
+
+@APP.route('/login', methods=['GET'])
+def login():
+    f = open('../cred.json',"r")
+    cred = json.load(f)
+    f.close()
+    # we load the dataset
+    email = flask.request.args['email']
+    pw = flask.request.args['pw']
+
+    print (email)
+    print (pw)
+    
+    if email in cred and check_password(pw, cred[email]["pw"]):
+        return True
+    else:
+        return False
+    
 
 if __name__ == '__main__':
 

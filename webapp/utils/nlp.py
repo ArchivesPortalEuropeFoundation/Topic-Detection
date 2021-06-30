@@ -52,13 +52,26 @@ def load_models(test=False):
     #model_dict = {"it":it_model}
     return model_dict
 
+
+def build_query_vector(text,lang,model_dict,boolean_search):
+
+    if boolean_search == "True":
+        # handling only AND for now
+        first_concept, operator,second_concept = boolean_operation(text)
+        first_vector, second_vector = text_embedding(first_concept,lang,model_dict), text_embedding(second_concept,lang,model_dict)
+        if first_vector and second_vector:
+            return {operator:[first_vector,second_vector]}
+    else:
+        vector = text_embedding(text,lang,model_dict)
+        if vector:
+            return vector
+
 def text_embedding(text,lang,model_dict):
     
     exclude = set(string.punctuation)
     exclude.add("-")
 
     model = model_dict[lang]
-
     
     text = text.lower()
     
@@ -92,23 +105,32 @@ def cossim(v1,v2):
 
 tfidf_vectorizer=TfidfVectorizer()
 
-# def rank_by_freq(query,doc,allow_partial_match):
-#     if allow_partial_match == "True":
-#         query = query.lower()
-#         doc = doc.lower()
-#         tfidf=tfidf_vectorizer.fit_transform([query,doc])
-#         score = cs(tfidf)[0][1]
-#         return score
-#     else:
-#         n = doc.lower().count(query.lower())
-#         n = n/len(doc.split(" "))
-#         return n
-
-def rank_by_freq(candidates,doc):
+def count_mentions(candidates,doc):
     candidates = set([x.lower() for x in candidates])
     n = [doc.lower().count(query) for query in candidates]
     n = sum(n)/len(doc.split(" "))
     return n
+
+def rank_by_freq(candidates,doc,boolean_search):
+    if boolean_search == "True":
+        operator = list(candidates.keys())[0]
+        first_cand, second_cand = candidates[operator]
+        first_n = count_mentions(first_cand,doc)
+        second_n = count_mentions(second_cand,doc)
+        # maybe this is the only bit to modify
+        if operator == "AND" and ((first_n>0.0) and (second_n>0.0)):
+            return (first_n+second_n)/2
+        if operator == "OR" and ((first_n>0.0) or (second_n>0.0)):
+            return (first_n+second_n)/2
+        if operator == "ANDNOT" and ((first_n>0.0) and (second_n==0.0)):
+            return first_n
+        else:
+            return 0.0
+
+
+    else:
+        n = count_mentions(candidates,doc)
+        return n
 
 def entity_processing(entity):
     entity = entity.split("(")[0]
@@ -142,11 +164,39 @@ def prepare_collection(df,model_dict):
                 texts.append(text)
     return embs,labels,doc_names,langs,texts
 
-def concept_search(index,query_emb,labels,doc_names,texts,how_many_results):
-    xq = np.array([query_emb]).astype('float32')
-    D, I = index.search(xq, how_many_results)     # actual search
-    res = {I[0][i]:D[0][i] for i in range(len(I[0]))}
-    ranking = [[doc_names[i],labels[i],texts[i],1.0-d] for i,d in res.items()]
+def concept_search(index,query_emb,labels,doc_names,texts,how_many_results,boolean_search):
+    if boolean_search == "True":
+        operator = list(query_emb.keys())[0]
+        first_vector,second_vector = query_emb[operator]
+        ext_how_many_results = how_many_results*10
+        # results first element
+        xq = np.array([first_vector]).astype('float32')
+        D, I = index.search(xq, ext_how_many_results)     # we need to retrieve more results to check the overlap
+        res = {I[0][i]:D[0][i] for i in range(len(I[0]))}
+        first_ranking = [[doc_names[i],labels[i],texts[i],1.0-d] for i,d in res.items()]
+        # results second element
+        xq = np.array([second_vector]).astype('float32')
+        D, I = index.search(xq, ext_how_many_results)     # we need to retrieve more results to check the overlap
+        res = {I[0][i]:D[0][i] for i in range(len(I[0]))}
+        second_ranking = [[doc_names[i],labels[i],texts[i],1.0-d] for i,d in res.items()]
+        second_ranking_dict = {x[0]:x[3] for x in second_ranking}
+        # aggregation
+        if operator == "AND":
+            ranking = [[x[0],x[1],x[2],(x[3]+second_ranking_dict[x[0]])/2] for x in first_ranking if x[0] in second_ranking_dict][:how_many_results]
+        if operator == "OR":
+            ranking = [[x[0],x[1],x[2],x[3]] for x in first_ranking if x[0] not in second_ranking_dict]+second_ranking
+            ranking.sort(key=lambda x: x[-1],reverse=True)
+            ranking = ranking[:how_many_results]
+        if operator == "ANDNOT":
+            second_ranking = {x[0]:x[3] for x in second_ranking}
+            ranking = [[x[0],x[1],x[2],x[3]] for x in first_ranking if x[0] not in second_ranking_dict][:how_many_results]
+            
+    else:
+        xq = np.array([query_emb]).astype('float32')
+        D, I = index.search(xq, how_many_results)     # actual search
+        res = {I[0][i]:D[0][i] for i in range(len(I[0]))}
+        ranking = [[doc_names[i],labels[i],texts[i],1.0-d] for i,d in res.items()]
+
     df = pd.DataFrame(ranking, columns=["Filename", "Labels", "Content", "Score"])
     return df
 
@@ -159,37 +209,60 @@ def build_index(embs,d):
     index.add(xb)                  # add vectors to the index
     return index
 
-def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_langs,broad_entity_search):
 
-    set_selected_langs = set(selected_langs)
-
+def get_candidates(entity,lang,selected_langs,broad_entity_search):
     site = pywikibot.Site(lang, "wikipedia")
     page = pywikibot.Page(site, entity)
-    item = pywikibot.ItemPage.fromPage(page)
-    item_dict = item.get()
-
-    wiki_labels = item_dict["labels"]
-    aliases = item_dict["aliases"]
-
-    langs = set(list(wiki_labels.keys()) + list(aliases.keys()))
-
     candidates = set()
-    candidates.add(entity)
 
-    for lang in langs:
-        if broad_entity_search == "False" and lang not in set_selected_langs:
-            continue
-        if lang in wiki_labels:
-            candidates.add(wiki_labels[lang])
-        if lang in aliases:
-            for al in aliases[lang]:
-                candidates.add(al)
+    try:
+        item = pywikibot.ItemPage.fromPage(page)
+    except Exception as e:
+        return candidates
 
-    print (candidates)
+    else:
+        item_dict = item.get()
+
+        wiki_labels = item_dict["labels"]
+        aliases = item_dict["aliases"]
+        langs = set(list(wiki_labels.keys()) + list(aliases.keys()))
+
+        candidates.add(entity)
+
+        set_selected_langs = set(selected_langs)
+
+        for lang in langs:
+            if broad_entity_search == "False" and lang not in set_selected_langs:
+                continue
+            if lang in wiki_labels:
+                candidates.add(wiki_labels[lang])
+            if lang in aliases:
+                for al in aliases[lang]:
+                    candidates.add(al)
+
+        return candidates
+
+def boolean_operation(query):
+    operators = ["ANDNOT", "OR","AND"]
+    for op in operators:
+        if op in query:
+            first_el, second_el = query.split(" "+op+" ")
+            return first_el,op,second_el
+
+def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_langs,broad_entity_search,boolean_search):
 
     ranking = [[doc_names[id_],labels[id_],texts[id_],selected_langs[id_]] for id_ in range(len(texts))]
     ranking = pd.DataFrame(ranking, columns=["Filename", "Labels", "Content", "Lang"])
-    ranking["Score"] = ranking.parallel_apply(lambda x: rank_by_freq(candidates, x['Content']), axis=1)
+
+    if boolean_search == "True":
+        # handling only AND for now
+        first_entity, operator, second_entity = boolean_operation(entity)
+        first_cand, second_cand  = get_candidates(first_entity,lang,selected_langs,broad_entity_search), get_candidates(second_entity,lang,selected_langs,broad_entity_search)
+        candidates = {operator:[first_cand,second_cand]}
+    else:
+        candidates = get_candidates(entity,lang,selected_langs,broad_entity_search)
+
+    ranking["Score"] = ranking.parallel_apply(lambda x: rank_by_freq(candidates, x['Content'],boolean_search), axis=1)
     ranking = ranking.sort_values('Score', ascending=False)
     ranking = ranking.head(how_many_results)
     ranking = ranking[ranking["Score"]>0.0]

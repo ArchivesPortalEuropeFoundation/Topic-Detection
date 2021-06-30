@@ -4,6 +4,8 @@ import flask
 import bcrypt
 from utils import nlp
 from argparse import ArgumentParser
+from random import randint
+
 
 parser = ArgumentParser()
 parser.add_argument("-t", "--test", dest="test",
@@ -38,18 +40,19 @@ def query_api():
     search_type = flask.request.args['type']
     n_res = int(flask.request.args['n_res'])
     broad_entity_search = flask.request.args['broad_entity_search']
+    boolean_search = flask.request.args['boolean_search']
     
     if search_type == "concept":
-        query_emb = nlp.text_embedding(query,lang,model_dict)
+        query_emb = nlp.build_query_vector(query,lang,model_dict,boolean_search)
         if query_emb:
-            ranking= nlp.concept_search(index,query_emb,labels,doc_names,texts,n_res)
+            ranking= nlp.concept_search(index,query_emb,labels,doc_names,texts,n_res,boolean_search)
             response = ranking.to_html(classes='data',index=False, table_id = 'results')
         else:
             response= "Concept not found in embedding space!"
 
     if search_type == "entity":
         #for the moment hardcoded
-        ranking = nlp.entity_search(query,lang,labels,doc_names,texts,n_res,langs,broad_entity_search)
+        ranking = nlp.entity_search(query,lang,labels,doc_names,texts,n_res,langs,broad_entity_search,boolean_search)
         if ranking.empty:
             response =  "Entity mentions not found in corpus!"
         else:
@@ -89,11 +92,15 @@ def registration():
     email = flask.request.args['email']
     pw = flask.request.args['pw']
     pw = get_hashed_password(pw)
+    code = randint(100000, 999999)  
     
     if email not in cred:
-        cred[email] = {"user":user,"pw":pw}
+        cred[email] = {"user":user,"pw":pw, "code":code}
         with open('../cred.json', 'w') as f:
             json.dump(cred, f)
+
+
+
         return True
     else:
         return False

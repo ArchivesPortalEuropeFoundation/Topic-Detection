@@ -48,13 +48,13 @@ def query_api():
             ranking= nlp.concept_search(index,query_emb,labels,doc_names,texts,n_res,boolean_search)
             response = ranking.to_html(classes='data',index=False, table_id = 'results')
         else:
-            response= "Concept not found in embedding space!"
+            response= f'Concept "{query}" not found in embedding space!'
 
     if search_type == "entity":
         #for the moment hardcoded
         ranking = nlp.entity_search(query,lang,labels,doc_names,texts,n_res,langs,broad_entity_search,boolean_search)
         if ranking.empty:
-            response =  "Entity mentions not found in corpus!"
+            response =  f'Mentions of "{query}" not found in corpus!'
         else:
             response = ranking.to_html(classes='data',index=False, table_id = 'results')
 

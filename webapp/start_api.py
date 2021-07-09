@@ -41,7 +41,15 @@ def query_api():
     n_res = int(flask.request.args['n_res'])
     broad_entity_search = flask.request.args['broad_entity_search']
     boolean_search = flask.request.args['boolean_search']
+    in_quote_query = nlp.check_quotation(query)
     
+    if in_quote_query:
+        query = in_quote_query
+        search_type = "entity"
+        add_note = f'The concept "{query}" correspond to an entry in Wikipedia. '
+    else:
+        add_note = ""
+
     if search_type == "concept":
         query_emb = nlp.build_query_vector(query,lang,model_dict,boolean_search)
         if query_emb:
@@ -51,12 +59,23 @@ def query_api():
             response= f'Concept "{query}" not found in embedding space!'
 
     if search_type == "entity":
-        #for the moment hardcoded
-        ranking = nlp.entity_search(query,lang,labels,doc_names,texts,n_res,langs,broad_entity_search,boolean_search)
+        ranking, page = nlp.entity_search(query,lang,labels,doc_names,texts,n_res,langs,broad_entity_search,boolean_search)
         if ranking.empty:
-            response =  f'Mentions of "{query}" not found in corpus!'
+            response =  add_note+ f'Mentions of "{query}" not found in corpus!'
         else:
-            response = ranking.to_html(classes='data',index=False, table_id = 'results')
+            if boolean_search == "True":
+                operator = list(page.keys())[0]
+                first_page = page[operator][0]
+                first_title = first_page.split("/")[-1].replace("_"," ")
+                second_page = page[operator][1]
+                second_title = second_page.split("/")[-1].replace("_"," ")
+
+                response = add_note+ f'We have found results for the entity <a href="{first_page}">{first_title}</a> {operator} the entity <a href="{second_page}">{second_title}</a>'
+
+            else:
+                title = page.split("/")[-1].replace("_"," ")
+                response = add_note + f'We have found results for the entity <a href="{page}">{title}</a>'
+            response += ranking.to_html(classes='data',index=False, table_id = 'results')
 
     download_button = open("../interface/templates/download_button.txt","r").read()
 

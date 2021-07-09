@@ -1,3 +1,4 @@
+import re
 import faiss                  
 import pickle
 import pywikibot
@@ -213,12 +214,14 @@ def build_index(embs,d):
 def get_candidates(entity,lang,selected_langs,broad_entity_search):
     site = pywikibot.Site(lang, "wikipedia")
     page = pywikibot.Page(site, entity)
+    url = page.full_url()
     candidates = set()
 
     try:
         item = pywikibot.ItemPage.fromPage(page)
     except Exception as e:
-        return candidates
+        url = ""
+        return candidates, url
 
     else:
         item_dict = item.get()
@@ -240,7 +243,7 @@ def get_candidates(entity,lang,selected_langs,broad_entity_search):
                 for al in aliases[lang]:
                     candidates.add(al)
 
-        return candidates
+        return candidates, url
 
 def boolean_operation(query):
     operators = ["ANDNOT", "OR","AND"]
@@ -248,6 +251,12 @@ def boolean_operation(query):
         if op in query:
             first_el, second_el = query.split(" "+op+" ")
             return first_el,op,second_el
+
+def check_quotation(query):
+    if '"' in query:
+        query = re.findall(r'"([^"]*)"', query)[0]
+        if len(query)>1:
+            return query
 
 def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_langs,broad_entity_search,boolean_search):
 
@@ -257,15 +266,17 @@ def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_l
     if boolean_search == "True":
         # handling only AND for now
         first_entity, operator, second_entity = boolean_operation(entity)
-        first_cand, second_cand  = get_candidates(first_entity,lang,selected_langs,broad_entity_search), get_candidates(second_entity,lang,selected_langs,broad_entity_search)
+        first_cand, first_page = get_candidates(first_entity,lang,selected_langs,broad_entity_search)
+        second_cand, second_page  = get_candidates(second_entity,lang,selected_langs,broad_entity_search)
         candidates = {operator:[first_cand,second_cand]}
+        page = {operator:[first_page,second_page]}
     else:
-        candidates = get_candidates(entity,lang,selected_langs,broad_entity_search)
+        candidates, page = get_candidates(entity,lang,selected_langs,broad_entity_search)
 
     ranking["Score"] = ranking.parallel_apply(lambda x: rank_by_freq(candidates, x['Content'],boolean_search), axis=1)
     ranking = ranking.sort_values('Score', ascending=False)
     ranking = ranking.head(how_many_results)
     ranking = ranking[ranking["Score"]>0.0]
 
-    return ranking
+    return ranking, page
     

@@ -2,18 +2,14 @@ import re
 import faiss                  
 import pickle
 import pywikibot
-import wikipedia
 import nltk, string
 import numpy as np
 import pandas as pd
-from utils import nlp
-from bs4 import BeautifulSoup
 from pandarallel import pandarallel
 from urllib.request import urlopen
 from urllib.parse import unquote,quote
 from gensim.models import KeyedVectors
 from sklearn.metrics.pairwise import cosine_similarity as cs
-from sklearn.feature_extraction.text import TfidfVectorizer
 
 pandarallel.initialize()
 
@@ -104,34 +100,48 @@ def cossim(v1,v2):
         return 0.0
 
 
-tfidf_vectorizer=TfidfVectorizer()
+def find_match(query,doc):
+    # hardcoded filter for very short candidates
+    if len(query)<3:
+        doc = doc.split(" ")
+        return doc.count(query)
+    else:
+        return doc.count(query)
+
 
 def count_mentions(candidates,doc):
-    candidates = set([x.lower() for x in candidates])
-    n = [doc.lower().count(query) for query in candidates]
+    # we don't lowercase anymore
+#    candidates = set([x.lower() for x in candidates])
+#    found = {query:doc.lower().count(query) for query in candidates}
+    candidates = set([x for x in candidates])
+    found = {query:find_match(query,doc) for query in candidates}
+    found = {x:y for x,y in found.items() if y>0}
+    n = [y for x,y in found.items()]
+    found = [x for x,y in found.items()]
     n = sum(n)/len(doc.split(" "))
-    return n
+    return n,found
+
 
 def rank_by_freq(candidates,doc,boolean_search):
     if boolean_search == "True":
         operator = list(candidates.keys())[0]
         first_cand, second_cand = candidates[operator]
-        first_n = count_mentions(first_cand,doc)
-        second_n = count_mentions(second_cand,doc)
+        first_n, first_count = count_mentions(first_cand,doc)
+        second_n, secound_count = count_mentions(second_cand,doc)
         # maybe this is the only bit to modify
         if operator == "AND" and ((first_n>0.0) and (second_n>0.0)):
-            return (first_n+second_n)/2
+            return [(first_n+second_n)/2, first_count+secound_count]
         if operator == "OR" and ((first_n>0.0) or (second_n>0.0)):
-            return (first_n+second_n)/2
+            return [(first_n+second_n)/2, first_count+secound_count]
         if operator == "ANDNOT" and ((first_n>0.0) and (second_n==0.0)):
-            return first_n
+            return [first_n, first_count]
         else:
-            return 0.0
+            return [0.0, []]
 
 
     else:
-        n = count_mentions(candidates,doc)
-        return n
+        n, n_count = count_mentions(candidates,doc)
+        return [n, n_count]
 
 def entity_processing(entity):
     entity = entity.split("(")[0]
@@ -258,6 +268,12 @@ def check_quotation(query):
         if len(query)>1:
             return query
 
+
+def make_bold(mentions, content):
+    for mention in mentions:
+        content = content.replace(mention,"<b>"+mention+"</b>")
+    return content
+
 def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_langs,broad_entity_search,boolean_search):
 
     ranking = [[doc_names[id_],labels[id_],texts[id_],selected_langs[id_]] for id_ in range(len(texts))]
@@ -273,10 +289,14 @@ def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_l
     else:
         candidates, page = get_candidates(entity,lang,selected_langs,broad_entity_search)
 
-    ranking["Score"] = ranking.parallel_apply(lambda x: rank_by_freq(candidates, x['Content'],boolean_search), axis=1)
+    ranking["Results"] = ranking.parallel_apply(lambda x: rank_by_freq(candidates, x['Content'],boolean_search), axis=1)
+    ranking[['Score', 'Mentions']] = ranking['Results'].tolist()
+    ranking = ranking.drop('Results', 1)
     ranking = ranking.sort_values('Score', ascending=False)
     ranking = ranking.head(how_many_results)
     ranking = ranking[ranking["Score"]>0.0]
+    ranking["Content"] = ranking.parallel_apply(lambda x: make_bold(x["Mentions"], x['Content']), axis=1)
+    ranking = ranking.drop('Mentions', 1)
 
     return ranking, page
     

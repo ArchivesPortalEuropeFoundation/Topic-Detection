@@ -75,7 +75,7 @@ def query_api():
             else:
                 title = page.split("/")[-1].replace("_"," ")
                 response = add_note + f'We have found results for the entity <a href="{page}">{title}</a>'
-            response += ranking.to_html(classes='data',index=False, table_id = 'results')
+            response += ranking.to_html(classes='data',index=False, table_id = 'results', escape=False)
 
     download_button = open("../interface/templates/download_button.txt","r").read()
 

@@ -77,7 +77,11 @@ def query_api():
                 response = add_note + f'We have found results for the entity <a href="{page}">{title}</a>'
             response += ranking.to_html(classes='data',index=False, table_id = 'results', escape=False)
 
+    query_string = query.replace(" ","+") +"_"+search_type+"_"+lang+"_"+"boolean_search:"+boolean_search+"_"+"broad_entity_search:"+broad_entity_search
+
     download_button = open("../interface/templates/download_button.txt","r").read()
+
+    download_button= download_button.replace("query_name",query_string)
 
     html = html.replace(" SELECTED ","")
     html = html.replace('placeholder="Your query"','placeholder="Your query was: '+query+'"')

@@ -1,1 +1,1 @@
-<p><a href="#" onclick="download_table_as_csv('results');">(Download results as CSV)</a></p>
+<p><a href="#" onclick="download_table_as_csv('results','query_name');">(Download results as CSV)</a></p>

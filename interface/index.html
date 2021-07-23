@@ -5,6 +5,11 @@
   <link rel="stylesheet" href="style.css">
 <script type="text/javascript" src="script.js" ></script>
 
+<h1>Cross-lingual Search on Archives Portal Europe</h1>
+Welcome! This is the alpha version of a cross-lingual search tool for concepts and entities across the entire APE collection.</br>
+To know more about the project, visit <a href="https://github.com/ArchivesPortalEuropeFoundation/Topic-Detection/">our GitHub</a></br></br>
+
+
 <form method="POST" action="query.php">
       <input name="text" type="text" placeholder="Your query">
   
@@ -30,11 +35,10 @@
       <input name="n_res" type="number" value="10">
       <input type="submit">
       </br>
-      <button type="button" onclick="hideSearch()">Advanced Search</button>
-      <div id="advancedSearch"  style="display: none">
-        <input type="checkbox" id="broad_entity_search" name="broad_entity_search" value="broad_entity_search">
-    <label for="advanced">Broad Entity Search</label><br>
-    </div>
+    <input type="checkbox" id="broad_entity_search" name="broad_entity_search" value="broad_entity_search">
+    <label for="advanced">Broad Entity Mention Search</label><br>
+    <input type="checkbox" id="boolean_search" name="boolean_search" value="boolean_search">
+    <label for="advanced">Boolean Search</label><br>
       
 
 </form>

@@ -1,7 +1,11 @@
-import flask
+import json
 import pickle
+import flask
+import bcrypt
 from utils import nlp
 from argparse import ArgumentParser
+from random import randint
+
 
 parser = ArgumentParser()
 parser.add_argument("-t", "--test", dest="test",
@@ -36,24 +40,48 @@ def query_api():
     search_type = flask.request.args['type']
     n_res = int(flask.request.args['n_res'])
     broad_entity_search = flask.request.args['broad_entity_search']
+    boolean_search = flask.request.args['boolean_search']
+    in_quote_query = nlp.check_quotation(query)
     
+    if in_quote_query:
+        query = in_quote_query
+        search_type = "entity"
+        add_note = f'The concept "{query}" correspond to an entry in Wikipedia. '
+    else:
+        add_note = ""
+
     if search_type == "concept":
-        query_emb = nlp.text_embedding(query,lang,model_dict)
+        query_emb = nlp.build_query_vector(query,lang,model_dict,boolean_search)
         if query_emb:
-            ranking= nlp.concept_search(index,query_emb,labels,doc_names,texts,n_res)
+            ranking= nlp.concept_search(index,query_emb,labels,doc_names,texts,n_res,boolean_search)
             response = ranking.to_html(classes='data',index=False, table_id = 'results')
         else:
-            response= "Concept not found in embedding space!"
+            response= f'Concept "{query}" not found in embedding space!'
 
     if search_type == "entity":
-        #for the moment hardcoded
-        ranking = nlp.entity_search(query,lang,labels,doc_names,texts,n_res,langs,broad_entity_search)
+        ranking, page = nlp.entity_search(query,lang,labels,doc_names,texts,n_res,langs,broad_entity_search,boolean_search)
         if ranking.empty:
-            response =  "Entity mentions not found in corpus!"
+            response =  add_note+ f'Mentions of "{query}" not found in corpus!'
         else:
-            response = ranking.to_html(classes='data',index=False, table_id = 'results')
+            if boolean_search == "True":
+                operator = list(page.keys())[0]
+                first_page = page[operator][0]
+                first_title = first_page.split("/")[-1].replace("_"," ")
+                second_page = page[operator][1]
+                second_title = second_page.split("/")[-1].replace("_"," ")
+
+                response = add_note+ f'We have found results for the entity <a href="{first_page}">{first_title}</a> {operator} the entity <a href="{second_page}">{second_title}</a>'
+
+            else:
+                title = page.split("/")[-1].replace("_"," ")
+                response = add_note + f'We have found results for the entity <a href="{page}">{title}</a>'
+            response += ranking.to_html(classes='data',index=False, table_id = 'results', escape=False)
+
+    query_string = query.replace(" ","+") +"_"+search_type+"_"+lang+"_"+"boolean_search:"+boolean_search+"_"+"broad_entity_search:"+broad_entity_search
 
     download_button = open("../interface/templates/download_button.txt","r").read()
+
+    download_button= download_button.replace("query_name",query_string)
 
     html = html.replace(" SELECTED ","")
     html = html.replace('placeholder="Your query"','placeholder="Your query was: '+query+'"')
@@ -66,6 +94,58 @@ def query_api():
 
     return html
 
+
+def get_hashed_password(plain_text_password):
+    # Hash a password for the first time
+    #   (Using bcrypt, the salt is saved into the hash itself)
+    return bcrypt.hashpw(plain_text_password, bcrypt.gensalt())
+
+def check_password(plain_text_password, hashed_password):
+    # Check hashed password. Using bcrypt, the salt is saved into the hash itself
+    return bcrypt.checkpw(plain_text_password, hashed_password)
+
+@APP.route('/registration', methods=['GET'])
+def registration():
+    f = open('../cred.json',"r")
+    cred = json.load(f)
+    f.close()
+    
+    # we load the dataset
+    user = flask.request.args['user']
+    email = flask.request.args['email']
+    pw = flask.request.args['pw']
+    pw = get_hashed_password(pw)
+    code = randint(100000, 999999)  
+    
+    if email not in cred:
+        cred[email] = {"user":user,"pw":pw, "code":code}
+        with open('../cred.json', 'w') as f:
+            json.dump(cred, f)
+
+
+
+        return True
+    else:
+        return False
+
+
+@APP.route('/login', methods=['GET'])
+def login():
+    f = open('../cred.json',"r")
+    cred = json.load(f)
+    f.close()
+    # we load the dataset
+    email = flask.request.args['email']
+    pw = flask.request.args['pw']
+
+    print (email)
+    print (pw)
+    
+    if email in cred and check_password(pw, cred[email]["pw"]):
+        return True
+    else:
+        return False
+    
 
 if __name__ == '__main__':
 
@@ -89,4 +169,4 @@ if __name__ == '__main__':
     index = nlp.build_index(embs,300)
     
     APP.debug=False
-    APP.run()
+    APP.run(port=6000)

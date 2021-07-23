@@ -1,5 +1,5 @@
 // Quick and simple export target #table_id into a csv
-function download_table_as_csv(table_id, separator = ',') {
+function download_table_as_csv(table_id, query_name,separator = ',') {
     // Select rows from table_id
     var rows = document.querySelectorAll('table#' + table_id + ' tr');
     // Construct csv
@@ -18,7 +18,7 @@ function download_table_as_csv(table_id, separator = ',') {
     }
     var csv_string = csv.join('\n');
     // Download it
-    var filename = 'export_' + table_id + '_' + new Date().toLocaleDateString() + '.csv';
+    var filename = query_name + '.csv';
     var link = document.createElement('a');
     link.style.display = 'none';
     link.setAttribute('target', '_blank');

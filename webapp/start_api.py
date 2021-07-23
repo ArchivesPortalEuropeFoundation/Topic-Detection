@@ -74,7 +74,8 @@ def query_api():
 
             else:
                 title = page.split("/")[-1].replace("_"," ")
-                response = add_note + f'We have found results for the entity <a href="{page}">{title}</a>'
+                #response = add_note + f'We have found results for the entity <a href="{page}">{title}</a>'
+                response = add_note + f'We have found results for the entity <a class="tiptext">{title} <iframe class="description" src="{page}"></iframe></a>'
             response += ranking.to_html(classes='data',index=False, table_id = 'results', escape=False)
 
     query_string = query.replace(" ","+") +"_"+search_type+"_"+lang+"_"+"boolean_search:"+boolean_search+"_"+"broad_entity_search:"+broad_entity_search

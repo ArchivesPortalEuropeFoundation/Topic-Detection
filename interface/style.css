@@ -111,3 +111,15 @@ table {
 background-color: #ccffcc;
   transition: background-color 0.2s;
 }
+
+.tiptext {
+  color:#178AA8; 
+  cursor:pointer;
+}
+.description {
+  display:none;
+  position:absolute;
+  border:1px solid #000;
+  width:400px;
+  height:400px;
+}

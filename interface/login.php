@@ -11,7 +11,7 @@ ini_set('session.gc_divisor', 100);
 
 session_start();
 
-$_SESSION["email"]  =$_POST['email'];
+$_SESSION["email"]  = $_POST['email'];
 $_SESSION["password"] = $_POST['password'];
 
 $url= 'http://127.0.0.1:6000/login?';

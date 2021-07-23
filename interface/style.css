@@ -1,5 +1,10 @@
-body {font-family: Open Sans;}
-* {box-sizing: border-box;}
+html, body {font-family: Open Sans;}
+
+h1 {font-size: 45px; font-weight: 600;}
+
+a {
+  color: #B23063;
+}
 
 input[type=text], select, textarea {
   padding: 12px;

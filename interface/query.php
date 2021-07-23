@@ -7,7 +7,7 @@ ini_set('session.gc_divisor', 100);
 
 session_start();
 
-//$url= 'http://127.0.0.1:6000/login?';
+//$url= 'http://127.0.0.1:5000/login?';
 
 //$data = array(
 //			'email' => $_SESSION["email"],
@@ -33,7 +33,7 @@ $_SESSION["n_res"] = $_POST['n_res'];
 $_SESSION["broad_entity_search"] = isset($_POST['broad_entity_search']) ? "True" : "False";
 $_SESSION["boolean_search"] = isset($_POST['boolean_search']) ? "True" : "False";
 
-$url= 'http://127.0.0.1:6000/query?';
+$url= 'http://127.0.0.1:5000/query?';
 
 $data = array('lang' => $_SESSION['lang'],
               'type' => $_SESSION['type'],

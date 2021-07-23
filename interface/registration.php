@@ -10,7 +10,7 @@ $email = strtolower($_POST['email']);
 
 $user =$_POST['username'];
 $pw = $_POST['password'];
-$url= 'http://127.0.0.1:6000/registration?';
+$url= 'http://127.0.0.1:5000/registration?';
 
 $data = array('user' => $user,
 			'email' => $email,

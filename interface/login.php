@@ -14,7 +14,7 @@ session_start();
 $_SESSION["email"]  = $_POST['email'];
 $_SESSION["password"] = $_POST['password'];
 
-$url= 'http://127.0.0.1:6000/login?';
+$url= 'http://127.0.0.1:5000/login?';
 
 $data = array(
 			'email' => $_SESSION["email"],

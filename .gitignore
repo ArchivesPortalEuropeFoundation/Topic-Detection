@@ -12,3 +12,8 @@ webapp/utils/__pycache__/*
 GenerateVectors/*
 webapp/apicache-py3/*
 interface/index.html
+webapp/test.py
+webapp/pywikibot.lwp
+webapp/throttle.ctrl
+.gitignore
+.gitignore

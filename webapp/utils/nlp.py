@@ -55,11 +55,12 @@ def build_query_vector(text,lang,model_dict,boolean_search):
     if boolean_search == "True":
         # handling only AND for now
         first_concept, operator,second_concept = boolean_operation(text)
-        first_vector, second_vector = text_embedding(first_concept,lang,model_dict), text_embedding(second_concept,lang,model_dict)
+        first_vector, first_word_embs = text_embedding(first_concept,lang,model_dict)
+        second_vector, second_word_embs = text_embedding(second_concept,lang,model_dict)
         if first_vector and second_vector:
             return {operator:[first_vector,second_vector]}
     else:
-        vector = text_embedding(text,lang,model_dict)
+        vector, word_embs = text_embedding(text,lang,model_dict)
         if vector:
             return vector
 
@@ -79,27 +80,25 @@ def text_embedding(text,lang,model_dict):
     text = [token for token in text if token.isalpha()]
     
     doc_embedd = []
+    word_embs = {}
     
     for word in text:
             try:
                 embed_word = model[word]
                 doc_embedd.append(embed_word)
+                word_embs[word] = embed_word
             except KeyError:
                 continue
     if len(doc_embedd)>0:
         avg = [float(sum(col))/len(col) for col in zip(*doc_embedd)]
-        return avg
+        return avg,word_embs
 
 def cossim(v1,v2):
-    if v1 and v2:
-        v1 = np.array(v1).reshape(1, -1)
-        v2 = np.array(v2).reshape(1, -1)
-        score = cs(v1,v2)[0][0]
-        return score
-    else:
-        return 0.0
-
-
+    v1 = np.array(v1).reshape(1, -1)
+    v2 = np.array(v2).reshape(1, -1)
+    score = cs(v1,v2)[0][0]
+    return score
+    
 def find_match(query,doc):
     # hardcoded filter for very short candidates
     if len(query)<3:
@@ -158,24 +157,35 @@ def prepare_collection(df,model_dict):
     doc_names = []
     langs = []
     texts = []
+    startDates = []
+    endDates = []
+    countries = []
+    all_word_embs = []
 
     for index, row in df.iterrows():
         lang = row["langMaterial"]
         label = row["filename"].replace(".json","")    
         title = row["titleProper"]
+        startDate = row["startDate"]
+        endDate = row["endDate"]
+        country = row["country"]
 
         if lang in model_dict:
             text = row["unitTitle"] +" "+ row["titleProper"]+" "+ row["scopeContent"]
-            emb = text_embedding(text,lang,model_dict)
+            emb, word_embs = text_embedding(text,lang,model_dict)
             if emb:
                 embs.append(emb)
                 labels.append(label)
                 langs.append(lang)
                 doc_names.append(title)
                 texts.append(text)
-    return embs,labels,doc_names,langs,texts
+                all_word_embs.append(word_embs)
+                startDates.append(startDate)
+                endDates.append(endDate)
+                countries.append(country)
+    return embs,labels,doc_names,langs,texts,all_word_embs,startDates,endDates,countries
 
-def concept_search(index,query_emb,labels,doc_names,texts,how_many_results,boolean_search):
+def concept_search(index,query_emb,labels,doc_names,texts,all_word_embs,startDate,endDate,country,how_many_results,boolean_search):
     if boolean_search == "True":
         operator = list(query_emb.keys())[0]
         first_vector,second_vector = query_emb[operator]
@@ -184,32 +194,42 @@ def concept_search(index,query_emb,labels,doc_names,texts,how_many_results,boole
         xq = np.array([first_vector]).astype('float32')
         D, I = index.search(xq, ext_how_many_results)     # we need to retrieve more results to check the overlap
         res = {I[0][i]:D[0][i] for i in range(len(I[0]))}
-        first_ranking = [[doc_names[i],labels[i],texts[i],1.0-d] for i,d in res.items()]
+        first_ranking = [[doc_names[i],labels[i],make_concept_bold(texts[i],all_word_embs[i],np.array(first_vector)),startDate[i],endDate[i],country[i],1.0-d] for i,d in res.items()]
         # results second element
         xq = np.array([second_vector]).astype('float32')
         D, I = index.search(xq, ext_how_many_results)     # we need to retrieve more results to check the overlap
         res = {I[0][i]:D[0][i] for i in range(len(I[0]))}
-        second_ranking = [[doc_names[i],labels[i],texts[i],1.0-d] for i,d in res.items()]
-        second_ranking_dict = {x[0]:x[3] for x in second_ranking}
+        second_ranking = [[doc_names[i],labels[i],make_concept_bold(texts[i],all_word_embs[i],np.array(second_vector)),startDate[i],endDate[i],country[i],1.0-d] for i,d in res.items()]
+        second_ranking_dict = {x[0]:x[-1] for x in second_ranking}
         # aggregation
         if operator == "AND":
-            ranking = [[x[0],x[1],x[2],(x[3]+second_ranking_dict[x[0]])/2] for x in first_ranking if x[0] in second_ranking_dict][:how_many_results]
+            ranking = [[x[0],x[1],x[2],x[3],x[4],x[5],(x[-1]+second_ranking_dict[x[0]])/2] for x in first_ranking if x[0] in second_ranking_dict][:how_many_results]
         if operator == "OR":
-            ranking = [[x[0],x[1],x[2],x[3]] for x in first_ranking if x[0] not in second_ranking_dict]+second_ranking
+            ranking = [x for x in first_ranking if x[0] not in second_ranking_dict]+second_ranking
             ranking.sort(key=lambda x: x[-1],reverse=True)
             ranking = ranking[:how_many_results]
         if operator == "ANDNOT":
-            second_ranking = {x[0]:x[3] for x in second_ranking}
-            ranking = [[x[0],x[1],x[2],x[3]] for x in first_ranking if x[0] not in second_ranking_dict][:how_many_results]
+            second_ranking = {x[0]:x[-1] for x in second_ranking}
+            ranking = [[x[0],x[1],x[2],x[3],x[4],x[5],x[-1]] for x in first_ranking if x[0] not in second_ranking_dict][:how_many_results]
             
     else:
         xq = np.array([query_emb]).astype('float32')
         D, I = index.search(xq, how_many_results)     # actual search
         res = {I[0][i]:D[0][i] for i in range(len(I[0]))}
-        ranking = [[doc_names[i],labels[i],texts[i],1.0-d] for i,d in res.items()]
+        ranking = [[doc_names[i],labels[i],make_concept_bold(texts[i],all_word_embs[i],np.array(query_emb)),startDate[i],endDate[i],country[i],1.0-d] for i,d in res.items()]
 
-    df = pd.DataFrame(ranking, columns=["Filename", "Labels", "Content", "Score"])
+    df = pd.DataFrame(ranking, columns=["Filename", "Labels", "Content","startDate","endDate","Country", "Score"])
     return df
+
+def make_concept_bold(content,word_embs,query_emb):
+    most_rel_words = [[word,cossim(query_emb,wemb)] for word,wemb in word_embs.items() if len(word)>3] # ignoring very short words
+    most_rel_words.sort(key=lambda x: x[1],reverse=True)
+    most_rel_words= [x[0] for x in most_rel_words[:10]] # top 10 words
+
+    for word in most_rel_words:
+        content = content.replace(word,"<b>"+word+"</b>")
+    return content
+
 
 def build_index(embs,d):
     d = 300                           # dimension
@@ -269,15 +289,15 @@ def check_quotation(query):
             return query
 
 
-def make_bold(mentions, content):
+def make_entity_bold(mentions, content):
     for mention in mentions:
         content = content.replace(mention,"<b>"+mention+"</b>")
     return content
 
-def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_langs,broad_entity_search,boolean_search):
+def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_langs,startDate,endDates,countries,broad_entity_search,boolean_search):
 
-    ranking = [[doc_names[id_],labels[id_],texts[id_],selected_langs[id_]] for id_ in range(len(texts))]
-    ranking = pd.DataFrame(ranking, columns=["Filename", "Labels", "Content", "Lang"])
+    ranking = [[doc_names[id_],labels[id_],texts[id_],selected_langs[id_],startDate[id_],endDates[id_],countries[id_]] for id_ in range(len(texts))]
+    ranking = pd.DataFrame(ranking, columns=["Filename", "Labels", "Content", "Lang","startDate","endDate","Country"])
 
     if boolean_search == "True":
         # handling only AND for now
@@ -295,7 +315,7 @@ def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_l
     ranking = ranking.sort_values('Score', ascending=False)
     ranking = ranking.head(how_many_results)
     ranking = ranking[ranking["Score"]>0.0]
-    ranking["Content"] = ranking.parallel_apply(lambda x: make_bold(x["Mentions"], x['Content']), axis=1)
+    ranking["Content"] = ranking.parallel_apply(lambda x: make_entity_bold(x["Mentions"], x['Content']), axis=1)
     ranking = ranking.drop('Mentions', 1)
 
     return ranking, page

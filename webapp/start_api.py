@@ -53,13 +53,13 @@ def query_api():
     if search_type == "concept":
         query_emb = nlp.build_query_vector(query,lang,model_dict,boolean_search)
         if query_emb:
-            ranking= nlp.concept_search(index,query_emb,labels,doc_names,texts,n_res,boolean_search)
-            response = ranking.to_html(classes='data',index=False, table_id = 'results')
+            ranking= nlp.concept_search(index,query_emb,labels,doc_names,texts,all_word_embs,startDate,endDates,countries,n_res,boolean_search)
+            response = ranking.to_html(classes='data',index=False, table_id = 'results', escape=False)
         else:
             response= f'Concept "{query}" not found in embedding space!'
 
     if search_type == "entity":
-        ranking, page = nlp.entity_search(query,lang,labels,doc_names,texts,n_res,langs,broad_entity_search,boolean_search)
+        ranking, page = nlp.entity_search(query,lang,labels,doc_names,texts,n_res,langs,startDate,endDates,countries,broad_entity_search,boolean_search)
         if ranking.empty:
             response =  add_note+ f'Mentions of "{query}" not found in corpus!'
         else:
@@ -155,7 +155,8 @@ if __name__ == '__main__':
 
         # we load the dataset
         with open('data/sample_dataset.pickle', 'rb') as f:
-            df = pickle.load(f)  
+            df = pickle.load(f) 
+            print (len(df),set(df["langMaterial"])) 
         model_dict = nlp.load_models(test=True)
     
     else:
@@ -165,8 +166,8 @@ if __name__ == '__main__':
             df = pickle.load(f)  
         model_dict = nlp.load_models(test=False)
 
-    embs,labels,doc_names,langs,texts = nlp.prepare_collection(df,model_dict)
+    embs,labels,doc_names,langs,texts,all_word_embs,startDate,endDates,countries = nlp.prepare_collection(df,model_dict)
     index = nlp.build_index(embs,300)
     
     APP.debug=False
-    APP.run(port=6000)
+    APP.run(port=5000)

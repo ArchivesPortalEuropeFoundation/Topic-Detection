@@ -24,6 +24,7 @@ def load_models(test=False):
         it_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.it.vec')
         fi_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.fi.vec')
         pl_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.pl.vec')
+        lv_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.lv.vec')
         sl_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.sl.vec')
         es_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.es.vec')
         he_model = KeyedVectors.load_word2vec_format('word-embs/1000_wiki.multi.he.vec')
@@ -37,6 +38,7 @@ def load_models(test=False):
         it_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.it.vec')
         fi_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.fi.vec')
         pl_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.pl.vec')
+        lv_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.lv.vec')
         sl_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.sl.vec')
         es_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.es.vec')
         he_model = KeyedVectors.load_word2vec_format('word-embs/wiki.multi.he.vec')
@@ -45,7 +47,7 @@ def load_models(test=False):
 
     # we just map the language with the word embeddings model
 
-    model_dict = {"es":es_model,"heb":he_model,"sv":sv_model,"rus":ru_model,"fr":fr_model,"en":en_model,"english":en_model,"de":de_model,"it":it_model,"fi":fi_model,"pl":pl_model,"sl":sl_model,"German":de_model,"English":en_model,"Finnish":fi_model,"French":fr_model,"Italian":it_model}
+    model_dict = {"es":es_model,"heb":he_model,"lv":lv_model,"sv":sv_model,"rus":ru_model,"fr":fr_model,"en":en_model,"english":en_model,"de":de_model,"it":it_model,"fi":fi_model,"pl":pl_model,"sl":sl_model,"German":de_model,"English":en_model,"Finnish":fi_model,"French":fr_model,"Italian":it_model}
     #model_dict = {"it":it_model}
     return model_dict
 
@@ -92,6 +94,8 @@ def text_embedding(text,lang,model_dict):
     if len(doc_embedd)>0:
         avg = [float(sum(col))/len(col) for col in zip(*doc_embedd)]
         return avg,word_embs
+    else:
+        return None, None
 
 def cossim(v1,v2):
     v1 = np.array(v1).reshape(1, -1)

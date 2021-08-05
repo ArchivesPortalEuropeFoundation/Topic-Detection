@@ -17,3 +17,5 @@ webapp/pywikibot.lwp
 webapp/throttle.ctrl
 .gitignore
 .gitignore
+webapp/test.py
+.gitignore

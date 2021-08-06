@@ -170,8 +170,8 @@ def prepare_collection(df,model_dict):
         lang = row["langMaterial"]
         label = row["filename"].replace(".json","")    
         title = row["titleProper"]
-        startDate = row["startDate"]
-        endDate = row["endDate"]
+        startDate = row["startDate"].split("-")[0]
+        endDate = row["endDate"].split("-")[0]
         country = row["country"]
 
         if lang in model_dict:

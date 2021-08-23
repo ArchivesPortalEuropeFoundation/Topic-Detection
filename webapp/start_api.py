@@ -53,28 +53,53 @@ def query_api():
     if search_type == "concept":
         query_emb = nlp.build_query_vector(query,lang,model_dict,boolean_search)
         if query_emb:
-            ranking= nlp.concept_search(index,query_emb,labels,doc_names,texts,all_word_embs,startDate,endDates,countries,n_res,boolean_search)
+            ranking= nlp.concept_search(index,query_emb,labels,doc_names,texts,all_word_embs,startDate,endDates,altDates,countries,n_res,boolean_search)
             response = ranking.to_html(classes='data',index=False, table_id = 'results', escape=False)
         else:
-            response= f'Concept "{query}" not found in embedding space!'
+            if boolean_search == "True":
+                response =  'There is an issue with your query: maybe this is not a boolean search?'
+
+            else:
+                response= f'Concept "{query}" not found in embedding space!'
 
     if search_type == "entity":
-        ranking, page = nlp.entity_search(query,lang,labels,doc_names,texts,n_res,langs,startDate,endDates,countries,broad_entity_search,boolean_search)
-        if ranking.empty:
+        ranking, page = nlp.entity_search(query,lang,labels,doc_names,texts,n_res,langs,startDate,endDates,altDates,countries,broad_entity_search,boolean_search)
+        if ranking is None:
+            response =  add_note+ f'There is an issue with your query: maybe this is not a boolean search?'
+        
+        elif ranking.empty:
             response =  add_note+ f'Mentions of "{query}" not found in corpus!'
         else:
             if boolean_search == "True":
                 operator = list(page.keys())[0]
                 first_page = page[operator][0]
                 first_title = first_page.split("/")[-1].replace("_"," ")
+                if first_page in wiki2viaf:
+                    first_viaf = wiki2viaf[first_page] 
+
+                    viaf_first_note = f'The first entity also appears in <a href="{first_viaf}">VIAF</a>. '
+                else:
+                    viaf_first_note = ''
+
                 second_page = page[operator][1]
                 second_title = second_page.split("/")[-1].replace("_"," ")
 
-                response = add_note+ f'We have found results for the entity <a href="{first_page}">{first_title}</a> {operator} the entity <a href="{second_page}">{second_title}</a>'
+                if second_page in wiki2viaf:
+                    second_viaf = wiki2viaf[second_page] 
+                    viaf_second_note = f'The second also appears in <a href="{second_viaf}">VIAF</a>.'
+                else:
+                    viaf_second_note = ''
+
+                response = add_note+ f'We have found results for the entity <a href="{first_page}">{first_title}</a> {operator} the entity <a href="{second_page}">{second_title}</a>. ' + viaf_first_note + viaf_second_note
 
             else:
                 title = page.split("/")[-1].replace("_"," ")
-                response = add_note + f'We have found results for the entity <a href="{page}">{title}</a>'
+                if page in wiki2viaf:
+                    viaf = wiki2viaf[page] 
+                    viaf_note = f'This entity also appears in <a href="{viaf}">VIAF</a>.'
+                else:
+                    viaf_note = ""
+                response = add_note + f'We have found results for the entity <a href="{page}">{title}</a>. ' + viaf_note
             response += ranking.to_html(classes='data',index=False, table_id = 'results', escape=False)
 
     query_string = query.replace(" ","+") +"_"+search_type+"_"+lang+"_"+"boolean_search:"+boolean_search+"_"+"broad_entity_search:"+broad_entity_search
@@ -150,6 +175,11 @@ def login():
 if __name__ == '__main__':
 
     test = args.test
+
+    with open('data/wiki2viaf.json') as f:
+        wiki2viaf = json.load(f)
+
+
     if test == "True":
         print ('test mode: on!')
 
@@ -166,7 +196,7 @@ if __name__ == '__main__':
             df = pickle.load(f)  
         model_dict = nlp.load_models(test=False)
 
-    embs,labels,doc_names,langs,texts,all_word_embs,startDate,endDates,countries = nlp.prepare_collection(df,model_dict)
+    embs,labels,doc_names,langs,texts,all_word_embs,startDate,endDates,altDates,countries = nlp.prepare_collection(df,model_dict)
     index = nlp.build_index(embs,300)
     
     APP.debug=False

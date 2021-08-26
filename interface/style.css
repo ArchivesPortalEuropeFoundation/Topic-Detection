@@ -37,8 +37,8 @@ input[type=submit] {
 .header img {
   vertical-align: top;
   float: right;
-  width: 400px;
-  height: 200px;
+  width: 30%;
+  height: 30%;
 }
 
 .header h1 {

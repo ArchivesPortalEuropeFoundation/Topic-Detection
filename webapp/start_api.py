@@ -5,6 +5,7 @@ import bcrypt
 from utils import nlp
 from argparse import ArgumentParser
 from random import randint
+from urllib.parse import unquote
 
 
 parser = ArgumentParser()
@@ -72,7 +73,7 @@ def query_api():
         else:
             if boolean_search == "True":
                 operator = list(page.keys())[0]
-                first_page = page[operator][0]
+                first_page = unquote(page[operator][0])
                 first_title = first_page.split("/")[-1].replace("_"," ")
                 if first_page in wiki2viaf:
                     first_viaf = wiki2viaf[first_page] 
@@ -81,18 +82,19 @@ def query_api():
                 else:
                     viaf_first_note = ''
 
-                second_page = page[operator][1]
+                second_page = unquote(page[operator][1])
                 second_title = second_page.split("/")[-1].replace("_"," ")
 
                 if second_page in wiki2viaf:
                     second_viaf = wiki2viaf[second_page] 
-                    viaf_second_note = f'The second also appears in <a href="{second_viaf}">VIAF</a>.'
+                    viaf_second_note = f'The second entity also appears in <a href="{second_viaf}">VIAF</a>.'
                 else:
                     viaf_second_note = ''
 
                 response = add_note+ f'We have found results for the entity <a href="{first_page}">{first_title}</a> {operator} the entity <a href="{second_page}">{second_title}</a>. ' + viaf_first_note + viaf_second_note
 
             else:
+                page = unquote(page)
                 title = page.split("/")[-1].replace("_"," ")
                 if page in wiki2viaf:
                     viaf = wiki2viaf[page] 

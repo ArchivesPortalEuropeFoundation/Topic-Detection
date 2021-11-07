@@ -207,5 +207,10 @@ table tr td span:nth-child(3n+2){
     /*
     Label the data
     */
-    #no-more-tables td:before { content: attr(data-title); }
+    #no-more-tables td:nth-child(1)::before { content: "Filename"; }
+    #no-more-tables td:nth-child(2)::before { content: "Topic"; }
+    #no-more-tables td:nth-child(3)::before { content: "Content"; }
+    #no-more-tables td:nth-child(4)::before { content: "Country"; }
+    #no-more-tables td:nth-child(5)::before { content: "Period"; }
+    #no-more-tables td:nth-child(6)::before { content: "Score"; }
 }

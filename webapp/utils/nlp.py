@@ -74,8 +74,6 @@ exclude = set(string.punctuation)
 exclude.add("-")
 exclude.remove("*")
 
-import re
-
 class RegexDict(dict):
 
     def get_matching(self, event):
@@ -127,15 +125,14 @@ def cossim(v1,v2):
     v2 = np.array(v2).reshape(1, -1)
     score = cs(v1,v2)[0][0]
     return score
-    
-def find_match(query,doc):
-    # hardcoded filter for very short candidates
-    if len(query)<3:
-        doc = doc.split(" ")
-        return doc.count(query)
-    else:
-        return doc.count(query)
 
+
+rx = r"\w+(?:'\w+)?|[^\w\s]"
+
+def find_match(query,doc):
+    # tokenize each query using a regex
+    doc = re.findall(rx, doc)
+    return doc.count(query)
 
 def count_mentions(candidates,doc):
     # we don't lowercase anymore
@@ -195,7 +192,9 @@ def prepare_collection(df,model_dict):
     for index, row in df.iterrows():
         lang = row["langMaterial"]
         label = row["filename"].replace(".json","").title()    
-        title = row["titleProper"]
+        # remove file identifier from the title
+        title = "".join(row["titleProper"].split(":")[:-1])
+
         startDate = row["startDate"].split("-")[0]
         endDate = row["endDate"].split("-")[0]
         altDate = row["alternateUnitdate"]

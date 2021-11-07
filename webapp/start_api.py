@@ -119,7 +119,7 @@ def query_api():
     
     html = html.replace("<table></table>",response)
 
-    return html
+    return response
 
 
 def get_hashed_password(plain_text_password):

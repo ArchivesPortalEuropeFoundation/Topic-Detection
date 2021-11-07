@@ -29,11 +29,36 @@ function download_table_as_csv(table_id, query_name,separator = ',') {
     document.body.removeChild(link);
 }
 
-function hideSearch() { 
+function hideSearch() {
     var x = document.getElementById("advancedSearch");
     if (x.style.display === "none") {
-      x.style.display = "block";
+        x.style.display = "block";
     } else {
-      x.style.display = "none";
+        x.style.display = "none";
     }
-  }
+}
+
+$(document).ready(function () {
+    $("form").submit(function (event) {
+        var formData = {
+            text: $("#query").val(),
+            lang: $("#lang").val(),
+            type: $("#type").val(),
+            n_res: $("#n_res").val(),
+            broad_entity_search: $("#broad_entity_search").val(),
+            boolean_search: $("#boolean_search").val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "query.php",
+            data: formData,
+            dataType: "html",
+            encode: true,
+        }).done(function (data) {
+            $("#download_csv").show();
+            $("#no-more-tables").html("<table border=\"1\" class=\"dataframe data\" id=\"results\">"+$('.dataframe', data).html()+"</table>");
+        });
+        event.preventDefault();
+    });
+});

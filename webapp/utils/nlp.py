@@ -52,7 +52,7 @@ def load_models(test=False):
     return model_dict
 
 
-def build_query_vector(text,lang,model_dict,boolean_search):
+def build_query_vector(text,lang,model_dict,boolean_search,query=True):
 
     if boolean_search == "True":
         # handling only AND for now
@@ -60,12 +60,12 @@ def build_query_vector(text,lang,model_dict,boolean_search):
             first_concept, operator,second_concept = boolean_operation(text)
         else:
             return None
-        first_vector, first_word_embs = text_embedding(first_concept,lang,model_dict)
-        second_vector, second_word_embs = text_embedding(second_concept,lang,model_dict)
+        first_vector, first_word_embs = text_embedding(first_concept,lang,model_dict,query=True)
+        second_vector, second_word_embs = text_embedding(second_concept,lang,model_dict,query=True)
         if first_vector and second_vector:
             return {operator:[first_vector,second_vector]}
     else:
-        vector, word_embs = text_embedding(text,lang,model_dict)
+        vector, word_embs = text_embedding(text,lang,model_dict,query=True)
         if vector:
             return vector
 
@@ -74,14 +74,12 @@ exclude = set(string.punctuation)
 exclude.add("-")
 exclude.remove("*")
 
-import re
-
 class RegexDict(dict):
 
     def get_matching(self, event):
         return (self[key] for key in self if re.match(key, event))
 
-def text_embedding(text,lang,model_dict):
+def text_embedding(text,lang,model_dict,query):
 
     model = model_dict[lang]
     
@@ -89,7 +87,7 @@ def text_embedding(text,lang,model_dict):
     
     text = ''.join(ch for ch in text if ch not in exclude)
 
-    if '*' in text:
+    if '*' in text and query==True:
         # split on whitespaces
         star_words = [word for word in text.split(" ") if "*" in word]
         dot_star_words = [word.replace('*',".*") for word in star_words]
@@ -127,15 +125,14 @@ def cossim(v1,v2):
     v2 = np.array(v2).reshape(1, -1)
     score = cs(v1,v2)[0][0]
     return score
-    
-def find_match(query,doc):
-    # hardcoded filter for very short candidates
-    if len(query)<3:
-        doc = doc.split(" ")
-        return doc.count(query)
-    else:
-        return doc.count(query)
 
+
+rx = r"\w+(?:'\w+)?|[^\w\s]"
+
+def find_match(query,doc):
+    # tokenize each query using a regex
+    doc = re.findall(rx, doc)
+    return doc.count(query)
 
 def count_mentions(candidates,doc):
     # we don't lowercase anymore
@@ -195,7 +192,9 @@ def prepare_collection(df,model_dict):
     for index, row in df.iterrows():
         lang = row["langMaterial"]
         label = row["filename"].replace(".json","").title()    
-        title = row["titleProper"]
+        # remove file identifier from the title
+        title = "".join(row["titleProper"].split(":")[:-1])
+
         startDate = row["startDate"].split("-")[0]
         endDate = row["endDate"].split("-")[0]
         altDate = row["alternateUnitdate"]
@@ -203,7 +202,7 @@ def prepare_collection(df,model_dict):
 
         if lang in model_dict:
             text = row["unitTitle"] +" "+ row["titleProper"]+" "+ row["scopeContent"]
-            emb, word_embs = text_embedding(text,lang,model_dict)
+            emb, word_embs = text_embedding(text,lang,model_dict,query=False)
             if emb:
                 embs.append(emb)
                 labels.append(label)

@@ -278,14 +278,15 @@ def make_concept_bold(content,word_embs,query_emb):
     most_rel_words.sort(key=lambda x: x[1],reverse=True)
     most_rel_words= [x[0] for x in most_rel_words[:5]] # top 5 words
     greys = ['#000000', '#0C090A', '#34282C', '#3B3131', '#3A3B3C'] # from here: https://www.computerhope.com/htmcolor.htm#black
+    tok_content = re.findall(rx, content)
     for w in range(len(most_rel_words)):
         word = most_rel_words[w]
         grey = greys[w]
-        if word in content:
+        if word in tok_content:
             content = content.replace(word,'<span style="color:'+grey+'">' + "<b>"+word+"</b>" + '</span>')
-        elif word.title() in content:
+        elif word.title() in tok_content:
             content = content.replace(word.title(),'<span style="color:'+grey+'">' + "<b>"+word.title()+"</b>" + '</span>')
-        elif word.upper() in content:
+        elif word.upper() in tok_content:
             content = content.replace(word.upper(),'<span style="color:'+grey+'">' + "<b>"+word.upper()+"</b>" + '</span>')
 
     content += " ".join(most_rel_words)

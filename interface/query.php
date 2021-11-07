@@ -7,7 +7,7 @@ ini_set('session.gc_divisor', 100);
 
 session_start();
 
-//$url= 'http://127.0.0.1:6000/login?';
+//$url= 'http://127.0.0.1:5000/login?';
 
 //$data = array(
 //			'email' => $_SESSION["email"],

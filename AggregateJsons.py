@@ -8,9 +8,11 @@ from collections import Counter
 # in data you will store the topic related json files
 path = 'webapp/data/'
 
-aggregating_fields = ["langMaterial","unitTitle","titleProper","scopeContent","topic"]
+# "langMaterial","unitTitle","titleProper","scopeContent","topic",
 
-dataset = [["id","langMaterial","unitTitle","titleProper","scopeContent","topic","filename"]]
+aggregating_fields = ['langMaterial','parentId', 'unitId', 'otherUnitId', 'duplicateUnitId', 'scopeContent', 'spell', 'unitTitle', 'levelName', 'startDate', 'endDate', 'alternateUnitdate', 'dateType', 'country', 'repositoryCode', 'ai', 'recordId', 'dao', 'numberOfDao', 'numberOfDaoBelow', 'numberOfDescendents', 'numberOfAncestors', 'daoType', 'other', 'titleProper', 'recordType', 'topic', 'F0_s', 'FID0_s', 'F1_s', 'FID1_s', 'F2_s', 'FID2_s', 'F3_s', 'FID3_s', 'F4_s', 'FID4_s', 'AID2_s', 'AID1_s', 'AID0_s', 'A1_s', 'A2_s', 'A0_s', 'orderId', 'openData', 'timestamp']
+
+dataset = [['id', 'langMaterial','parentId', 'unitId', 'otherUnitId', 'duplicateUnitId', 'scopeContent', 'spell', 'unitTitle', 'levelName', 'startDate', 'endDate', 'alternateUnitdate', 'dateType', 'country', 'repositoryCode', 'ai', 'recordId', 'dao', 'numberOfDao', 'numberOfDaoBelow', 'numberOfDescendents', 'numberOfAncestors', 'daoType', 'other', 'titleProper', 'recordType', 'topic', 'F0_s', 'FID0_s', 'F1_s', 'FID1_s', 'F2_s', 'FID2_s', 'F3_s', 'FID3_s', 'F4_s', 'FID4_s', 'AID2_s', 'AID1_s', 'AID0_s', 'A1_s', 'A2_s', 'A0_s', 'orderId', 'openData', 'timestamp',"filename"]]
 
 for filename in [x for x in os.listdir(path) if x.endswith(".json")]:
     
@@ -33,7 +35,7 @@ print ("we have loaded",len(dataset),"entries")
 # %%
 
 # we remove al columns that do not contain text (where we have less than 3 chars)
-selected_dataset = [dataset[0]]+ [x for x in dataset[1:] if len(x[4])>3]
+selected_dataset = [dataset[0]]+ [x for x in dataset[1:] if len(x[6])>3]
 
 column_names = selected_dataset.pop(0)
 
@@ -74,5 +76,12 @@ langs_dict = {"de":"de","ger":"de","fr":"fr","fre":"fr","it":"it","en":"en","sl"
 df['langMaterial'] = df['langMaterial'].map(langs_dict)
 
 # finally we save the pickle file containing the dataframe
-with open('dataset.pickle', 'wb') as f:
+with open('test_dataset.pickle', 'wb') as f:
         pickle.dump(df, f)
+
+sample = df[df["langMaterial"] == "fr"]
+sample = sample.head(100)
+
+# finally we save the pickle file containing the dataframe
+with open('sample_test_dataset.pickle', 'wb') as f:
+        pickle.dump(sample, f)

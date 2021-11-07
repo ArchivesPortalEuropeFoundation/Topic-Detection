@@ -34,6 +34,19 @@ input[type=submit] {
   cursor: pointer;
 }
 
+.header img {
+  vertical-align: top;
+  float: right;
+  width: 30%;
+  height: 30%;
+}
+
+.header h1 {
+  position: relative;
+  top: 18px;
+  left: 10px;
+}
+
 input[type=submit]:hover {
   background-color: #178AA8;
 }

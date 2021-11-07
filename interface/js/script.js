@@ -44,10 +44,14 @@ $(document).ready(function () {
             text: $("#query").val(),
             lang: $("#lang").val(),
             type: $("#type").val(),
-            n_res: $("#n_res").val(),
-            broad_entity_search: $("#broad_entity_search").val(),
-            boolean_search: $("#boolean_search").val()
+            n_res: $("#n_res").val()
         };
+        if($("#broad_entity_search").prop('checked') == true) {
+            formData.broad_entity_search = "True";
+        }
+        if($("#boolean_search").prop('checked') == true) {
+            formData.boolean_search = "True";
+        }
 
         $.ajax({
             type: "POST",
@@ -56,6 +60,8 @@ $(document).ready(function () {
             dataType: "html",
             encode: true,
         }).done(function (data) {
+            var query_string = $("#query").val().replace(" ","+") +"_"+$("#lang").val()+"_"+$("#type").val()+"_"+"boolean_search:"+($("#boolean_search").prop('checked') == true ? "True": "False")+"_"+"broad_entity_search:"+($("#broad_entity_search").prop('checked') == true ? "True": "False")
+            $("#download_csv a").attr("onclick","download_table_as_csv('results','"+query_string+"');")
             $("#download_csv").show();
             $("#no-more-tables").html("<table border=\"1\" class=\"dataframe data\" id=\"results\">"+$('.dataframe', data).html()+"</table>");
         });

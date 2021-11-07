@@ -1,69 +1,80 @@
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-    </head>
-  <link rel="stylesheet" href="style.css">
-<script type="text/javascript" src="script.js" ></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Cross-lingual Search on Archives Portal Europe</title>
+
+    <!--    Stylesheets-->
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!--    Javascript-->
+    <script type="text/javascript" src="js/bootstrap/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="js/script.js" ></script>
+</head>
 
 <body>
 
+<div class="container-fluid p-3">
+    <div class="row justify-content-lg-between justify-content-center header">
+        <div class="col-auto" style="text-align: center">
+            <h1>Cross-lingual Search on Archives Portal Europe</h1>
+        </div>
+        <div class="col-auto order-first order-lg-last" style="text-align: right">
+            <a href="http://www.archivesportaleurope.net/">
+                <img src="img/logo.png" class="logo"/>
+            </a>
+        </div>
+    </div>
 
-<div class="header">
-    <a href="http://www.archivesportaleurope.net/">
-    <img src="img/logo.png" class="logo"/>
-    </a>
-<h1>Cross-lingual Search on Archives Portal Europe</h1>
+    <div class="row mt-5 justify-content-center">
+        <div class="col-auto" style="text-align: center">
+            <p>Welcome! This is the alpha version of a cross-lingual search tool for concepts and entities across the entire APE collection.</p>
+            <p>To know more about the project, visit <a href="https://github.com/ArchivesPortalEuropeFoundation/Topic-Detection/">our GitHub</a></p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-auto" style="text-align: center">
+
+            <form method="POST" action="query.php">
+                <input name="text" type="text" placeholder="Your query" style="width: 400px;">
+
+                <select name= lang>
+
+                    <option value= "en" SELECTED >en</option>
+                    <option value= "de">de</option>
+                    <option value= "es">es</option>
+                    <option value= "fi">fi</option>
+                    <option value= "fr">fr</option>
+                    <option value= "he">he</option>
+                    <option value= "it">it</option>
+                    <option value= "lv">lv</option>
+                    <option value= "pl">pl</option>
+                    <option value= "ru">ru</option>
+                    <option value= "sl">sl</option>
+                    <option value= "sv">sv</option>
+
+                </select>
+                <select name= "type">
+                    <option value= "concept" SELECTED >concept</option>
+                    <option value= "entity">entity</option>
+                </select>
+                <input name="n_res" type="number" value="10">
+                <input type="submit">
+                </br>
+                <input type="checkbox" id="broad_entity_search" name="broad_entity_search" value="broad_entity_search">
+                <label for="broad_entity_search">Broad Entity Mention Search</label><br>
+                <input type="checkbox" id="boolean_search" name="boolean_search" value="boolean_search">
+                <label for="boolean_search">Boolean Search</label><br>
+            </form>
+
+            <p><query></query></p>
+
+            <div id="no-more-tables">
+                <table></table>
+            </div>
+        </div>
+    </div>
 </div>
-
-Welcome! This is the alpha version of a cross-lingual search tool for concepts and entities across the entire APE collection.</br>
-To know more about the project, visit <a href="https://github.com/ArchivesPortalEuropeFoundation/Topic-Detection/">our GitHub</a></br></br>
-
-
-
-
-<form method="POST" action="query.php">
-      <input name="text" type="text" placeholder="Your query">
-  
-      <select name= lang>
-          
-          <option value= "en" SELECTED >en</option>
-          <option value= "de">de</option>
-          <option value= "es">es</option>
-          <option value= "fi">fi</option>
-          <option value= "fr">fr</option>
-          <option value= "he">he</option>
-          <option value= "it">it</option>
-          <option value= "lv">lv</option>
-          <option value= "pl">pl</option>
-          <option value= "ru">ru</option>
-          <option value= "sl">sl</option>
-          <option value= "sv">sv</option>
-          
-      </select>
-      <select name= "type">
-          <option value= "concept" SELECTED >concept</option>
-          <option value= "entity">entity</option>
-      </select>        
-      <input name="n_res" type="number" value="10">
-      <input type="submit">
-      </br>
-    <input type="checkbox" id="broad_entity_search" name="broad_entity_search" value="broad_entity_search">
-    <label for="advanced">Broad Entity Mention Search</label><br>
-    <input type="checkbox" id="boolean_search" name="boolean_search" value="boolean_search">
-    <label for="advanced">Boolean Search</label><br>
-      
-
-</form>
-    
-      <p><query></query></p>   
-      <!DOCTYPE html>
-  
-   
-  <table></table>
-  
-  
-  </body>
-  </html>
-  
-      
-  </form>
+</body>
+</html>

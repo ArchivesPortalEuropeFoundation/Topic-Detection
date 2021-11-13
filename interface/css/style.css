@@ -75,11 +75,11 @@ table td, th {
 }
 
 table tr:nth-child(even){
-    background-color: #f2f2f2;
+    background-color: #f5fdff;
 }
 
 table tr:hover {
-    background-color: #ddd;
+    background-color: #dcf8fe;
 }
 
 table th {
@@ -90,16 +90,29 @@ table th {
     color: white;
 }
 
-table tr td span:nth-child(3n+0){
-    color: #900C3F!important;
+.relevance_1 {
+    font-weight:bold;
+	color: #047086;
 }
 
-table tr td span:nth-child(3n+1){
-    color: #D35400!important;
+.relevance_2 {
+    font-weight:bold;
+	color: #158198;
 }
 
-table tr td span:nth-child(3n+2){
-    color: #229954!important;
+.relevance_3 {
+    font-weight:bold;
+	color: #058ca8;
+}
+
+.relevance_4 {
+    font-weight:bold;
+	color: #0099bc;
+}
+
+.relevance_5 {
+    font-weight:bold;
+	color: #06afd2;
 }
 
 .register {

@@ -281,11 +281,11 @@ def make_concept_bold(content,word_embs,query_emb):
     for w in range(len(most_rel_words)):
         word = most_rel_words[w]
         if word in tok_content:
-            content = content.replace(word,'<span class="relevance_'+str(w+1)+'">' + "<b>"+word+"</b>" + '</span>')
+            content = content.replace(word,'<span class="relevance_'+str(w+1)+'">' + word + '</span>')
         elif word.title() in tok_content:
-            content = content.replace(word.title(),'<span class="relevance_'+str(w+1)+'">' +"<b>"+word.title()+"</b>" + '</span>')
+            content = content.replace(word.title(),'<span class="relevance_'+str(w+1)+'">' +word.title() + '</span>')
         elif word.upper() in tok_content:
-            content = content.replace(word.upper(),'<span class="relevance_'+str(w+1)+'">' + "<b>"+word.upper()+"</b>" + '</span>')
+            content = content.replace(word.upper(),'<span class="relevance_'+str(w+1)+'">' +word.upper() + '</span>')
 
     content += " ".join(most_rel_words)
     return content

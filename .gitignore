@@ -19,3 +19,5 @@ webapp/throttle.ctrl
 .gitignore
 webapp/test.py
 .gitignore
+apicache-py3/*
+pywikibot.lwp

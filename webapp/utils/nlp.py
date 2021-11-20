@@ -1,6 +1,6 @@
 import re
-import faiss                  
-import pickle
+import faiss 
+import requests
 import pywikibot
 import nltk, string
 import numpy as np
@@ -301,39 +301,49 @@ def build_index(embs,d):
     return index
 
 
+def get_redirect(lang,page,site):
+    r = requests.get("https://"+lang+".wikipedia.org/w/api.php?action=query&titles="+page.title()+"&&redirects&format=json")
+    entity = r.json()["query"]["redirects"][0]["to"]
+    page = pywikibot.Page(site, entity)
+    url = page.full_url()
+    item = pywikibot.ItemPage.fromPage(page)
+    return item,url
+
 def get_candidates(entity,lang,selected_langs,broad_entity_search):
     site = pywikibot.Site(lang, "wikipedia")
     page = pywikibot.Page(site, entity)
     url = page.full_url()
     candidates = set()
-
     try:
         item = pywikibot.ItemPage.fromPage(page)
-    except Exception as e:
-        url = ""
-        return candidates, url
+    except pywikibot.exceptions.NoPageError:
+        try:
+            item, page = get_redirect(lang,page,site)
 
-    else:
-        item_dict = item.get()
+        except pywikibot.exceptions.NoPageError:
+            url = ""
+            return candidates, url
 
-        wiki_labels = item_dict["labels"]
-        aliases = item_dict["aliases"]
-        langs = set(list(wiki_labels.keys()) + list(aliases.keys()))
+    item_dict = item.get()
 
-        candidates.add(entity)
+    wiki_labels = item_dict["labels"]
+    aliases = item_dict["aliases"]
+    langs = set(list(wiki_labels.keys()) + list(aliases.keys()))
 
-        set_selected_langs = set(selected_langs)
+    candidates.add(entity)
 
-        for lang in langs:
-            if broad_entity_search == "False" and lang not in set_selected_langs:
-                continue
-            if lang in wiki_labels:
-                candidates.add(wiki_labels[lang])
-            if lang in aliases:
-                for al in aliases[lang]:
-                    candidates.add(al)
+    set_selected_langs = set(selected_langs)
 
-        return candidates, url
+    for lang in langs:
+        if broad_entity_search == "False" and lang not in set_selected_langs:
+            continue
+        if lang in wiki_labels:
+            candidates.add(wiki_labels[lang])
+        if lang in aliases:
+            for al in aliases[lang]:
+                candidates.add(al)
+
+    return candidates, url
 
 def boolean_operation(query):
     operators = ["ANDNOT", "OR","AND"]
@@ -370,7 +380,9 @@ def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_l
         candidates = {operator:[first_cand,second_cand]}
         page = {operator:[first_page,second_page]}
     else:
+        print ("here")
         candidates, page = get_candidates(entity,lang,selected_langs,broad_entity_search)
+        print (candidates,page)
 
     ranking["Results"] = ranking.parallel_apply(lambda x: rank_by_freq(candidates, x['Content'],boolean_search), axis=1)
     ranking[['Score', 'Mentions']] = ranking['Results'].tolist()

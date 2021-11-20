@@ -361,7 +361,7 @@ def check_quotation(query):
 
 def make_entity_bold(mentions, content):
     for mention in mentions:
-        content = content.replace(mention,"<b>"+mention+"</b>")
+        content = content.replace(mention,'<span class="relevance_1">'+mention+"</span>")
     return content
 
 def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_langs,startDate,endDates,altDate,countries,broad_entity_search,boolean_search):
@@ -380,9 +380,7 @@ def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_l
         candidates = {operator:[first_cand,second_cand]}
         page = {operator:[first_page,second_page]}
     else:
-        print ("here")
         candidates, page = get_candidates(entity,lang,selected_langs,broad_entity_search)
-        print (candidates,page)
 
     ranking["Results"] = ranking.parallel_apply(lambda x: rank_by_freq(candidates, x['Content'],boolean_search), axis=1)
     ranking[['Score', 'Mentions']] = ranking['Results'].tolist()

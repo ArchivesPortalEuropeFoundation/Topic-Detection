@@ -32,8 +32,6 @@ def my_form():
 @APP.route('/query', methods=['GET'])
 def query_api():
 
-    html = open('../interface/index.html','r').read()
-
     # we load the dataset
 
     query = flask.request.args['text']
@@ -110,16 +108,7 @@ def query_api():
 
     download_button= download_button.replace("query_name",query_string)
 
-    html = html.replace(" SELECTED ","")
-    html = html.replace('placeholder="Your query"','placeholder="Your query was: '+query+'"')
-    html = html.replace('<option value= "'+search_type+'">'+search_type+'</option>','<option value= "'+search_type+'" SELECTED >'+search_type+'</option>')
-    html = html.replace('<option value= "'+lang+'">'+lang+'</option>','<option value= "'+lang+'" SELECTED >'+lang+'</option>')
-    
-    html = html.replace("<query></query>",download_button)
-    
-    html = html.replace("<table></table>",response)
-
-    return html
+    return response
 
 
 def get_hashed_password(plain_text_password):
@@ -202,4 +191,4 @@ if __name__ == '__main__':
     index = nlp.build_index(embs,300)
     
     APP.debug=False
-    APP.run(port=6000)
+    APP.run(port=5000)

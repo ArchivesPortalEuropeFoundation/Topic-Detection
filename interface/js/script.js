@@ -29,11 +29,43 @@ function download_table_as_csv(table_id, query_name,separator = ',') {
     document.body.removeChild(link);
 }
 
-function hideSearch() { 
+function hideSearch() {
     var x = document.getElementById("advancedSearch");
     if (x.style.display === "none") {
-      x.style.display = "block";
+        x.style.display = "block";
     } else {
-      x.style.display = "none";
+        x.style.display = "none";
     }
-  }
+}
+
+$(document).ready(function () {
+    $("form").submit(function (event) {
+        var formData = {
+            text: $("#query").val(),
+            lang: $("#lang").val(),
+            type: $("#type").val(),
+            n_res: $("#n_res").val()
+        };
+        if($("#broad_entity_search").prop('checked') == true) {
+            formData.broad_entity_search = "True";
+        }
+        if($("#boolean_search").prop('checked') == true) {
+            formData.boolean_search = "True";
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "query.php",
+            data: formData,
+            dataType: "html",
+            encode: true,
+        }).done(function (data) {
+            var query_string = $("#query").val().replace(" ","+") +"_"+$("#lang").val()+"_"+$("#type").val()+"_"+"boolean_search:"+($("#boolean_search").prop('checked') == true ? "True": "False")+"_"+"broad_entity_search:"+($("#broad_entity_search").prop('checked') == true ? "True": "False")
+            $("#download_csv a").attr("onclick","download_table_as_csv('results','"+query_string+"');")
+            $("#download_csv").show();
+            // $("#no-more-tables").html("<table border=\"1\" class=\"dataframe data\" id=\"results\">"+$('.dataframe', data).html()+"</table>");
+            $("#no-more-tables").html(data);
+        });
+        event.preventDefault();
+    });
+});

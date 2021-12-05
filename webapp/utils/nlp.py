@@ -47,7 +47,7 @@ def load_models(test=False):
 
     # we just map the language with the word embeddings model
 
-    model_dict = {"es":es_model,"heb":he_model,"lv":lv_model,"sv":sv_model,"rus":ru_model,"fr":fr_model,"en":en_model,"english":en_model,"de":de_model,"it":it_model,"fi":fi_model,"pl":pl_model,"sl":sl_model,"German":de_model,"English":en_model,"Finnish":fi_model,"French":fr_model,"Italian":it_model}
+    model_dict = {"es":es_model,"heb":he_model,"he":he_model,"lv":lv_model,"sv":sv_model,"rus":ru_model,"ru":ru_model,"fr":fr_model,"en":en_model,"english":en_model,"de":de_model,"it":it_model,"fi":fi_model,"pl":pl_model,"sl":sl_model,"German":de_model,"English":en_model,"Finnish":fi_model,"French":fr_model,"Italian":it_model}
     #model_dict = {"it":it_model}
     return model_dict
 

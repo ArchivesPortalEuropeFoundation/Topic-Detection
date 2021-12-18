@@ -6,7 +6,7 @@ from langdetect import detect
 from collections import Counter
 
 # in data you will store the topic related json files
-path = 'webapp/data/'
+path = '../webapp/data/'
 
 # "langMaterial","unitTitle","titleProper","scopeContent","topic",
 

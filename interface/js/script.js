@@ -53,6 +53,10 @@ $(document).ready(function () {
             formData.boolean_search = "True";
         }
 
+        $("#loader").show();
+        $("#download_csv").hide();
+        $("#no-more-tables").hide();
+
         $.ajax({
             type: "POST",
             url: "query.php",
@@ -60,6 +64,11 @@ $(document).ready(function () {
             dataType: "html",
             encode: true,
         }).done(function (data) {
+
+            $("#loader").hide();
+            $("#download_csv").show();
+            $("#no-more-tables").show();
+
             var query_string = $("#query").val().replace(" ","+") +"_"+$("#lang").val()+"_"+$("#type").val()+"_"+"boolean_search:"+($("#boolean_search").prop('checked') == true ? "True": "False")+"_"+"broad_entity_search:"+($("#broad_entity_search").prop('checked') == true ? "True": "False")
             $("#download_csv a").attr("onclick","download_table_as_csv('results','"+query_string+"');")
             $("#download_csv").show();

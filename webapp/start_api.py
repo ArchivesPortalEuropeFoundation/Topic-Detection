@@ -191,4 +191,4 @@ if __name__ == '__main__':
     index = nlp.build_index(embs,300)
     
     APP.debug=False
-    APP.run(port=5000)
+    APP.run(port=5000, host='0.0.0.0')

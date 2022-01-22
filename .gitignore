@@ -20,3 +20,4 @@ pywikibot.lwp
 webapp/data/wiki2viaf.json
 cred.json
 .vscode/
+webapp/data/dataset.pickle

@@ -1,7 +1,6 @@
 *.tsv
 -checkpoint.ipynb
 *-checkpoint.ipynb
-*.vec
 *.xlsx
 utils/.ipynb_checkpoints
 utils/__pycache__

@@ -2,7 +2,8 @@ import json
 
 wiki2viaf = {}
 
-with open("/Users/fnanni/Downloads/viaf-20210802-links.txt", "r") as r:
+# download the file from here http://viaf.org/viaf/data/
+with open("viaf-20210802-links.txt", "r") as r:
     for line in r:
         if "wiki" in line.lower():
             try:

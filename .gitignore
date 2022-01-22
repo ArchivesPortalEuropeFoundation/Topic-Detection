@@ -1,5 +1,4 @@
 *.tsv
-*.json
 -checkpoint.ipynb
 *-checkpoint.ipynb
 *.vec
@@ -21,3 +20,6 @@ webapp/test.py
 .gitignore
 apicache-py3/*
 pywikibot.lwp
+webapp/data/wiki2viaf.json
+cred.json
+.vscode/

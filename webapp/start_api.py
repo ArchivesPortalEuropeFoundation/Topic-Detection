@@ -167,12 +167,14 @@ if __name__ == '__main__':
 
     test = args.test
 
-    with open('data/wiki2viaf.json') as f:
-        wiki2viaf = json.load(f)
+
 
 
     if test == "True":
         print ('test mode: on!')
+
+        with open('data/sample_wiki2viaf.json') as f:
+            wiki2viaf = json.load(f)
 
         # we load the dataset
         with open('data/sample_dataset.pickle', 'rb') as f:
@@ -182,6 +184,9 @@ if __name__ == '__main__':
     
     else:
         print ('test mode: off.')
+
+        with open('data/wiki2viaf.json') as f:
+            wiki2viaf = json.load(f)
 
         with open('data/dataset.pickle', 'rb') as f:
             df = pickle.load(f)  

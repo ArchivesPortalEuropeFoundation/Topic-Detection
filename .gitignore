@@ -14,10 +14,7 @@ interface/index.html
 webapp/test.py
 webapp/pywikibot.lwp
 webapp/throttle.ctrl
-.gitignore
-.gitignore
 webapp/test.py
-.gitignore
 apicache-py3/*
 pywikibot.lwp
 webapp/data/wiki2viaf.json

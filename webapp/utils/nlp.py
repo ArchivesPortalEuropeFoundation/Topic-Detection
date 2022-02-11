@@ -303,11 +303,16 @@ def build_index(embs,d):
 
 def get_redirect(lang,page,site):
     r = requests.get("https://"+lang+".wikipedia.org/w/api.php?action=query&titles="+page.title()+"&&redirects&format=json")
-    entity = r.json()["query"]["redirects"][0]["to"]
-    page = pywikibot.Page(site, entity)
-    url = page.full_url()
-    item = pywikibot.ItemPage.fromPage(page)
-    return item,url
+    entity = r.json()["query"]
+    if 'redirects' in entity.keys():
+        entity = r.json()["query"]["redirects"][0]["to"]
+        page = pywikibot.Page(site, entity)
+        url = page.full_url()
+        item = pywikibot.ItemPage.fromPage(page)
+        return item,url
+    else:
+        return None,None
+
 
 def get_candidates(entity,lang,selected_langs,broad_entity_search):
     site = pywikibot.Site(lang, "wikipedia")
@@ -319,7 +324,9 @@ def get_candidates(entity,lang,selected_langs,broad_entity_search):
     except pywikibot.exceptions.NoPageError:
         try:
             item, page = get_redirect(lang,page,site)
-
+            if item is None:
+                url = ""
+                return candidates, url
         except pywikibot.exceptions.NoPageError:
             url = ""
             return candidates, url

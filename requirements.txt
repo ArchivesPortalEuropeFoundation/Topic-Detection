@@ -5,7 +5,7 @@ Flask==1.1.2
 Flask_Table==0.5.0
 gensim==4.0.1
 langdetect==1.0.8
-nltk==3.6.1
+nltk==3.6.6
 numpy==1.20.2
 pandarallel==1.5.2
 pandas==1.2.3

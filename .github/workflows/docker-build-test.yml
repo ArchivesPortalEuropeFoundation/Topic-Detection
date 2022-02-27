@@ -9,4 +9,8 @@ jobs:
    steps:
      - uses: actions/checkout@v2
      - name: Build Docker image 
-       run: docker build --tag ape .
+       run: docker build --tag topic-detection:prod .
+     - name: Run Docker container
+       run: docker run -d --name topic-detection-backend -p 8091:5000 topic-detection:prod
+     - name: Run tests inside the container
+       run: docker exec topic-detection-backend pytest 

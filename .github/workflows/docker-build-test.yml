@@ -11,6 +11,7 @@ jobs:
      - name: Build Docker image 
        run: docker build --tag topic-detection:action .
      - name: Run Docker container
-       run: docker run -d --name topic-detection-action topic-detection:action
+       run: docker run -d --name topic-detection-action topic-detection:action -p 5000:5000
      - name: Run tests inside the container
        run: docker exec topic-detection-action pytest 
+     

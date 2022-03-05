@@ -1,18 +1,13 @@
+import os
 import json
 import pickle
 import flask
 import bcrypt
 from utils import nlp
-from argparse import ArgumentParser
 from random import randint
 from urllib.parse import unquote
+from configparser import SafeConfigParser
 
-
-parser = ArgumentParser()
-parser.add_argument("-t", "--test", dest="test",
-                    help="select True for testmode, else False", default=False)
-
-args = parser.parse_args()
 
 # Create the application.
 APP = flask.Flask(__name__)
@@ -164,11 +159,11 @@ def login():
     
 
 if __name__ == '__main__':
+    parser = SafeConfigParser()
+    parser.read('../config/config.env')
 
-    test = args.test
-
-
-
+    test = parser.get('default', 'TEST_DATA')
+    print (test)
 
     if test == "True":
         print ('test mode: on!')
@@ -190,6 +185,7 @@ if __name__ == '__main__':
 
         with open('data/dataset.pickle', 'rb') as f:
             df = pickle.load(f)  
+            print (len(df)) 
         model_dict = nlp.load_models(test=False)
 
     embs,labels,doc_names,langs,texts,all_word_embs,startDate,endDates,altDates,countries = nlp.prepare_collection(df,model_dict)

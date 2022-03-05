@@ -14,4 +14,4 @@ EXPOSE 5000
 COPY . .
 WORKDIR "/webapp"
 
-CMD ["python", "start_api.py", "-t", "True"]
+CMD ["python", "start_api.py"]

@@ -21,3 +21,4 @@ cred.json
 .vscode/
 webapp/data/dataset.pickle
 webapp/word-embs/*
+webapp/tests/__pycache__/*

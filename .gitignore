@@ -23,3 +23,6 @@ webapp/data/dataset.pickle
 webapp/word-embs/*
 webapp/tests/__pycache__/*
 config/config.env
+generateDataset/exportedJsons/*
+generateDataset/*
+webapp/data/previous_dataset.pickle

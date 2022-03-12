@@ -1,3 +1,4 @@
+import datatetime
 import git
 import requests
 import pandas as pd
@@ -5,8 +6,11 @@ from pandarallel import pandarallel
 from tqdm.notebook import tqdm
 from pathlib import Path
 
-repo = git.Repo(search_parent_directories=True)
-sha = repo.head.object.hexsha
+try:
+    repo = git.Repo(search_parent_directories=True)
+    sha = repo.head.object.hexsha
+except Exception:
+    sha = str(datetime.datetime.now())
 
 tqdm.pandas()
 pandarallel.initialize()

@@ -1,4 +1,4 @@
-import datatetime
+import datetime
 import git
 import requests
 import pandas as pd
@@ -10,7 +10,7 @@ try:
     repo = git.Repo(search_parent_directories=True)
     sha = repo.head.object.hexsha
 except Exception:
-    sha = str(datetime.datetime.now())
+    sha = str(datetime.datetime.now()).replace(" ",".")
 
 tqdm.pandas()
 pandarallel.initialize()

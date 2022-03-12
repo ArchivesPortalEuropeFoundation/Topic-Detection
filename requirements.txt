@@ -19,3 +19,5 @@ mwparserfromhell>=0.5.0
 markupsafe==2.0.1
 pytest==7.0.1
 configparser==5.2.0
+GitPython==3.1.27
+tqdm==4.60.0

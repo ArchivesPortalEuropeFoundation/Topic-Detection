@@ -12,7 +12,7 @@ tqdm.pandas()
 pandarallel.initialize()
 
 def query_tool(lang,type,text,n_res,broad_entity_search,boolean_search):
-    r = requests.get('http://0.0.0.0:8091/query?lang='+lang+'&type='+type+'&text='+text+'&n_res='+n_res+'&broad_entity_search='+broad_entity_search+'&boolean_search='+boolean_search)
+    r = requests.get('http://0.0.0.0:5000/query?lang='+lang+'&type='+type+'&text='+text+'&n_res='+n_res+'&broad_entity_search='+broad_entity_search+'&boolean_search='+boolean_search)
     return r.status_code
 
 def test_queries():

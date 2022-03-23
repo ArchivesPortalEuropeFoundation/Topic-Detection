@@ -1,14 +1,16 @@
 import re
+import string
+from urllib.parse import quote, unquote
+from urllib.request import urlopen
+
 import faiss
-import requests
-import pywikibot
-import nltk, string
+import nltk
 import numpy as np
 import pandas as pd
-from pandarallel import pandarallel
-from urllib.request import urlopen
-from urllib.parse import unquote, quote
+import pywikibot
+import requests
 from gensim.models import KeyedVectors
+from pandarallel import pandarallel
 from sklearn.metrics.pairwise import cosine_similarity as cs
 
 pandarallel.initialize()

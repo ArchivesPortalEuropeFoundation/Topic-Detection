@@ -1,13 +1,14 @@
-import os
 import json
+import os
 import pickle
-import flask
-import bcrypt
-from utils import nlp
+from configparser import SafeConfigParser
 from random import randint
 from urllib.parse import unquote
-from configparser import SafeConfigParser
 
+import bcrypt
+import flask
+
+from utils import nlp
 
 # Create the application.
 APP = flask.Flask(__name__)
@@ -104,7 +105,9 @@ def query_api():
                 if first_page in wiki2viaf:
                     first_viaf = wiki2viaf[first_page]
 
-                    viaf_first_note = f'The first entity also appears in <a href="{first_viaf}">VIAF</a>. '
+                    viaf_first_note = (
+                        f'The first entity also appears in <a href="{first_viaf}">VIAF</a>. '
+                    )
                 else:
                     viaf_first_note = ""
 
@@ -113,7 +116,9 @@ def query_api():
 
                 if second_page in wiki2viaf:
                     second_viaf = wiki2viaf[second_page]
-                    viaf_second_note = f'The second entity also appears in <a href="{second_viaf}">VIAF</a>.'
+                    viaf_second_note = (
+                        f'The second entity also appears in <a href="{second_viaf}">VIAF</a>.'
+                    )
                 else:
                     viaf_second_note = ""
 
@@ -129,9 +134,7 @@ def query_api():
                 title = page.split("/")[-1].replace("_", " ")
                 if page in wiki2viaf:
                     viaf = wiki2viaf[page]
-                    viaf_note = (
-                        f'This entity also appears in <a href="{viaf}">VIAF</a>.'
-                    )
+                    viaf_note = f'This entity also appears in <a href="{viaf}">VIAF</a>.'
                 else:
                     viaf_note = ""
                 response = (

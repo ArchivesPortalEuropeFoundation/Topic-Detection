@@ -55,13 +55,13 @@ def load_models(test=False):
 def build_query_vector(text,lang,model_dict,boolean_search,query=True):
 
     if boolean_search == "True":
-        # handling only AND for now
         if boolean_operation(text):
             first_concept, operator,second_concept = boolean_operation(text)
         else:
             return None
         first_vector, first_word_embs = text_embedding(first_concept,lang,model_dict,query=True)
         second_vector, second_word_embs = text_embedding(second_concept,lang,model_dict,query=True)
+        
         if first_vector and second_vector:
             return {operator:[first_vector,second_vector]}
     else:
@@ -234,14 +234,14 @@ def concept_search(index,query_emb,labels,doc_names,texts,all_word_embs,startDat
         second_ranking_dict = {x[0]:x[-1] for x in second_ranking}
         # aggregation
         if operator == "AND":
-            ranking = [[x[0],x[1],x[2],x[3],x[4],x[5],(x[-1]+second_ranking_dict[x[0]])/2] for x in first_ranking if x[0] in second_ranking_dict][:how_many_results]
+            ranking = [[x[0],x[1],x[2],x[3],x[4],x[5],x[6],(x[-1]+second_ranking_dict[x[0]])/2] for x in first_ranking if x[0] in second_ranking_dict][:how_many_results]
         if operator == "OR":
             ranking = [x for x in first_ranking if x[0] not in second_ranking_dict]+second_ranking
             ranking.sort(key=lambda x: x[-1],reverse=True)
             ranking = ranking[:how_many_results]
         if operator == "ANDNOT":
             second_ranking = {x[0]:x[-1] for x in second_ranking}
-            ranking = [[x[0],x[1],x[2],x[3],x[4],x[5],x[-1]] for x in first_ranking if x[0] not in second_ranking_dict][:how_many_results]
+            ranking = [[x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[-1]] for x in first_ranking if x[0] not in second_ranking_dict][:how_many_results]
             
     else:
         xq = np.array([query_emb]).astype('float32')
@@ -303,11 +303,16 @@ def build_index(embs,d):
 
 def get_redirect(lang,page,site):
     r = requests.get("https://"+lang+".wikipedia.org/w/api.php?action=query&titles="+page.title()+"&&redirects&format=json")
-    entity = r.json()["query"]["redirects"][0]["to"]
-    page = pywikibot.Page(site, entity)
-    url = page.full_url()
-    item = pywikibot.ItemPage.fromPage(page)
-    return item,url
+    entity = r.json()["query"]
+    if 'redirects' in entity.keys():
+        entity = r.json()["query"]["redirects"][0]["to"]
+        page = pywikibot.Page(site, entity)
+        url = page.full_url()
+        item = pywikibot.ItemPage.fromPage(page)
+        return item,url
+    else:
+        return None,None
+
 
 def get_candidates(entity,lang,selected_langs,broad_entity_search):
     site = pywikibot.Site(lang, "wikipedia")
@@ -319,7 +324,9 @@ def get_candidates(entity,lang,selected_langs,broad_entity_search):
     except pywikibot.exceptions.NoPageError:
         try:
             item, page = get_redirect(lang,page,site)
-
+            if item is None:
+                url = ""
+                return candidates, url
         except pywikibot.exceptions.NoPageError:
             url = ""
             return candidates, url

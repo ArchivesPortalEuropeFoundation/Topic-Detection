@@ -6,7 +6,7 @@ from langdetect import detect
 from collections import Counter
 
 # in data you will store the topic related json files
-path = 'webapp/data/'
+path = 'exportedJsons/'
 
 # "langMaterial","unitTitle","titleProper","scopeContent","topic",
 
@@ -33,9 +33,12 @@ for filename in [x for x in os.listdir(path) if x.endswith(".json")]:
 print ("we have loaded",len(dataset),"entries")
 
 # %%
-
+print (dataset[0][6],dataset[0][8],dataset[0][25])
 # we remove al columns that do not contain text (where we have less than 3 chars)
-selected_dataset = [dataset[0]]+ [x for x in dataset[1:] if len(x[6])>3]
+selected_dataset = [dataset[0]]+ [x for x in dataset[1:] if len(x[8]+ x[25]+ x[6])>3]
+
+print ("we have ",len(selected_dataset),"entries with a textual descriptive unit")
+
 
 column_names = selected_dataset.pop(0)
 
@@ -74,6 +77,8 @@ print (Counter(langs).most_common())
 
 langs_dict = {"de":"de","ger":"de","fr":"fr","fre":"fr","it":"it","en":"en","sl":"sl","pl":"pl","pol":"pl","fi":"fi","sv":"sv","heb":"heb","es":"es","rus":"rus"}
 df['langMaterial'] = df['langMaterial'].map(langs_dict)
+
+print (len(df))
 
 # finally we save the pickle file containing the dataframe
 with open('test_dataset.pickle', 'wb') as f:

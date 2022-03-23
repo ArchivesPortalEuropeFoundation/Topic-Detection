@@ -1,18 +1,13 @@
+import os
 import json
 import pickle
 import flask
 import bcrypt
 from utils import nlp
-from argparse import ArgumentParser
 from random import randint
 from urllib.parse import unquote
+from configparser import SafeConfigParser
 
-
-parser = ArgumentParser()
-parser.add_argument("-t", "--test", dest="test",
-                    help="select True for testmode, else False", default=False)
-
-args = parser.parse_args()
 
 # Create the application.
 APP = flask.Flask(__name__)
@@ -31,8 +26,6 @@ def my_form():
 
 @APP.route('/query', methods=['GET'])
 def query_api():
-
-    html = open('../interface/index.html','r').read()
 
     # we load the dataset
 
@@ -110,16 +103,7 @@ def query_api():
 
     download_button= download_button.replace("query_name",query_string)
 
-    html = html.replace(" SELECTED ","")
-    html = html.replace('placeholder="Your query"','placeholder="Your query was: '+query+'"')
-    html = html.replace('<option value= "'+search_type+'">'+search_type+'</option>','<option value= "'+search_type+'" SELECTED >'+search_type+'</option>')
-    html = html.replace('<option value= "'+lang+'">'+lang+'</option>','<option value= "'+lang+'" SELECTED >'+lang+'</option>')
-    
-    html = html.replace("<query></query>",download_button)
-    
-    html = html.replace("<table></table>",response)
-
-    return html
+    return response
 
 
 def get_hashed_password(plain_text_password):
@@ -175,15 +159,17 @@ def login():
     
 
 if __name__ == '__main__':
+    parser = SafeConfigParser()
+    parser.read('../config/config.env')
 
-    test = args.test
-
-    with open('data/wiki2viaf.json') as f:
-        wiki2viaf = json.load(f)
-
+    test = parser.get('default', 'TEST_DATA')
+    print (test)
 
     if test == "True":
         print ('test mode: on!')
+
+        with open('data/sample_wiki2viaf.json') as f:
+            wiki2viaf = json.load(f)
 
         # we load the dataset
         with open('data/sample_dataset.pickle', 'rb') as f:
@@ -194,12 +180,16 @@ if __name__ == '__main__':
     else:
         print ('test mode: off.')
 
+        with open('data/wiki2viaf.json') as f:
+            wiki2viaf = json.load(f)
+
         with open('data/dataset.pickle', 'rb') as f:
             df = pickle.load(f)  
+            print (len(df)) 
         model_dict = nlp.load_models(test=False)
 
     embs,labels,doc_names,langs,texts,all_word_embs,startDate,endDates,altDates,countries = nlp.prepare_collection(df,model_dict)
     index = nlp.build_index(embs,300)
     
     APP.debug=False
-    APP.run(port=6000)
+    APP.run(port=5000, host='0.0.0.0')

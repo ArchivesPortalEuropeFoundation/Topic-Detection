@@ -1,0 +1,229 @@
+@font-face {
+    font-family:"Open Sans";
+    src: url("../fonts/OpenSans/OpenSans-VariableFont_wdth,wght.ttf") format("truetype");
+}
+
+html, body {font-family: 'Open Sans', Helvetica, sans-serif;}
+
+/*h1 {font-size: 45px; font-weight: 400;}*/
+
+a {
+    color: #B23063;
+}
+
+input[type=text], select, textarea {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+input[type='number']{
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+    width: 100px;
+}
+
+input[type=submit] {
+    background-color: #178AA8;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.header img {
+    /*vertical-align: top;*/
+    /*float: right;*/
+    width: 200px;
+    /*height: 30%;*/
+}
+
+/*.header h1 {*/
+/*  position: relative;*/
+/*  top: 18px;*/
+/*  left: 10px;*/
+/*}*/
+
+input[type=submit]:hover {
+    background-color: #178AA8;
+}
+
+.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+table {
+    /*font-family: Arial, Helvetica, sans-serif;*/
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table tr:nth-child(even){
+    background-color: #f5fdff;
+}
+
+table tr:hover {
+    background-color: #dcf8fe;
+}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #178AA8;
+    color: white;
+}
+
+.relevance_1 {
+    font-weight:bold;
+	color: #047086;
+}
+
+.relevance_2 {
+    font-weight:bold;
+	color: #158198;
+}
+
+.relevance_3 {
+    font-weight:bold;
+	color: #058ca8;
+}
+
+.relevance_4 {
+    font-weight:bold;
+	color: #0099bc;
+}
+
+.relevance_5 {
+    font-weight:bold;
+	color: #06afd2;
+}
+
+.register {
+    width: 400px;
+    background-color: #ffffff;
+    box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
+    margin: 100px auto;
+}
+
+.register h1 {
+    text-align: center;
+    color: #5b6574;
+    font-size: 24px;
+    padding: 20px 0 20px 0;
+    border-bottom: 1px solid #dee0e4;
+}
+
+.register form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.register form label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: #178AA8;
+    color: #000;
+}
+
+.register form input[type="password"], .register form input[type="text"], .register form input[type="email"] {
+    width: 310px;
+    height: 50px;
+    border: 1px solid #dee0e4;
+    margin-bottom: 20px;
+    padding: 0 15px;
+}
+
+.register form input[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: #178AA8;
+    border: 0;
+    cursor: pointer;
+    font-weight: bold;
+    color: #000;
+    transition: background-color 0.2s;
+}
+
+.register form input[type="submit"]:hover {
+    background-color: #ccffcc;
+    transition: background-color 0.2s;
+}
+
+
+@media only screen and (max-width: 924px) {
+
+    /* Force table to not be like tables anymore */
+    #no-more-tables table,
+    #no-more-tables thead,
+    #no-more-tables tbody,
+    #no-more-tables th,
+    #no-more-tables td,
+    #no-more-tables tr {
+        display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    #no-more-tables thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    #no-more-tables tr { border: 1px solid #ccc; }
+
+    #no-more-tables td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        white-space: normal;
+        text-align:left;
+    }
+
+    #no-more-tables td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align:left;
+        font-weight: bold;
+    }
+
+    /*
+    Label the data
+    */
+    #no-more-tables td:nth-child(1)::before { content: "Filename"; }
+    #no-more-tables td:nth-child(2)::before { content: "Topic"; }
+    #no-more-tables td:nth-child(3)::before { content: "Content"; }
+    #no-more-tables td:nth-child(4)::before { content: "Country"; }
+    #no-more-tables td:nth-child(5)::before { content: "Period"; }
+    #no-more-tables td:nth-child(6)::before { content: "Score"; }
+}

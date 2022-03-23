@@ -7,11 +7,19 @@ Two main goals:
 
 A public version of the tool in its current alpha state is available [here](http://topicdetection.archivesportaleurope.net/).
 
+
 ## Installation of the alpha version of the tool
 
 ### 1. Setup Environment
 
 Clone the repository to a dedicated folder.
+
+### 2. Docker Setup
+
+```
+docker build -t topic-detection:prod .
+docker run -d --name topic-detection-backend -p 8091:5000 -v {path_to}/volumes/data:/webapp/data -v {path_to}/volumes/word-embs:/webapp/word-embs topic-detection:prod
+```
 
 Download and Install [Anaconda](https://www.anaconda.com/products/individual).
 

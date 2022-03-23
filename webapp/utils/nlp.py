@@ -1,6 +1,6 @@
 import re
-import faiss                  
-import pickle
+import faiss 
+import requests
 import pywikibot
 import nltk, string
 import numpy as np
@@ -47,7 +47,7 @@ def load_models(test=False):
 
     # we just map the language with the word embeddings model
 
-    model_dict = {"es":es_model,"heb":he_model,"lv":lv_model,"sv":sv_model,"rus":ru_model,"fr":fr_model,"en":en_model,"english":en_model,"de":de_model,"it":it_model,"fi":fi_model,"pl":pl_model,"sl":sl_model,"German":de_model,"English":en_model,"Finnish":fi_model,"French":fr_model,"Italian":it_model}
+    model_dict = {"es":es_model,"heb":he_model,"he":he_model,"lv":lv_model,"sv":sv_model,"rus":ru_model,"ru":ru_model,"fr":fr_model,"en":en_model,"english":en_model,"de":de_model,"it":it_model,"fi":fi_model,"pl":pl_model,"sl":sl_model,"German":de_model,"English":en_model,"Finnish":fi_model,"French":fr_model,"Italian":it_model}
     #model_dict = {"it":it_model}
     return model_dict
 
@@ -55,13 +55,13 @@ def load_models(test=False):
 def build_query_vector(text,lang,model_dict,boolean_search,query=True):
 
     if boolean_search == "True":
-        # handling only AND for now
         if boolean_operation(text):
             first_concept, operator,second_concept = boolean_operation(text)
         else:
             return None
         first_vector, first_word_embs = text_embedding(first_concept,lang,model_dict,query=True)
         second_vector, second_word_embs = text_embedding(second_concept,lang,model_dict,query=True)
+        
         if first_vector and second_vector:
             return {operator:[first_vector,second_vector]}
     else:
@@ -73,8 +73,6 @@ def build_query_vector(text,lang,model_dict,boolean_search,query=True):
 exclude = set(string.punctuation)
 exclude.add("-")
 exclude.remove("*")
-
-import re
 
 class RegexDict(dict):
 
@@ -127,15 +125,14 @@ def cossim(v1,v2):
     v2 = np.array(v2).reshape(1, -1)
     score = cs(v1,v2)[0][0]
     return score
-    
-def find_match(query,doc):
-    # hardcoded filter for very short candidates
-    if len(query)<3:
-        doc = doc.split(" ")
-        return doc.count(query)
-    else:
-        return doc.count(query)
 
+
+rx = r"\w+(?:'\w+)?|[^\w\s]"
+
+def find_match(query,doc):
+    # tokenize each query using a regex
+    doc = re.findall(rx, doc)
+    return doc.count(query)
 
 def count_mentions(candidates,doc):
     # we don't lowercase anymore
@@ -195,7 +192,9 @@ def prepare_collection(df,model_dict):
     for index, row in df.iterrows():
         lang = row["langMaterial"]
         label = row["filename"].replace(".json","").title()    
-        title = row["titleProper"]
+        # remove file identifier from the title
+        title = "".join(row["titleProper"].split(":")[:-1])
+
         startDate = row["startDate"].split("-")[0]
         endDate = row["endDate"].split("-")[0]
         altDate = row["alternateUnitdate"]
@@ -235,14 +234,14 @@ def concept_search(index,query_emb,labels,doc_names,texts,all_word_embs,startDat
         second_ranking_dict = {x[0]:x[-1] for x in second_ranking}
         # aggregation
         if operator == "AND":
-            ranking = [[x[0],x[1],x[2],x[3],x[4],x[5],(x[-1]+second_ranking_dict[x[0]])/2] for x in first_ranking if x[0] in second_ranking_dict][:how_many_results]
+            ranking = [[x[0],x[1],x[2],x[3],x[4],x[5],x[6],(x[-1]+second_ranking_dict[x[0]])/2] for x in first_ranking if x[0] in second_ranking_dict][:how_many_results]
         if operator == "OR":
             ranking = [x for x in first_ranking if x[0] not in second_ranking_dict]+second_ranking
             ranking.sort(key=lambda x: x[-1],reverse=True)
             ranking = ranking[:how_many_results]
         if operator == "ANDNOT":
             second_ranking = {x[0]:x[-1] for x in second_ranking}
-            ranking = [[x[0],x[1],x[2],x[3],x[4],x[5],x[-1]] for x in first_ranking if x[0] not in second_ranking_dict][:how_many_results]
+            ranking = [[x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[-1]] for x in first_ranking if x[0] not in second_ranking_dict][:how_many_results]
             
     else:
         xq = np.array([query_emb]).astype('float32')
@@ -278,16 +277,15 @@ def make_concept_bold(content,word_embs,query_emb):
     most_rel_words = [[word,cossim(query_emb,wemb)] for word,wemb in word_embs.items() if len(word)>3] # ignoring very short words
     most_rel_words.sort(key=lambda x: x[1],reverse=True)
     most_rel_words= [x[0] for x in most_rel_words[:5]] # top 5 words
-    greys = ['#000000', '#0C090A', '#34282C', '#3B3131', '#3A3B3C'] # from here: https://www.computerhope.com/htmcolor.htm#black
+    tok_content = re.findall(rx, content)
     for w in range(len(most_rel_words)):
         word = most_rel_words[w]
-        grey = greys[w]
-        if word in content:
-            content = content.replace(word,'<span style="color:'+grey+'">' + "<b>"+word+"</b>" + '</span>')
-        elif word.title() in content:
-            content = content.replace(word.title(),'<span style="color:'+grey+'">' + "<b>"+word.title()+"</b>" + '</span>')
-        elif word.upper() in content:
-            content = content.replace(word.upper(),'<span style="color:'+grey+'">' + "<b>"+word.upper()+"</b>" + '</span>')
+        if word in tok_content:
+            content = content.replace(word,'<span class="relevance_'+str(w+1)+'">' + word + '</span>')
+        elif word.title() in tok_content:
+            content = content.replace(word.title(),'<span class="relevance_'+str(w+1)+'">' +word.title() + '</span>')
+        elif word.upper() in tok_content:
+            content = content.replace(word.upper(),'<span class="relevance_'+str(w+1)+'">' +word.upper() + '</span>')
 
     content += " ".join(most_rel_words)
     return content
@@ -303,39 +301,56 @@ def build_index(embs,d):
     return index
 
 
+def get_redirect(lang,page,site):
+    r = requests.get("https://"+lang+".wikipedia.org/w/api.php?action=query&titles="+page.title()+"&&redirects&format=json")
+    entity = r.json()["query"]
+    if 'redirects' in entity.keys():
+        entity = r.json()["query"]["redirects"][0]["to"]
+        page = pywikibot.Page(site, entity)
+        url = page.full_url()
+        item = pywikibot.ItemPage.fromPage(page)
+        return item,url
+    else:
+        return None,None
+
+
 def get_candidates(entity,lang,selected_langs,broad_entity_search):
     site = pywikibot.Site(lang, "wikipedia")
     page = pywikibot.Page(site, entity)
     url = page.full_url()
     candidates = set()
-
     try:
         item = pywikibot.ItemPage.fromPage(page)
-    except Exception as e:
-        url = ""
-        return candidates, url
+    except pywikibot.exceptions.NoPageError:
+        try:
+            item, page = get_redirect(lang,page,site)
+            if item is None:
+                url = ""
+                return candidates, url
+        except pywikibot.exceptions.NoPageError:
+            url = ""
+            return candidates, url
 
-    else:
-        item_dict = item.get()
+    item_dict = item.get()
 
-        wiki_labels = item_dict["labels"]
-        aliases = item_dict["aliases"]
-        langs = set(list(wiki_labels.keys()) + list(aliases.keys()))
+    wiki_labels = item_dict["labels"]
+    aliases = item_dict["aliases"]
+    langs = set(list(wiki_labels.keys()) + list(aliases.keys()))
 
-        candidates.add(entity)
+    candidates.add(entity)
 
-        set_selected_langs = set(selected_langs)
+    set_selected_langs = set(selected_langs)
 
-        for lang in langs:
-            if broad_entity_search == "False" and lang not in set_selected_langs:
-                continue
-            if lang in wiki_labels:
-                candidates.add(wiki_labels[lang])
-            if lang in aliases:
-                for al in aliases[lang]:
-                    candidates.add(al)
+    for lang in langs:
+        if broad_entity_search == "False" and lang not in set_selected_langs:
+            continue
+        if lang in wiki_labels:
+            candidates.add(wiki_labels[lang])
+        if lang in aliases:
+            for al in aliases[lang]:
+                candidates.add(al)
 
-        return candidates, url
+    return candidates, url
 
 def boolean_operation(query):
     operators = ["ANDNOT", "OR","AND"]
@@ -353,7 +368,7 @@ def check_quotation(query):
 
 def make_entity_bold(mentions, content):
     for mention in mentions:
-        content = content.replace(mention,"<b>"+mention+"</b>")
+        content = content.replace(mention,'<span class="relevance_1">'+mention+"</span>")
     return content
 
 def entity_search(entity,lang,labels,doc_names,texts,how_many_results,selected_langs,startDate,endDates,altDate,countries,broad_entity_search,boolean_search):

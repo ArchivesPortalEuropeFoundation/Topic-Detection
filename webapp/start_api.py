@@ -1,11 +1,9 @@
 import json
-import os
 import pickle
 from configparser import SafeConfigParser
 from random import randint
 from urllib.parse import unquote
 
-import bcrypt
 import flask
 
 from utils import nlp
@@ -28,7 +26,12 @@ def my_form():
 
 @APP.route("/query", methods=["GET"])
 def query_api():
+    """
+    query_api _summary_
 
+    Returns:
+        _type_: _description_
+    """
     # we load the dataset
 
     query = flask.request.args["text"]
@@ -165,18 +168,6 @@ def query_api():
     download_button = download_button.replace("query_name", query_string)
 
     return response
-
-
-def get_hashed_password(plain_text_password):
-    # Hash a password for the first time
-    #   (Using bcrypt, the salt is saved into the hash itself)
-    return bcrypt.hashpw(plain_text_password, bcrypt.gensalt())
-
-
-def check_password(plain_text_password, hashed_password):
-    # Check hashed password. Using bcrypt, the salt is saved into the hash itself
-    return bcrypt.checkpw(plain_text_password, hashed_password)
-
 
 @APP.route("/registration", methods=["GET"])
 def registration():

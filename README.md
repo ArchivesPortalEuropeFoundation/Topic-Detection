@@ -46,6 +46,7 @@ Open the terminal and go to the repository folder (using `cd` and the path to th
 Create a dedicated Python environment:
 
 `conda create -n py37ape python=3.7`
+
 `conda activate py37ape`
 
 Run `pip install -r requirements.txt`

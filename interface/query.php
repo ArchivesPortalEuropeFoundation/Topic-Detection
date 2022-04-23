@@ -7,7 +7,7 @@ ini_set('session.gc_divisor', 100);
 
 session_start();
 
-$ENV = parse_ini_file('/config/config.env');
+$ENV = parse_ini_file('../config/config.env');
 
 $time = date('Y-m-d H:i:s');;
   

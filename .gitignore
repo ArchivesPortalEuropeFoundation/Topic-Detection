@@ -26,3 +26,4 @@ generateDataset/exportedJsons/*
 generateDataset/*
 webapp/data/previous_dataset.pickle
 TopicTerms.tsv
+webapp/tests/apicache-py3/*

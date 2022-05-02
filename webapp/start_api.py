@@ -41,6 +41,10 @@ def query_api():
     broad_entity_search = flask.request.args["broad_entity_search"]
     boolean_search = flask.request.args["boolean_search"]
     in_quote_query = nlp.check_quotation(query)
+    
+    # currently hardcoded cutoff
+    if n_res>100:
+        n_res = 100
 
     if in_quote_query:
         query = in_quote_query

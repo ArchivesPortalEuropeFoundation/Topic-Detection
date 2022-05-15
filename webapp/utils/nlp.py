@@ -82,9 +82,7 @@ def build_query_vector(text, lang, model_dict, boolean_search, query=True):
             first_concept, operator, second_concept = boolean_operation(text)
         else:
             return None
-        first_vector, first_word_embs = text_embedding(
-            first_concept, lang, model_dict, query=True
-        )
+        first_vector, first_word_embs = text_embedding(first_concept, lang, model_dict, query=True)
         second_vector, second_word_embs = text_embedding(
             second_concept, lang, model_dict, query=True
         )
@@ -231,9 +229,7 @@ def prepare_collection(df, model_dict):
         country = row["country"].split(":")[0].title()
 
         if lang in model_dict:
-            text = (
-                row["unitTitle"] + " " + row["titleProper"] + " " + row["scopeContent"]
-            )
+            text = row["unitTitle"] + " " + row["titleProper"] + " " + row["scopeContent"]
             emb, word_embs = text_embedding(text, lang, model_dict, query=False)
             if emb:
                 embs.append(emb)
@@ -409,9 +405,7 @@ def check_dataframe(df):
 
 def make_concept_bold(content, word_embs, query_emb):
     most_rel_words = [
-        [word, cossim(query_emb, wemb)]
-        for word, wemb in word_embs.items()
-        if len(word) > 3
+        [word, cossim(query_emb, wemb)] for word, wemb in word_embs.items() if len(word) > 3
     ]  # ignoring very short words
     most_rel_words.sort(key=lambda x: x[1], reverse=True)
     most_rel_words = [x[0] for x in most_rel_words[:5]]  # top 5 words
@@ -425,20 +419,12 @@ def make_concept_bold(content, word_embs, query_emb):
         elif word.title() in tok_content:
             content = content.replace(
                 word.title(),
-                '<span class="relevance_'
-                + str(w + 1)
-                + '">'
-                + word.title()
-                + "</span>",
+                '<span class="relevance_' + str(w + 1) + '">' + word.title() + "</span>",
             )
         elif word.upper() in tok_content:
             content = content.replace(
                 word.upper(),
-                '<span class="relevance_'
-                + str(w + 1)
-                + '">'
-                + word.upper()
-                + "</span>",
+                '<span class="relevance_' + str(w + 1) + '">' + word.upper() + "</span>",
             )
 
     content += " ".join(most_rel_words)
@@ -508,8 +494,9 @@ def get_candidates(entity, lang, selected_langs, broad_entity_search):
             candidates.add(wiki_labels[lang])
         if lang in aliases:
             for al in aliases[lang]:
-                candidates.add(al)
-
+                # hardcoded cutoff for the moment to avoid timeout given too many cands
+                if len(candidates) < 50:
+                    candidates.add(al)
     return candidates, url
 
 
@@ -530,9 +517,7 @@ def check_quotation(query):
 
 def make_entity_bold(mentions, content):
     for mention in mentions:
-        content = content.replace(
-            mention, '<span class="relevance_1">' + mention + "</span>"
-        )
+        content = content.replace(mention, '<span class="relevance_1">' + mention + "</span>")
     return content
 
 
@@ -594,9 +579,8 @@ def entity_search(
         candidates = {operator: [first_cand, second_cand]}
         page = {operator: [first_page, second_page]}
     else:
-        candidates, page = get_candidates(
-            entity, lang, selected_langs, broad_entity_search
-        )
+        candidates, page = get_candidates(entity, lang, selected_langs, broad_entity_search)
+        print(len(candidates))
 
     ranking["Results"] = ranking.parallel_apply(
         lambda x: rank_by_freq(candidates, x["Content"], boolean_search), axis=1
@@ -606,6 +590,7 @@ def entity_search(
     ranking = ranking.sort_values("Score", ascending=False)
     ranking = ranking.head(how_many_results)
     ranking = ranking[ranking["Score"] > 0.0]
+    print(ranking)
     try:
         ranking["Content"] = ranking.parallel_apply(
             lambda x: make_entity_bold(x["Mentions"], x["Content"]), axis=1

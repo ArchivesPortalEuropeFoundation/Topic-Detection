@@ -13,8 +13,7 @@ from gensim.models import KeyedVectors
 from pandarallel import pandarallel
 from sklearn.metrics.pairwise import cosine_similarity as cs
 
-pandarallel.initialize()
-
+pandarallel.initialize(use_memory_fs=False)
 
 def load_models(test=False):
 

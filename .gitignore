@@ -1,4 +1,3 @@
-*.tsv
 -checkpoint.ipynb
 *-checkpoint.ipynb
 *.xlsx
@@ -26,3 +25,5 @@ config/config.env
 generateDataset/exportedJsons/*
 generateDataset/*
 webapp/data/previous_dataset.pickle
+TopicTerms.tsv
+webapp/tests/apicache-py3/*

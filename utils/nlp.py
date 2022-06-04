@@ -458,11 +458,14 @@ def get_redirect(lang, page, site):
     else:
         return None, None
 
-
-def get_candidates(entity, lang, selected_langs, broad_entity_search):
+def get_url(entity,lang):
     site = pywikibot.Site(lang, "wikipedia")
     page = pywikibot.Page(site, entity)
     url = page.full_url()
+    return url
+
+def get_candidates(entity, lang, selected_langs, broad_entity_search):
+    url = get_url(entity,lang)
     candidates = set()
     try:
         item = pywikibot.ItemPage.fromPage(page)

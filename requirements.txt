@@ -9,7 +9,6 @@ nltk==3.6.6
 numpy==1.21.0
 pandarallel==1.5.2
 pandas==1.2.3
-python_bcrypt==0.3.2
 pywikibot==6.3.0
 requests==2.25.1
 scikit_learn==1.0.1

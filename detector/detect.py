@@ -14,9 +14,10 @@ de_tagger = SequenceTagger.load("flair/ner-german")
 fr_tagger = SequenceTagger.load("flair/ner-french")
 nl_tagger = SequenceTagger.load("flair/ner-dutch")
 
-ner_dict = {'en':en_tagger,'de':de_tagger,'fr':fr_tagger,'nl':nl_tagger}
+ner_dict = {"en": en_tagger, "de": de_tagger, "fr": fr_tagger, "nl": nl_tagger}
 
-def tag_string(text:str,lang:str)->[str]:
+
+def tag_string(text: str, lang: str) -> [str]:
     """
     Given a string and a language returns the urls of the identified entities
 
@@ -39,10 +40,15 @@ def tag_string(text:str,lang:str)->[str]:
 
     for entity in sentence.get_spans("ner"):
         print(entity.text)
-        url = nlp.get_url(entity.text,lang)
+        url = nlp.get_url(entity.text, lang)
         ents.append(url)
-    return ents
+    response = ["Content", "Language", "Entities"]
+    response.append([text, lang, ents])
+
+    return response
+
+
 # make example sentence
 text = "Berlin ist eine schöne Stadt mit dem Deutschen Bundestag"
-lang = 'de'
-print (tag_string(text,lang))
+lang = "de"
+print(tag_string(text, lang))

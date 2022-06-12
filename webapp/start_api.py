@@ -10,6 +10,7 @@ import flask
 
 # Add "../" to path to import utils
 sys.path.insert(0, os.path.abspath(os.path.pardir))
+from detector import detect
 from utils import nlp
 
 # Create the application.
@@ -45,9 +46,9 @@ def query_api():
     broad_entity_search = flask.request.args["broad_entity_search"]
     boolean_search = flask.request.args["boolean_search"]
     in_quote_query = nlp.check_quotation(query)
-    
+
     # currently hardcoded cutoff
-    if n_res>100:
+    if n_res > 100:
         n_res = 100
 
     if in_quote_query:
@@ -177,6 +178,7 @@ def query_api():
 
     return response
 
+
 @APP.route("/registration", methods=["GET"])
 def registration():
     f = open("../cred.json", "r")
@@ -216,6 +218,15 @@ def login():
         return True
     else:
         return False
+
+
+@APP.route("/detect", methods=["GET"])
+def detector():
+    query = flask.request.args["query"]
+    lang = flask.request.args["lang"]
+    response = tag_string(query, lang)
+    response = response.to_html(classes="data", index=False, table_id="results", escape=False)
+    return response
 
 
 if __name__ == "__main__":

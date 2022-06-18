@@ -224,7 +224,7 @@ def login():
 def detector():
     query = flask.request.args["query"]
     lang = flask.request.args["lang"]
-    response = tag_string(query, lang)
+    response = detect.tag_string(query, lang)
     response = response.to_html(classes="data", index=False, table_id="results", escape=False)
     return response
 

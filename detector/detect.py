@@ -1,6 +1,6 @@
 import os
 import sys
-
+import pandas as pd
 from flair.data import Sentence
 from flair.models import SequenceTagger
 
@@ -41,11 +41,12 @@ def tag_string(text: str, lang: str) -> [str]:
     for entity in sentence.get_spans("ner"):
         print(entity.text)
         url = nlp.get_url(entity.text, lang)
-        ents.append(url)
-    response = ["Content", "Language", "Entities"]
-    response.append([text, lang, ents])
+        str_url = "<a href="+url+">"+entity.text+"</a>"
+        ents.append(str_url)
+    headers = ["Content", "Entities"]
+    df = pd.DataFrame([[text, ents]], columns=headers)
 
-    return response
+    return df
 
 
 # make example sentence

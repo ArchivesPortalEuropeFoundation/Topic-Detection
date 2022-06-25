@@ -12,7 +12,7 @@ jobs:
        run: docker build --tag topic-detection:action .
      - name: Run Docker container
        run: docker run -p 0.0.0.0:5000:5000/tcp -d --name topic-detection-action topic-detection:action 
-     - name: Sleep for 30 seconds
+     - name: Sleep for 60 seconds
        uses: jakejarvis/wait-action@master
        with:
          time: '60s'

@@ -15,7 +15,7 @@ jobs:
      - name: Sleep for 30 seconds
        uses: jakejarvis/wait-action@master
        with:
-         time: '30s'
+         time: '60s'
 
      - name: Run tests inside the container
        run: docker exec topic-detection-action pytest 

@@ -27,3 +27,5 @@ generateDataset/*
 webapp/data/previous_dataset.pickle
 TopicTerms.tsv
 webapp/tests/apicache-py3/*
+detector/apicache-py3/*
+detector/__pycache__/*

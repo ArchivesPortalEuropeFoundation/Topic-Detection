@@ -45,14 +45,14 @@ def tag_string(ner_dict: dict, text: str, lang: str) -> [str]:
     # predict NER tags
     tagger.predict(sentence)
 
-    ents = []
+    ents = set()
 
     for entity in sentence.get_spans("ner"):
         print(entity.text)
         url = nlp.get_url(entity.text, lang)
         str_url = "<a href=" + url + ">" + entity.text + "</a>"
-        ents.append(str_url)
+        ents.add(str_url)
     headers = ["Content", "Entities"]
-    df = pd.DataFrame([[text, ents]], columns=headers)
+    df = pd.DataFrame([[text, list(ents)]], columns=headers)
 
     return df

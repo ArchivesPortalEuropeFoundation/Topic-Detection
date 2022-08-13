@@ -1,0 +1,71 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Multilingual Detection for Archives Portal Europe</title>
+
+    <!--    Stylesheets-->
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!--    Javascript-->
+    <script type="text/javascript" src="js/jQuery/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+</head>
+
+<body>
+
+    <div class="container-fluid p-3">
+        <div class="row justify-content-lg-between justify-content-center header">
+            <div class="col-auto" style="text-align: center">
+                <h1>Multilingual Detection for Archives Portal Europe</h1>
+            </div>
+            <div class="col-auto order-first order-lg-last" style="text-align: right">
+                <a href="http://www.archivesportaleurope.net/">
+                    <img src="img/logo.png" class="logo" />
+                </a>
+            </div>
+        </div>
+
+        <div class="row mt-5 justify-content-center">
+            <div class="col-auto" style="text-align: center">
+                <p>Welcome! This is the alpha version of a multilingual detection tool for concepts and entities.</p>
+                <p>To know more about the project, visit <a
+                        href="https://github.com/ArchivesPortalEuropeFoundation/Topic-Detection/">our GitHub</a></p>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-auto" style="text-align: center">
+
+                <form method="POST" action="detect.php">
+                    <input id="query" name="text" type="text" placeholder="Your textual description"
+                        style="width: 400px;">
+
+                    <select id="lang" name=lang>
+
+                        <option value="en" SELECTED>en</option>
+                        <option value="de">de</option>
+                        <option value="fr">fr</option>
+                        <option value="nl">nl</option>
+
+                    </select>
+                    <input type="submit">
+                    </br>
+                </form>
+
+                <div id="loader" class="col-auto" style="display:none">
+                    <img src="img/loader.gif" />
+                </div>
+
+
+                <div id="no-more-tables">
+                    <table></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

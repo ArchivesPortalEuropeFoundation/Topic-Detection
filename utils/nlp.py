@@ -458,23 +458,38 @@ def get_redirect(lang, page, site):
     else:
         return None, None
 
-
-def get_candidates(entity, lang, selected_langs, broad_entity_search):
+def get_url(entity,lang):
     site = pywikibot.Site(lang, "wikipedia")
     page = pywikibot.Page(site, entity)
     url = page.full_url()
-    candidates = set()
+    return page, url, site
+
+
+def get_entity(entity,lang):
+    page, url, site = get_url(entity,lang)
+    if check_redirect(page,'de',site) != False:
+        return url
+
+def check_redirect(page,lang,site):
     try:
         item = pywikibot.ItemPage.fromPage(page)
+        return item
     except pywikibot.exceptions.NoPageError:
         try:
             item, page = get_redirect(lang, page, site)
             if item is None:
-                url = ""
-                return candidates, url
+                return False
+            return item
         except pywikibot.exceptions.NoPageError:
-            url = ""
-            return candidates, url
+            return False
+
+def get_candidates(entity, lang, selected_langs, broad_entity_search):
+    page, url,site  = get_url(entity,lang)
+    candidates = set()
+    item = check_redirect(page,lang,site)
+
+    if item == False:
+        return candidates, ""
 
     item_dict = item.get()
 

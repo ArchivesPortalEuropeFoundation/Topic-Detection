@@ -2,6 +2,8 @@ import pandas as pd
 import requests
 from pandarallel import pandarallel
 
+# import swifter
+
 pandarallel.initialize()
 
 
@@ -27,7 +29,8 @@ QUERY_PATH = "tests/test_data/20220211_ATDWorkshop_LogResults.tsv"
 df = pd.read_csv(QUERY_PATH, sep="\t")
 df = df.drop("Time of query (in UTC)", 1)
 df = df.drop_duplicates(keep=False, inplace=False)
-df = df[:1000]
+print(len(df))
+# df = df[:100]
 df["status"] = df.parallel_apply(
     lambda row: query_tool(
         lang=row["Language of search term"],
@@ -40,12 +43,16 @@ df["status"] = df.parallel_apply(
     axis=1,
 )
 
+out_df = pd.DataFrame()
+
 for idx, row in df.iterrows():
     if (
         "<table" in str(row["status"][:6])
-    #    or "embedding" in str(row["status"])
-        or "Mentions" in str(row["status"])
+cd ..        #        or "Mentions" in str(row["status"])
         or "We have found results for the entity" in str(row["status"])
     ):
         continue
-    print(row["status"])
+    out_df = out_df.append(row)
+
+print(len(df), len(out_df), len(df) / len(out_df))
+out_df.to_csv("tests/test_log/missing_queries.tsv", sep="\t")

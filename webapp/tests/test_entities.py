@@ -29,3 +29,6 @@ def test_get_redirect():
 def test_get_entity():
     url = nlp.get_entity("Barack Obama", "en")
     assert url == "https://en.wikipedia.org/wiki/Barack_Obama"
+
+    url = nlp.get_entity("asjdkasdhakd", "en")
+    assert url == None

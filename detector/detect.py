@@ -48,7 +48,7 @@ def tag_string(ner_dict: dict, text: str, lang: str) -> [str]:
     ents = {}
 
     for entity in sentence.get_spans("ner"):
-        url = nlp.get_url(entity.text, lang)
+        url = nlp.get_entity(entity.text, lang)
         str_url = "<a href=" + url + ">" + entity.text + "</a>"
         if str_url not in ents:
             ents[str_url] = {"start":entity.start_position,"end":entity.end_position,'label':entity.get_label("ner").value,'score':entity.get_label("ner").score}

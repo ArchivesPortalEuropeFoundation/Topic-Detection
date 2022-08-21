@@ -1,5 +1,5 @@
 # Topic-Detection
-Using machine learning approaches for automatic topic detection in a multilingual environment.
+Using machine learning approaches for automatic topic detection and retrieval in a multilingual environment.
 
 Two main goals:
 * tagging documents that have no topic associated, with one of the pre-defined topics
@@ -7,11 +7,37 @@ Two main goals:
 
 A public version of the tool in its current alpha state is available [here](http://topicdetection.archivesportaleurope.net/).
 
-## Installation of the alpha version of the tool
+
+## Installation
+
+### 0. Setup on our dedicated server
+
+The `dev` branch of the repository currently sit inside this folder: `/data/containerdata/topic-detection` in our dedicated server. In the same folder we have the `volumes` folder, which host the full versions of the `data` and `word-embs` folders (instead of only the sample data that we host in the repo).
+
+We have two Docker images, one for the web interface (we call it `webapp`) and one for the python code (we call it `backend`). To deploy the full version of the tool, you need to change in the [config file](config/config.env) the test flag to `False`. In the same file you can change the endpoint to `http://topic-detection-webapp:5000`.
+
+To build the `backend` image you should run: 
+```
+docker build -t topic-detection:prod .
+```
+Then you can start the container as:
+```
+docker run -d --name topic-detection-backend -p 10.32.34.167:8091:5000 -v /data/containerdata/topicdetection/volumes/data:/webapp/data -v /data/containerdata/topicdetection/volumes/word-embs:/webapp/word-embs --network=ape --restart unless-stopped topic-detection:prod
+```
+The container will take some time to run - you can test that all runs properly by running `pytest`.
+
+We deploy the second image, for the `webapp` as following:
+```
+docker run -d --name topic-detection-webapp -p 10.32.34.167:8090:80 -v /data/containerdata/topicdetection/Topic-Detection/interface:/var/www/html --network=ape --restart unless-stopped php:7.3-apache
+```
+
+The name of the container is topic-detection-webapp and is exposes the internal port of `80` to the external port `8090` on the host machine. Finally we map the port to `http://topicdetection2.archivesportaleurope.net/` 
 
 ### 1. Setup Environment
 
 Clone the repository to a dedicated folder.
+
+### 2. Docker Setup
 
 Download and Install [Anaconda](https://www.anaconda.com/products/individual).
 
@@ -20,6 +46,7 @@ Open the terminal and go to the repository folder (using `cd` and the path to th
 Create a dedicated Python environment:
 
 `conda create -n py37ape python=3.7`
+
 `conda activate py37ape`
 
 Run `pip install -r requirements.txt`

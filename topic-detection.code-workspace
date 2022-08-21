@@ -5,6 +5,10 @@
 		}
 	],
 	"settings": {
-		"workbench.colorTheme": "Solarized Dark"
+		"workbench.colorTheme": "Solarized Dark",
+		"python.pythonPath": "/usr/local/anaconda3/envs/py37ape/bin/python",
+		"python.linting.pylintPath": "/usr/local/anaconda3/envs/py37ape/bin/pylint",
+		"python.linting.pylintEnabled": true,
+		"python.linting.enabled": true
 	}
 }

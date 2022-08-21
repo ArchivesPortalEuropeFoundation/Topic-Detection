@@ -29,7 +29,7 @@
 
     <div class="row mt-5 justify-content-center">
         <div class="col-auto" style="text-align: center">
-            <p>Welcome! This is the alpha version of a cross-lingual search tool for concepts and entities across the entire APE collection.</p>
+            <p>Welcome! This is the beta version of a cross-lingual search tool for concepts and entities across the entire APE collection.</p>
             <p>To know more about the project, visit <a href="https://github.com/ArchivesPortalEuropeFoundation/Topic-Detection/">our GitHub</a></p>
         </div>
     </div>
@@ -69,6 +69,10 @@
                 <label for="boolean_search">Boolean Search</label><br>
             </form>
 
+            <div id="loader" class="col-auto" style="display:none">
+                <img src="img/loader.gif"/>
+            </div>
+            
             <p id="download_csv" style="display: none"><a href="#" onclick="download_table_as_csv('results','result');">(Download results as CSV)</a></p>
 
             <div id="no-more-tables">

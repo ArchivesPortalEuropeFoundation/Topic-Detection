@@ -1,0 +1,785 @@
+Time of query (in UTC)	Language of search term	Type of search	Query text	No of results	broad entity search	boolean search	Response Status
+2/11/22 13:35	de	concept	Güterverkehr	10	False 	False 	200
+2/11/22 13:35	en	concept	Napoleon*	10	False 	False 	200
+2/11/22 13:36	en	concept	economics	30	False 	False 	200
+2/11/22 13:36	es	concept	Inquisición	10	False 	False 	200
+2/11/22 13:36	en	concept	Lisbon	10	False 	True 	200
+2/11/22 13:36	he	concept	דלות	10	False 	False 	200
+2/11/22 13:36	en	concept	Lisbon	10	True 	False 	200
+2/11/22 13:36	de	concept	Verkehr	10	False 	False 	200
+2/11/22 13:36	en	concept	historic and transport	10	False 	True 	200
+2/11/22 13:36	de	concept	Transport	10	False 	False 	200
+2/11/22 13:36	en	concept	democracy	10	False 	False 	200
+2/11/22 13:36	de	concept	Erster Welkrieg	10	False 	False 	200
+2/11/22 13:36	es	concept	Inquisición	10	False 	False 	200
+2/11/22 13:37	en	concept	slavery	10	True 	False 	200
+2/11/22 13:38	de	concept	Napoleon	10	False 	False 	200
+2/11/22 13:38	he	concept	דלות	10	True 	False 	200
+2/11/22 13:38	en	concept	mannesmann	10	False 	False 	200
+2/11/22 13:38	en	concept	bretton woods	30	False 	False 	200
+2/11/22 13:38	de	concept	Transport*	10	False 	False 	200
+2/11/22 13:38	en	concept	Inquisition	10	False 	False 	200
+2/11/22 13:38	en	concept	Inquisition	10	False 	False 	200
+2/11/22 13:38	en	concept	boats	10	False 	False 	200
+2/11/22 13:39	he	concept	רעוואלוציע	10	True 	False 	200
+2/11/22 13:39	he	concept	מהפכה	10	True 	False 	200
+2/11/22 13:39	en	concept	slave boats	10	False 	True 	200
+2/11/22 13:39	en	concept	slave boats	10	False 	False 	200
+2/11/22 13:39	en	concept	underground AND london	10	False 	False 	200
+2/11/22 13:40	en	concept	Maps	10	False 	False 	200
+2/11/22 13:40	en	concept	miracle	10	False 	False 	200
+2/11/22 13:40	he	concept	פליטים	10	True 	False 	200
+2/11/22 13:40	en	concept	notaries	10	True 	False 	200
+2/11/22 13:40	en	concept	miracle	10	False 	False 	200
+2/11/22 13:40	he	concept	פליטים יהודיים	10	True 	False 	500
+2/11/22 13:41	en	concept	notaries	10	True 	False 	200
+2/11/22 13:41	he	concept	פליטים פולניים	10	True 	False 	500
+2/11/22 13:41	en	concept	epidemic	10	False 	False 	200
+2/11/22 13:41	he	concept	פליטים מטוסטריה	10	True 	False 	200
+2/11/22 13:41	en	concept	Maps*	10	False 	False 	200
+2/11/22 13:42	sl	concept	cestni promet AND LRS	10	False 	True 	500
+2/11/22 13:42	de	concept	karten*	10	False 	False 	200
+2/11/22 13:42	fr	concept	historic and transport	10	False 	True 	200
+2/11/22 13:42	en	concept	Kodály	10	False 	False 	200
+2/11/22 13:42	en	concept	heresy	10	False 	False 	200
+2/11/22 13:42	en	concept	Napolean*	10	True 	False 	200
+2/11/22 13:42	fr	concept	historic or transport	10	False 	True 	200
+2/11/22 13:42	en	concept	Napoleon I%09	10	True 	False 	200
+2/11/22 13:42	en	concept	Napoleon I%09	10	False 	False 	200
+2/11/22 13:42	pl	concept	uchodźcy	10	True 	False 	200
+2/11/22 13:43	en	concept	mannesmann	10	False 	False 	200
+2/11/22 13:43	en	concept	mannesmann	10	True 	False 	200
+2/11/22 13:43	en	concept	historical or transport	10	False 	True 	200
+2/11/22 13:43	en	concept	Inqui*	10	False 	False 	200
+2/11/22 13:43	en	concept	transport	10	False 	True 	200
+2/11/22 13:43	fr	concept	transpor	10	False 	True 	200
+2/11/22 13:44	fr	concept	transports	10	False 	True 	200
+2/11/22 13:44	en	concept	Napoleon I AND World War I	10	False 	True 	500
+2/11/22 13:44	pl	concept	Fluchtlinge	10	True 	False 	200
+2/11/22 13:44	en	concept	dalmine	10	True 	False 	200
+2/11/22 13:44	en	concept	dalmine	10	True 	False 	200
+2/11/22 13:44	pl	concept	Fluchtlinge	10	False 	False 	200
+2/11/22 13:44	fr	concept	heritage	10	False 	True 	200
+2/11/22 13:44	de	concept	FLÜCHTLINGE 	10	False 	False 	200
+2/11/22 13:44	en	concept	Catholicism AND heresy	10	False 	True 	500
+2/11/22 13:44	en	concept	Inquisi*	10	False 	False 	200
+2/11/22 13:44	en	concept	CatholicismANDheresy	10	False 	True 	500
+2/11/22 13:44	en	concept	heritage	10	False 	True 	200
+2/11/22 13:44	en	concept	Kodály	10	True 	False 	200
+2/11/22 13:44	de	concept	Transport	10	False 	False 	200
+2/11/22 13:44	en	concept	dalmine	10	False 	False 	200
+2/11/22 13:44	en	concept	Kodály	10	True 	True 	200
+2/11/22 13:44	en	concept	Catholicism AND heresy	10	False 	False 	200
+2/11/22 13:44	en	concept	dalmine	10	False 	False 	200
+2/11/22 13:44	en	concept	Kodály	10	False 	True 	200
+2/11/22 13:44	de	concept	Transport	100	False 	False 	200
+2/11/22 13:45	en	concept	Church AND heresy	10	False 	False 	200
+2/11/22 13:45	en	concept	epidemic	10	False 	False 	200
+2/11/22 13:45	he	concept	פליטים	10	False 	False 	200
+2/11/22 13:45	en	concept	angles	10	False 	False 	200
+2/11/22 13:45	de	concept	Transport	100	True 	False 	200
+2/11/22 13:45	he	concept	פליטים	15	False 	False 	200
+2/11/22 13:45	en	concept	angels	10	False 	False 	200
+2/11/22 13:45	en	concept	saints	10	False 	False 	200
+2/11/22 13:45	fr	concept	heritage	10	False 	True 	200
+2/11/22 13:45	he	concept	פליטים	10	False 	False 	200
+2/11/22 13:45	en	concept	rocca	10	False 	True 	200
+2/11/22 13:45	fr	concept	heritage	10	False 	False 	200
+2/11/22 13:45	en	concept	heresy	10	False 	False 	200
+2/11/22 13:46	en	concept	heritage	10	False 	False 	200
+2/11/22 13:46	en	concept	road trafic	10	False 	True 	200
+2/11/22 13:46	en	concept	road trafic	10	False 	False 	200
+2/11/22 13:46	en	concept	heritage	10	True 	False 	200
+2/11/22 13:46	en	concept	Kodály	10	True 	False 	200
+2/11/22 13:46	sl	concept	cestni promet AND LRS	10	False 	True 	500
+2/11/22 13:46	en	concept	Kodály	100	True 	False 	200
+2/11/22 13:46	en	concept	heritage transport	10	False 	False 	200
+2/11/22 13:47	en	concept	heritage and transport	10	False 	True 	200
+2/11/22 13:47	en	concept	Kodály*	100	True 	False 	200
+2/11/22 13:47	en	concept	heritage or transport	10	False 	True 	200
+2/11/22 13:47	en	concept	electric vehicle	10	False 	False 	200
+2/11/22 13:47	en	concept	Russian AND literature	10	False 	False 	200
+2/11/22 13:47	en	concept	Kodály*	100	False 	False 	200
+2/11/22 13:47	en	concept	Kodály	100	False 	False 	200
+2/11/22 13:47	en	concept	John Paul	10	False 	False 	200
+2/11/22 13:47	en	concept	Kodály	100	False 	True 	200
+2/11/22 13:47	en	concept	Kodály Zoltán	100	False 	True 	200
+2/11/22 13:47	en	concept	portugal	10	True 	False 	200
+2/11/22 13:47	en	concept	Kodály Zoltán	100	False 	False 	200
+2/11/22 13:48	en	concept	spanish flu	10	False 	False 	500
+2/11/22 13:48	en	concept	cheese	30	False 	False 	200
+2/11/22 13:48	en	concept	eresia	10	False 	False 	200
+2/11/22 13:48	it	concept	eresia	10	False 	False 	200
+2/11/22 13:48	en	concept	Luigi Barnaba Chiaramonti	10	False 	False 	200
+2/11/22 13:48	en	concept	spanish flu	10	False 	False 	200
+2/11/22 13:48	sl	concept	cestni promet	10	False 	False 	200
+2/11/22 13:48	en	concept	flu	10	False 	False 	200
+2/11/22 13:48	en	concept	Russian literature	10	False 	False 	200
+2/11/22 13:49	en	concept	spanish and flu	10	False 	False 	200
+2/11/22 13:49	en	concept	Maps*	10	False 	False 	200
+2/11/22 13:49	en	concept	Ottoman	10	False 	False 	200
+2/11/22 13:49	sl	concept	road trafic and Slovenia	10	False 	True 	200
+2/11/22 13:49	en	concept	Madrid	10	False 	False 	200
+2/11/22 13:49	es	concept	Madrid	10	False 	False 	200
+2/11/22 13:49	en	concept	road trafic AND Slovenia	10	False 	True 	500
+2/11/22 13:49	es	concept	Madrid and gripe	10	False 	False 	200
+2/11/22 13:49	en	concept	road trafic AND France	10	False 	True 	500
+2/11/22 13:49	en	concept	Maps*	10	False 	False 	200
+2/11/22 13:50	en	concept	Петр I	10	False 	False 	200
+2/11/22 13:50	en	concept	heritage AND transport	10	False 	True 	500
+2/11/22 13:50	en	concept	road trafic AND France	10	True 	True 	500
+2/11/22 13:50	en	concept	Maps AND Firstworldwar	10	False 	True 	200
+2/11/22 13:50	en	concept	road trafic AND France	10	False 	True 	500
+2/11/22 13:50	fr	concept	heritage AND transport	10	False 	True 	500
+2/11/22 13:50	ru	concept	Россия	10	False 	False 	200
+2/11/22 13:50	de	concept	heritage AND transport	10	False 	True 	500
+2/11/22 13:50	en	concept	military AND hospital	10	False 	True 	500
+2/11/22 13:50	en	concept	Maps AND First world war	10	False 	True 	500
+2/11/22 13:50	de	concept	military AND hospital	10	False 	True 	500
+2/11/22 13:50	en	concept	Napoleon*	10	False 	False 	200
+2/11/22 13:50	de	concept	Kriegsgefangene*	10	False 	False 	200
+2/11/22 13:50	en	concept	historic AND transport	10	False 	True 	500
+2/11/22 13:50	en	concept	Maps*	10	False 	True 	200
+2/11/22 13:50	en	concept	Россия	10	False 	False 	200
+2/11/22 13:51	en	concept	Maps*	10	False 	False 	200
+2/11/22 13:51	en	concept	train	10	False 	False 	200
+2/11/22 13:51	he	concept	פליטים	10	False 	False 	200
+2/11/22 13:51	ru	concept	Россия	10	False 	False 	200
+2/11/22 13:51	ru	concept	Россия	10	False 	False 	200
+2/11/22 13:51	en	concept	eric hobsbawm	10	False 	False 	200
+2/11/22 13:51	en	concept	portugal	10	True 	False 	200
+2/11/22 13:51	en	concept	Maps*	1000	False 	False 	200
+2/11/22 13:51	en	concept	portugal and lisbon	10	False 	True 	200
+2/11/22 13:52	en	concept	portugal and lisbon	10	True 	True 	200
+2/11/22 13:52	de	concept	Bundeskanzler 	10	False 	False 	200
+2/11/22 13:52	de	concept	Kriegsgefangene	10	False 	False 	200
+2/11/22 13:52	en	concept	portugal and lisbon	10	True 	False 	200
+2/11/22 13:52	en	concept	Trafic coridor	10	False 	False 	200
+2/11/22 13:52	en	concept	démocratie	10	False 	False 	200
+2/11/22 13:52	en	concept	Trafic coridor AND Germany	10	False 	False 	200
+2/11/22 13:52	en	concept	historia	10	False 	False 	200
+2/11/22 13:52	it	concept	eresia AND chiesa	10	False 	True 	500
+2/11/22 13:53	en	concept	Napoleon*	60	False 	False 	200
+2/11/22 13:53	it	concept	eresia AND chiesa	10	False 	True 	500
+2/11/22 13:53	fr	concept	Россия AND армия	10	False 	False 	200
+2/11/22 13:53	en	concept	Genealogy	10	False 	False 	200
+2/11/22 13:53	fr	concept	development and africa	10	False 	False 	200
+2/11/22 13:53	en	concept	medina del campo	10	False 	False 	200
+2/11/22 13:53	it	concept	eresia AND chiesa	10	False 	True 	500
+2/11/22 13:53	en	concept	transport corridor AND Germany	10	False 	False 	200
+2/11/22 13:53	en	concept	Bretton Woods	10	False 	False 	500
+2/11/22 13:54	en	concept	transport corridor AND Germany	10	False 	True 	500
+2/11/22 13:54	en	concept	españa	10	False 	False 	200
+2/11/22 13:54	en	concept	portugal and lisbon	10	False 	True 	200
+2/11/22 13:54	fr	concept	development and africa and Europe	10	False 	False 	200
+2/11/22 13:54	it	concept	eresia	10	False 	True 	200
+2/11/22 13:54	en	concept	historic AND transportal	10	False 	True 	200
+2/11/22 13:54	it	concept	eresia	10	False 	False 	200
+2/11/22 13:54	en	concept	historical AND transport	10	False 	True 	500
+2/11/22 13:54	en	concept	catolico	10	False 	False 	200
+2/11/22 13:54	en	concept	catolicismo	10	False 	False 	200
+2/11/22 13:54	en	concept	transport corridor AND Germany	10	False 	False 	200
+2/11/22 13:54	en	concept	portuga*	10	True 	False 	200
+2/11/22 13:54	en	concept	transport corridor Germany	10	False 	False 	200
+2/11/22 13:54	en	concept	démocratie	10	False 	False 	200
+2/11/22 13:54	en	concept	transport corridor Germany	14	False 	False 	200
+2/11/22 13:54	en	concept	portugal not lisbon	10	False 	True 	200
+2/11/22 13:54	fr	concept	German AND army	10	False 	False 	200
+2/11/22 13:55	en	concept	maps	10	False 	False 	200
+2/11/22 13:55	es	concept	Brujería	10	False 	False 	200
+2/11/22 13:55	en	concept	historical AND transport	10	False 	True 	500
+2/11/22 13:55	en	concept	Hospital Germany	14	False 	False 	200
+2/11/22 13:55	es	concept	maps	10	False 	False 	200
+2/11/22 13:55	en	concept	portugal "and" Lisbon	10	False 	True 	200
+2/11/22 13:55	en	concept	Migration*	10	False 	False 	200
+2/11/22 13:55	es	concept	mapa	10	False 	False 	200
+2/11/22 13:55	en	concept	Luigi Barnaba Chiaramonti	10	False 	False 	200
+2/11/22 13:55	es	concept	Map of Madrid	10	False 	False 	500
+2/11/22 13:55	en	concept	Map of Madrid	10	False 	False 	500
+2/11/22 13:55	es	concept	mapa	30	False 	False 	200
+2/11/22 13:55	en	concept	panzer	30	False 	False 	200
+2/11/22 13:55	en	concept	dalmine	10	False 	False 	200
+2/11/22 13:55	en	concept	dalmine	10	False 	False 	200
+2/11/22 13:55	en	concept	démocratie	10	False 	False 	200
+2/11/22 13:55	en	concept	Dalmine	10	False 	False 	200
+2/11/22 13:55	en	concept	Dalmine	10	False 	False 	200
+2/11/22 13:56	en	concept	migration*	10	False 	False 	200
+2/11/22 13:56	en	concept	portugal "and" Lisbon	10	True 	False 	500
+2/11/22 13:56	fr	concept	pope	10	False 	False 	200
+2/11/22 13:56	en	concept	portugal lisbon	10	True 	False 	200
+2/11/22 13:56	en	concept	democracy	10	False 	False 	200
+2/11/22 13:56	en	concept	democracy	10	False 	False 	200
+2/11/22 13:56	es	concept	notaires	30	False 	False 	200
+2/11/22 13:56	de	concept	Ministerium für Staatssicherheit	10	False 	False 	200
+2/11/22 13:56	es	concept	notarios	30	False 	False 	200
+2/11/22 13:56	en	concept	Keynes AND democracy	10	False 	False 	200
+2/11/22 13:56	en	concept	Maps AND First world war	1000	False 	True 	500
+2/11/22 13:56	en	concept	Keyn*	10	False 	False 	200
+2/11/22 13:56	fr	concept	démocratie	10	False 	False 	200
+2/11/22 13:56	it	concept	Prigioniero di guerra	10	False 	False 	200
+2/11/22 13:57	fr	concept	Trafic Routier AND France	10	False 	True 	500
+2/11/22 13:57	he	concept	1910	10	False 	False 	200
+2/11/22 13:57	es	concept	notaires	30	False 	False 	200
+2/11/22 13:57	de	concept	Liquidation AND Deutschland	25	True 	True 	500
+2/11/22 13:57	de	concept	KARTE*	10	False 	False 	200
+2/11/22 13:57	en	concept	transport	10	False 	False 	200
+2/11/22 13:57	es	concept	maps	30	False 	False 	200
+2/11/22 13:57	en	concept	european and development and fund	10	True 	False 	200
+2/11/22 13:57	de	concept	Liquidation AND Deutschland	10	True 	True 	500
+2/11/22 13:57	de	concept	KARTE*	10	False 	False 	200
+2/11/22 13:57	en	concept	transport	50	False 	False 	200
+2/11/22 13:58	de	concept	hospital AND germany	10	False 	True 	500
+2/11/22 13:58	es	concept	napoleon	30	False 	False 	200
+2/11/22 13:58	de	concept	hospital AND germany	10	False 	False 	200
+2/11/22 13:58	de	concept	hospital germany	10	False 	False 	200
+2/11/22 13:58	en	concept	hospital germany	10	False 	False 	200
+2/11/22 13:58	de	concept	KARTE AND Napol*	10	False 	True 	500
+2/11/22 13:58	en	concept	transport	50	False 	False 	200
+2/11/22 13:58	it	concept	Dalmine	10	True 	False 	200
+2/11/22 13:58	en	concept	Napoleon and Bonaparte	10	False 	False 	200
+2/11/22 13:58	en	concept	eric AND hobsbawm	10	False 	True 	500
+2/11/22 13:58	en	concept	eric hobsbawm	10	False 	True 	200
+2/11/22 13:58	fr	concept	Somme	10	False 	False 	200
+2/11/22 13:58	en	concept	eric hobsbawm	10	False 	False 	200
+2/11/22 13:58	it	concept	dalmine	10	False 	False 	200
+2/11/22 13:59	de	concept	KARTE AND Napoleon	10	False 	True 	500
+2/11/22 13:59	en	concept	hospital germany	10	False 	False 	500
+2/11/22 13:59	de	concept	eric hobsbawm	10	False 	False 	200
+2/11/22 13:59	en	concept	hospital germany	10	False 	True 	200
+2/11/22 13:59	de	concept	hospital germany	10	False 	True 	200
+2/11/22 13:59	en	concept	1900 AND Paris	10	False 	False 	200
+2/11/22 13:59	en	concept	migration*	10	False 	False 	200
+2/11/22 13:59	fr	concept	Bataille de la Somme	10	False 	False 	500
+2/11/22 13:59	it	concept	Dalmine	10	False 	False 	200
+2/11/22 13:59	es	concept	Map of Madrid	10	False 	False 	500
+2/11/22 13:59	it	concept	corsini	10	False 	False 	200
+2/11/22 13:59	de	concept	hospital germany	10	False 	True 	200
+2/11/22 13:59	de	concept	hospital germany	10	False 	True 	200
+2/11/22 13:59	de	concept	hospital germany	10	False 	False 	200
+2/11/22 13:59	it	concept	giovanni greppi	10	False 	False 	200
+2/11/22 13:59	de	concept	migration*	10	False 	False 	200
+2/11/22 13:59	de	concept	Kriegsgefangene*	10	False 	False 	200
+2/11/22 14:00	it	concept	techint	10	False 	False 	200
+2/11/22 14:00	en	concept	Dalmine	10	False 	False 	200
+2/11/22 14:00	it	concept	Dalmine	10	False 	False 	200
+2/11/22 14:00	it	concept	rocca	10	False 	False 	200
+2/11/22 14:00	en	concept	Beethoven AND famil*	100	False 	True 	500
+2/11/22 14:00	de	concept	paris conference	10	False 	False 	200
+2/11/22 14:00	it	concept	dalmine	10	False 	False 	200
+2/11/22 14:00	en	concept	paris conference	10	False 	False 	200
+2/11/22 14:00	en	concept	portugal lisbon	17	True 	False 	200
+2/11/22 14:00	en	concept	winston churchill	10	False 	False 	200
+2/11/22 14:00	it	concept	agostino rocca	10	False 	False 	200
+2/11/22 14:01	es	concept	napoleon and maps	30	False 	True 	200
+2/11/22 14:01	fr	concept	1900 AND avril	10	False 	False 	200
+2/11/22 14:01	de	concept	Liquidation	10	True 	True 	200
+2/11/22 14:01	fr	concept	Napoleon	10	True 	True 	200
+2/11/22 14:01	en	concept	portugal lisbon	10	True 	False 	200
+2/11/22 14:01	fr	concept	Napoleon	10	True 	False 	200
+2/11/22 14:01	it	concept	agostino and rocca	10	False 	False 	200
+2/11/22 14:01	de	concept	Beethoven AND famil*	100	False 	True 	500
+2/11/22 14:01	es	concept	napoleon AND maps	30	False 	True 	500
+2/11/22 14:01	de	concept	Lastwagen* OR Lastwägen	10	True 	True 	200
+2/11/22 14:01	de	concept	portugal lisbon	10	True 	False 	200
+2/11/22 14:01	en	concept	battle somme	10	False 	False 	200
+2/11/22 14:01	de	concept	Lastwagen* Lastwägen	10	True 	True 	200
+2/11/22 14:01	en	concept	battle AND somme	10	False 	True 	500
+2/11/22 14:01	de	concept	Lastwagen or Lastwägen	10	True 	True 	200
+2/11/22 14:02	de	concept	Lastwagen OR Lastwägen	10	True 	True 	200
+2/11/22 14:02	de	concept	Lastwagen OR Lastwägen	10	False 	True 	200
+2/11/22 14:02	fr	concept	25 AND avril	10	False 	False 	200
+2/11/22 14:02	en	concept	Notar*	10	False 	False 	200
+2/11/22 14:02	en	concept	Notariat*	10	False 	False 	200
+2/11/22 14:02	fr	concept	Napoleon*	10	True 	False 	200
+2/11/22 14:02	de	concept	Beethoven AND famil*	100	True 	True 	500
+2/11/22 14:02	it	concept	fiat	10	False 	False 	200
+2/11/22 14:02	en	concept	Transport	10	False 	False 	200
+2/11/22 14:02	en	concept	Transport	10	False 	False 	200
+2/11/22 14:02	de	concept	Lastwagen*	10	True 	False 	200
+2/11/22 14:02	it	concept	rocca agostino	10	False 	True 	200
+2/11/22 14:03	it	concept	rocca and agostino	10	False 	True 	200
+2/11/22 14:03	es	concept	napoleon AND maps	10	False 	True 	500
+2/11/22 14:03	en	concept	Transport AND Economics	10	False 	True 	500
+2/11/22 14:03	de	concept	transport	50	False 	False 	200
+2/11/22 14:03	sl	concept	Prešern	10	False 	False 	200
+2/11/22 14:03	fr	concept	Napoleon*	10	True 	False 	200
+2/11/22 14:03	it	concept	architettura and industria	10	False 	True 	200
+2/11/22 14:03	en	concept	Econom* 	10	False 	True 	200
+2/11/22 14:04	en	concept	Econom* 	10	False 	False 	200
+2/11/22 14:04	it	concept	architettura industria	10	False 	False 	200
+2/11/22 14:04	de	concept	transport AND historic	50	False 	False 	200
+2/11/22 14:04	it	concept	company town	10	False 	False 	200
+2/11/22 14:04	en	concept	Emperor	10	False 	False 	200
+2/11/22 14:04	en	concept	Econom* 	10	True 	False 	200
+2/11/22 14:04	it	concept	company town	10	False 	True 	200
+2/11/22 14:04	en	concept	Econom* 	10	False 	False 	200
+2/11/22 14:04	en	concept	Econom* 	10	True 	False 	200
+2/11/22 14:04	en	concept	company and town	10	False 	False 	200
+2/11/22 14:04	de	concept	Pope Francis	100	True 	True 	200
+2/11/22 14:05	de	concept	Pope Francis	100	True 	False 	200
+2/11/22 14:05	en	concept	Econom* AND Transport	10	False 	True 	500
+2/11/22 14:05	en	concept	Samuelson	10	False 	False 	200
+2/11/22 14:05	de	concept	march	10	True 	False 	200
+2/11/22 14:05	en	concept	cathedral AND window	10	False 	True 	500
+2/11/22 14:05	en	concept	greppi	10	False 	False 	200
+2/11/22 14:05	en	concept	Economics AND Transport	10	False 	True 	500
+2/11/22 14:05	en	concept	Marsaillaise	60	False 	False 	200
+2/11/22 14:05	en	concept	war AND treason	10	False 	True 	500
+2/11/22 14:05	it	concept	greppi	10	False 	False 	200
+2/11/22 14:05	en	concept	war AND treason	8	False 	True 	500
+2/11/22 14:06	en	concept	Lake Rusalka	10	False 	False 	200
+2/11/22 14:06	en	concept	alto tradimento	10	False 	True 	200
+2/11/22 14:06	en	concept	notaries	10	True 	False 	200
+2/11/22 14:06	en	concept	alto tradimento	10	False 	False 	200
+2/11/22 14:06	de	concept	Pope AND Francis	100	True 	True 	500
+2/11/22 14:06	en	concept	cathedral* AND window*	10	False 	True 	500
+2/11/22 14:06	en	concept	Napoleon I AND "World War I"	10	False 	True 	200
+2/11/22 14:06	en	concept	archduke	10	False 	False 	200
+2/11/22 14:06	en	concept	Slavery	10	False 	False 	200
+2/11/22 14:07	de	concept	Kampagne	10	False 	False 	200
+2/11/22 14:07	de	concept	krieg	10	False 	False 	200
+2/11/22 14:07	de	concept	krieg	10	False 	False 	200
+2/11/22 14:07	fr	concept	25 AND avril	10	False 	True 	200
+2/11/22 14:07	de	concept	*migration*	10	False 	False 	200
+2/11/22 14:07	de	concept	Pope AND Francis	10	False 	True 	500
+2/11/22 14:07	de	concept	Schlacht AND somme	10	False 	True 	500
+2/11/22 14:07	fr	concept	camion*	10	True 	False 	200
+2/11/22 14:07	en	concept	greppi	10	False 	False 	200
+2/11/22 14:08	de	concept	Reichskolonialamt%3AF1538359	50	False 	False 	200
+2/11/22 14:08	de	concept	greppi	10	False 	False 	200
+2/11/22 14:08	de	concept	Kriegsschäden	10	False 	False 	200
+2/11/22 14:08	de	concept	Schlacht UND somme	10	False 	True 	200
+2/11/22 14:08	de	concept	Schlacht UND somme	10	False 	True 	200
+2/11/22 14:08	es	concept	esclavitud	10	False 	False 	200
+2/11/22 14:08	es	concept	greppi	10	False 	False 	200
+2/11/22 14:08	fi	concept	greppi	10	False 	False 	200
+2/11/22 14:08	fr	concept	greppi	10	False 	False 	200
+2/11/22 14:08	he	concept	greppi	10	False 	False 	200
+2/11/22 14:08	sl	concept	Glavna direkcija za cestni promet LRS	10	False 	False 	200
+2/11/22 14:08	sl	concept	Glavna direkcija za cestni promet LRS	10	False 	False 	200
+2/11/22 14:08	de	concept	historic AND transport	50	False 	False 	200
+2/11/22 14:08	sl	concept	Glavna direkcija za cestni promet LRS	10	False 	False 	200
+2/11/22 14:08	de	concept	Kriegsschäd*	10	False 	False 	200
+2/11/22 14:08	en	concept	religious	10	False 	True 	200
+2/11/22 14:08	en	concept	religious	10	False 	False 	200
+2/11/22 14:08	de	concept	Wilhelm 	10	False 	False 	200
+2/11/22 14:08	en	concept	slavery AND world war	10	False 	True 	500
+2/11/22 14:08	fr	concept	Guerres de Coalitions	10	False 	False 	200
+2/11/22 14:08	en	concept	Glavna direkcija za cestni promet LRS	10	False 	False 	200
+2/11/22 14:08	it	concept	greppi	10	False 	False 	200
+2/11/22 14:08	de	concept	Kriegssch*	10	False 	False 	200
+2/11/22 14:09	en	concept	historic AND transport	50	False 	False 	200
+2/11/22 14:09	de	concept	Kriegs*	10	False 	True 	200
+2/11/22 14:09	en	concept	popish	10	False 	False 	200
+2/11/22 14:09	en	concept	Arhiv Republike Slovenije	10	False 	False 	500
+2/11/22 14:09	de	concept	Kriegs*	10	False 	True 	200
+2/11/22 14:09	de	concept	Kriegs*	10	False 	False 	200
+2/11/22 14:09	fr	concept	Guerres de Coalitions	10	False 	False 	500
+2/11/22 14:09	sl	concept	Arhiv Republike Slovenije	10	False 	False 	500
+2/11/22 14:09	de	concept	may AND 1st	10	False 	True 	200
+2/11/22 14:09	sl	concept	Arhiv Republike Slovenije	10	False 	True 	200
+2/11/22 14:09	de	concept	may AND 1	10	False 	True 	200
+2/11/22 14:09	sl	concept	Arhiv Republike Slovenije	10	False 	True 	200
+2/11/22 14:09	de	concept	winston churchill	10	False 	False 	200
+2/11/22 14:09	ru	concept	рабство	10	False 	True 	200
+2/11/22 14:09	en	concept	papal	10	False 	False 	200
+2/11/22 14:09	ru	concept	рабство	10	False 	False 	200
+2/11/22 14:09	de	concept	may AND one	10	False 	True 	500
+2/11/22 14:09	sl	concept	Arhiv Republike Slovenije	10	False 	False 	200
+2/11/22 14:09	en	concept	historic AND transport	50	False 	True 	500
+2/11/22 14:09	de	concept	Kriegsschäden	10	False 	False 	200
+2/11/22 14:09	en	concept	may AND first	10	False 	True 	500
+2/11/22 14:09	de	concept	Wilhelm 	20	False 	False 	200
+2/11/22 14:10	de	concept	Max Weber	10	False 	False 	500
+2/11/22 14:10	en	concept	25 AND April	10	False 	False 	200
+2/11/22 14:10	en	concept	25 AND April	10	False 	True 	200
+2/11/22 14:10	de	concept	Guerres de Coalitions	10	False 	True 	200
+2/11/22 14:10	en	concept	25 AND April	10	False 	False 	200
+2/11/22 14:10	en	concept	25-Apr	10	False 	False 	200
+2/11/22 14:10	en	concept	slavery AND world war	10	False 	True 	500
+2/11/22 14:10	en	concept	25 April portugal	10	False 	False 	200
+2/11/22 14:10	de	concept	Guerres de Coalitions	10	False 	False 	200
+2/11/22 14:10	en	concept	First World War%09	10	False 	False 	200
+2/11/22 14:10	en	concept	25 AND April AND Portugal	10	False 	False 	200
+2/11/22 14:10	en	concept	25 AND April AND Portugal	10	False 	False 	200
+2/11/22 14:10	en	concept	25 AND avril	10	False 	False 	200
+2/11/22 14:11	en	concept	First AND May	10	False 	True 	500
+2/11/22 14:11	en	concept	development and africa and Europe	10	False 	True 	200
+2/11/22 14:11	en	concept	development and africa and Europe	10	False 	True 	200
+2/11/22 14:11	en	concept	25 AND April AND Portugal	10	False 	True 	500
+2/11/22 14:11	en	concept	April AND Portugal	10	False 	True 	500
+2/11/22 14:11	it	concept	greppi	10	False 	False 	200
+2/11/22 14:11	en	concept	Portugal	10	False 	True 	200
+2/11/22 14:11	en	concept	Portugal	10	False 	True 	200
+2/11/22 14:11	en	concept	Portugal	10	False 	False 	200
+2/11/22 14:11	en	concept	First World War%09	100	False 	False 	200
+2/11/22 14:11	fr	concept	Portugal	10	False 	False 	200
+2/11/22 14:11	en	concept	utrecht	50	False 	True 	200
+2/11/22 14:12	en	concept	utrecht	50	False 	False 	200
+2/11/22 14:12	de	concept	Krankenhaus AND Germany	10	False 	False 	200
+2/11/22 14:12	en	concept	Portugal	10	True 	False 	200
+2/11/22 14:12	fr	concept	plan	10	False 	False 	200
+2/11/22 14:12	fr	concept	plan de la ville	10	False 	False 	200
+2/11/22 14:12	de	concept	Gemeindearchiv Schützingen	10	False 	False 	200
+2/11/22 14:12	en	concept	development and africa and Europe	10	False 	False 	200
+2/11/22 14:12	fr	concept	plan de la ville	10	False 	False 	200
+2/11/22 14:13	en	concept	may OR first	10	False 	True 	200
+2/11/22 14:13	en	concept	development and africa and Europe	10	False 	True 	200
+2/11/22 14:13	de	concept	Gemeindearchiv OR Schützingen	10	False 	True 	200
+2/11/22 14:13	fr	concept	carte	10	False 	False 	200
+2/11/22 14:13	en	concept	May or first	100	False 	True 	200
+2/11/22 14:13	en	concept	utrecht	50	False 	False 	200
+2/11/22 14:13	de	concept	Gemeindearchiv Schützingen	10	False 	True 	200
+2/11/22 14:13	fr	concept	frontière	10	False 	False 	200
+2/11/22 14:14	it	concept	greppi	10	False 	False 	200
+2/11/22 14:14	en	concept	may OR first	100	False 	True 	200
+2/11/22 14:14	fr	concept	région	10	False 	False 	200
+2/11/22 14:14	en	concept	hillman	50	False 	False 	200
+2/11/22 14:14	en	concept	PORTUGAL AND LISBON	10	True 	True 	500
+2/11/22 14:14	en	concept	PORTUGAL AND LISBON	10	False 	True 	500
+2/11/22 14:14	fr	concept	carte	10	False 	False 	200
+2/11/22 14:14	fr	concept	liberté	10	False 	False 	200
+2/11/22 14:15	en	concept	Citroën	50	False 	False 	200
+2/11/22 14:15	fr	concept	Guerres de Coalitions	10	False 	False 	500
+2/11/22 14:15	en	concept	Health or Transport	100	False 	True 	200
+2/11/22 14:15	fr	concept	Guerres de Coalitions	10	False 	False 	500
+2/11/22 14:15	en	concept	APRIL AND PORTUGAL	10	False 	True 	500
+2/11/22 14:15	fr	concept	Autres instruments de recherche	10	False 	False 	500
+2/11/22 14:15	fr	concept	Guerres de Coalitions	10	False 	True 	200
+2/11/22 14:15	en	concept	APRIL AND PORTUGAL	10	False 	True 	500
+2/11/22 14:15	en	concept	APRIL AND PORTUGAL	10	False 	True 	500
+2/11/22 14:15	en	concept	europe and dévelopment and fond	10	True 	False 	200
+2/11/22 14:15	en	concept	PORTUGAL AND LISBON	10	True 	False 	200
+2/11/22 14:15	en	concept	europe and dévelopment and fond	10	False 	True 	200
+2/11/22 14:15	en	concept	Health OR Transport	100	False 	True 	200
+2/11/22 14:15	fr	concept	europe and dévelopment and fond	10	False 	True 	200
+2/11/22 14:15	en	concept	winston churchill AND france	10	False 	False 	200
+2/11/22 14:16	it	concept	Luigi Barnaba Chiaramonti	10	False 	False 	200
+2/11/22 14:16	en	concept	may OR first	100	True 	True 	200
+2/11/22 14:16	en	concept	rolls AND royes	50	False 	False 	200
+2/11/22 14:16	en	concept	rolls AND royce	50	False 	False 	200
+2/11/22 14:16	en	concept	rolls AND royce	50	False 	False 	200
+2/11/22 14:17	en	concept	APRIL AND PORTUGAL	10	False 	True 	500
+2/11/22 14:17	fr	concept	Développement and Afrique 	10	True 	True 	200
+2/11/22 14:17	fr	concept	Développement and Afrique 	10	False 	True 	200
+2/11/22 14:17	fr	concept	Développement and Afrique 	10	True 	False 	200
+2/11/22 14:17	en	concept	April AND Portugal	10	False 	True 	500
+2/11/22 14:17	it	concept	DALMINE	10	False 	False 	200
+2/11/22 14:17	en	concept	winston churchill	10	False 	False 	500
+2/11/22 14:17	de	concept	Familienwahlrecht	10	False 	False 	200
+2/11/22 14:17	en	concept	winston churchill AND france	10	False 	False 	200
+2/11/22 14:18	de	concept	Russia AND Napoleon	10	False 	True 	500
+2/11/22 14:18	en	concept	Russia AND Napoleon	10	False 	True 	500
+2/11/22 14:18	en	concept	rolls AND royce	50	False 	True 	500
+2/11/22 14:18	en	concept	Russia AND Napoleon	10	False 	True 	500
+2/11/22 14:18	en	concept	Kandó AND train	100	True 	True 	200
+2/11/22 14:18	en	concept	Kandó AND train	100	False 	True 	200
+2/11/22 14:18	de	concept	Gesundheitsamt	10	False 	False 	200
+2/11/22 14:18	en	concept	rolls royce	50	False 	True 	200
+2/11/22 14:18	de	concept	Kaiser AND empereur	20	False 	True 	500
+2/11/22 14:18	en	concept	rolls royce	50	False 	False 	500
+2/11/22 14:18	fr	concept	empereur	20	False 	False 	200
+2/11/22 14:18	en	concept	MÁV AND train	100	True 	True 	500
+2/11/22 14:19	en	concept	rolls-royce	50	False 	False 	500
+2/11/22 14:20	en	concept	Cape town	10	False 	False 	200
+2/11/22 14:20	en	concept	mercedarian*	10	False 	False 	200
+2/11/22 14:20	en	concept	london	10	True 	False 	200
+2/11/22 14:20	it	concept	Luigi Barnaba Chiaramonti	10	False 	False 	200
+2/11/22 14:21	fr	concept	Hortense de Beauharnais	10	False 	False 	200
+2/11/22 14:21	de	concept	 Gustav Nachtigal	10	False 	False 	200
+2/11/22 14:21	de	concept	rolls-royce	50	False 	False 	200
+2/11/22 14:21	fr	concept	rolls-royce	50	False 	False 	500
+2/11/22 14:21	fr	concept	Hortense de Beauharnais	10	False 	False 	200
+2/11/22 14:21	fr	concept	rolls royce	50	False 	False 	500
+2/11/22 14:21	de	concept	 Gustav Nachtigal	10	False 	False 	200
+2/11/22 14:21	en	concept	paris	10	True 	False 	200
+2/11/22 14:22	fr	concept	Hortense de Beauharnais	10	False 	False 	200
+2/11/22 14:22	en	concept	päpstlich	10	False 	False 	200
+2/11/22 14:22	de	concept	päpstlich	10	False 	False 	200
+2/11/22 14:22	en	concept	churchil	10	True 	False 	200
+2/11/22 14:22	fr	concept	palace	10	True 	False 	200
+2/11/22 14:22	de	concept	 "Gustav Nachtigal"	10	False 	False 	200
+2/11/22 14:23	fr	concept	napoleon	10	True 	False 	200
+2/11/22 14:23	en	concept	Right of way	10	False 	True 	200
+2/11/22 14:23	en	concept	winston churchill AND france	10	True 	False 	200
+2/11/22 14:23	de	concept	winston churchill AND france	10	False 	False 	200
+2/11/22 14:25	en	concept	rolls royce	50	False 	False 	500
+2/11/22 14:26	en	concept	portugal and lisbon	10	True 	False 	200
+2/11/22 14:26	en	concept	portugal and lisbon	10	True 	False 	200
+2/11/22 14:26	fr	concept	napoleon	10	True 	False 	200
+2/11/22 14:26	fr	concept	napoleon	10	True 	False 	200
+2/11/22 14:26	en	concept	dalmine	10	False 	False 	500
+2/11/22 14:26	en	concept	dalmine	10	False 	False 	200
+2/11/22 14:26	en	concept	dalmine	10	False 	False 	200
+2/11/22 14:27	en	concept	Churchillian	10	False 	False 	200
+2/11/22 14:27	en	concept	rolls AND royce	50	False 	True 	500
+2/11/22 14:27	en	concept	Churchillian	10	False 	False 	200
+2/11/22 14:27	fr	concept	French revolution	10	False 	False 	500
+2/11/22 14:27	it	concept	Greppi	10	False 	False 	200
+2/11/22 14:27	fr	concept	French revolution	10	False 	False 	200
+2/11/22 14:27	en	concept	French revolution	10	False 	False 	200
+2/11/22 14:27	fr	concept	bastille	10	False 	False 	200
+2/11/22 14:28	en	concept	portugal	10	False 	False 	200
+2/11/22 14:42	en	concept	train	10	False 	False 	200
+2/11/22 13:36	en	entity	Benedetto Croce	10	True 	False 	200
+2/11/22 13:37	en	entity	Fascism	10	True 	False 	500
+2/11/22 13:38	de	entity	Napoleon	10	False 	False 	500
+2/11/22 13:38	de	entity	Transport*	10	False 	False 	500
+2/11/22 13:38	es	entity	Inquisición	10	True 	False 	500
+2/11/22 13:39	en	entity	underground AND london	10	True 	False 	200
+2/11/22 13:39	en	entity	underground AND london	10	False 	False 	200
+2/11/22 13:39	en	entity	Inquisition	10	False 	False 	200
+2/11/22 13:39	en	entity	bretton woods	30	False 	False 	500
+2/11/22 13:39	ru	entity	Петр I	10	False 	False 	500
+2/11/22 13:39	en	entity	bretton woods	30	False 	False 	200
+2/11/22 13:40	ru	entity	Россия	10	False 	False 	500
+2/11/22 13:40	en	entity	Russian literature' 	10	False 	False 	500
+2/11/22 13:40	en	entity	Russian literature	10	False 	False 	500
+2/11/22 13:41	en	entity	notaries	10	True 	False 	500
+2/11/22 13:41	en	entity	Inquisition	10	True 	False 	500
+2/11/22 13:42	en	entity	bretton woods	30	True 	False 	500
+2/11/22 13:42	en	entity	Luigi Barnaba Chiaramonti	10	False 	False 	500
+2/11/22 13:42	en	entity	Russian AND literature	10	False 	False 	500
+2/11/22 13:42	en	entity	bretton woods	30	True 	False 	500
+2/11/22 13:42	en	entity	bretton woods	30	False 	False 	200
+2/11/22 13:43	en	entity	bretton woods	30	True 	False 	200
+2/11/22 13:44	en	entity	epidemic	10	False 	False 	200
+2/11/22 13:44	en	entity	dalmine	10	True 	False 	200
+2/11/22 13:44	en	entity	dalmine	10	False 	False 	200
+2/11/22 13:44	en	entity	dalmine	10	False 	False 	200
+2/11/22 13:45	en	entity	rocca AND agostino 	10	False 	True 	200
+2/11/22 13:45	en	entity	rocca agostino	10	False 	True 	200
+2/11/22 13:45	en	entity	rocca	10	False 	True 	200
+2/11/22 13:45	en	entity	rocca	10	False 	True 	200
+2/11/22 13:46	en	entity	tenaris	10	False 	True 	200
+2/11/22 13:46	en	entity	steinthal	10	False 	True 	200
+2/11/22 13:47	en	entity	mannesmann	10	False 	True 	200
+2/11/22 13:47	en	entity	mannesmann	10	False 	False 	200
+2/11/22 13:47	en	entity	John Paul	10	False 	False 	500
+2/11/22 13:47	en	entity	heritage	10	True 	False 	500
+2/11/22 13:47	en	entity	John Paul	10	False 	False 	500
+2/11/22 13:47	en	entity	techint	10	False 	False 	500
+2/11/22 13:47	en	entity	Napoleon I AND World War I	10	False 	True 	500
+2/11/22 13:47	en	entity	heritage and transport	10	False 	True 	200
+2/11/22 13:47	en	entity	electric vehicle	10	False 	False 	500
+2/11/22 13:47	en	entity	John Paul	10	False 	False 	500
+2/11/22 13:48	en	entity	tenaris	10	False 	False 	200
+2/11/22 13:48	en	entity	Kodály Zoltán	100	False 	False 	500
+2/11/22 13:48	en	entity	Napoleon I 	10	False 	False 	500
+2/11/22 13:48	en	entity	Kodály	100	False 	False 	200
+2/11/22 13:48	en	entity	Luigi Barnaba Chiaramonti	10	False 	False 	500
+2/11/22 13:48	en	entity	Napoleon	10	False 	False 	500
+2/11/22 13:48	en	entity	Napoleon*	10	False 	False 	200
+2/11/22 13:48	en	entity	Beethoven	100	False 	False 	200
+2/11/22 13:48	en	entity	Napoleon*	10	False 	False 	200
+2/11/22 13:49	en	entity	Maps*	10	False 	False 	500
+2/11/22 13:49	en	entity	Napoleon*	10	False 	False 	200
+2/11/22 13:49	en	entity	Beethoven music	100	False 	False 	500
+2/11/22 13:49	en	entity	John Paul	10	False 	False 	500
+2/11/22 13:49	en	entity	Петр I	10	False 	False 	200
+2/11/22 13:49	en	entity	Maps*	10	False 	False 	500
+2/11/22 13:49	en	entity	Ottoman	10	False 	False 	500
+2/11/22 13:49	en	entity	Beethoven	100	False 	False 	200
+2/11/22 13:50	en	entity	portugal	10	True 	False 	500
+2/11/22 13:50	en	entity	Ford AND Motor	10	False 	True 	500
+2/11/22 13:50	en	entity	Ford AND Motor AND Company	10	False 	True 	500
+2/11/22 13:50	en	entity	Ford AND Motor AND Company	10	True 	True 	500
+2/11/22 13:50	it	entity	John Paul	10	False 	False 	200
+2/11/22 13:50	en	entity	Beethoven AND zene	100	False 	False 	500
+2/11/22 13:50	en	entity	tenaris	10	False 	False 	500
+2/11/22 13:50	he	entity	פליטים	10	False 	False 	500
+2/11/22 13:50	en	entity	train	10	False 	False 	500
+2/11/22 13:51	de	entity	Bundeskanzler 	10	False 	False 	500
+2/11/22 13:51	en	entity	John Paul	10	False 	False 	500
+2/11/22 13:51	de	entity	Beethoven AND Musik	100	False 	False 	500
+2/11/22 13:51	sl	entity	LRS	10	False 	False 	500
+2/11/22 13:51	de	entity	Beethoven UND Musik	100	False 	False 	500
+2/11/22 13:51	sl	entity	Slovenia	10	False 	False 	500
+2/11/22 13:51	de	entity	Beethoven UND Musik	100	False 	True 	200
+2/11/22 13:51	de	entity	Beethoven AND Musik	100	False 	True 	500
+2/11/22 13:51	sl	entity	Slovenski	10	False 	False 	500
+2/11/22 13:51	it	entity	John Paul	10	False 	False 	200
+2/11/22 13:51	sl	entity	Slovenian	10	False 	False 	200
+2/11/22 13:51	it	entity	Pope Paul	10	False 	False 	500
+2/11/22 13:52	it	entity	Pope and Paul	10	False 	True 	200
+2/11/22 13:52	de	entity	Россия	10	False 	False 	200
+2/11/22 13:52	en	entity	Beethoven AND Musik	100	False 	True 	200
+2/11/22 13:52	it	entity	Pope AND Paul	10	False 	True 	200
+2/11/22 13:52	de	entity	Ford AND Motor AND Company	10	False 	False 	500
+2/11/22 13:52	fr	entity	Россия AND армия	10	False 	False 	500
+2/11/22 13:53	en	entity	Pope AND Paul	10	False 	True 	500
+2/11/22 13:53	de	entity	Bundesregierung	10	False 	False 	500
+2/11/22 13:53	it	entity	eresia AND chiesa	10	False 	True 	200
+2/11/22 13:53	de	entity	Ford*	10	False 	False 	200
+2/11/22 13:53	en	entity	Luigi Barnaba Chiaramonti	10	False 	False 	500
+2/11/22 13:54	de	entity	Ford*	10	False 	False 	200
+2/11/22 13:54	en	entity	Napoleon	10	False 	False 	200
+2/11/22 13:54	de	entity	Enver*	10	False 	False 	200
+2/11/22 13:55	en	entity	transport corridor Germany	14	False 	False 	500
+2/11/22 13:55	de	entity	Kriegsgefangene	10	False 	False 	200
+2/11/22 13:55	en	entity	Enver*	10	False 	False 	200
+2/11/22 13:55	en	entity	Hospital Germany	14	False 	False 	500
+2/11/22 13:55	en	entity	John Paul	10	False 	False 	500
+2/11/22 13:55	en	entity	German AND army	10	False 	False 	500
+2/11/22 13:55	de	entity	Ministerium* für Staatssicherheit	100	False 	False 	500
+2/11/22 13:55	en	entity	pope	10	False 	False 	500
+2/11/22 13:55	de	entity	Ministerium für Staatssicherheit	100	False 	False 	500
+2/11/22 13:56	fr	entity	pope	10	False 	False 	500
+2/11/22 13:56	de	entity	Ministerium für Staatssicherheit	10	False 	False 	500
+2/11/22 13:56	en	entity	German AND army	10	False 	True 	500
+2/11/22 13:56	en	entity	Keyn*	10	False 	False 	200
+2/11/22 13:56	en	entity	Keyn*	10	False 	False 	500
+2/11/22 13:56	es	entity	notarios	30	False 	False 	500
+2/11/22 13:56	en	entity	ferdinand	10	False 	False 	200
+2/11/22 13:56	en	entity	1910	10	False 	False 	500
+2/11/22 13:56	en	entity	keynes	10	False 	False 	200
+2/11/22 13:57	es	entity	notarios	30	False 	False 	500
+2/11/22 13:57	en	entity	transport	10	False 	True 	200
+2/11/22 13:57	es	entity	notaires	30	False 	False 	500
+2/11/22 13:57	en	entity	transport	10	False 	False 	500
+2/11/22 13:57	en	entity	keynes	10	True 	False 	500
+2/11/22 13:57	he	entity	1900	10	False 	False 	200
+2/11/22 13:58	en	entity	eric hobsbawm	10	False 	False 	500
+2/11/22 13:58	en	entity	eric and hobsbawm	10	False 	False 	500
+2/11/22 13:58	en	entity	eric and hobsbawm	10	False 	True 	200
+2/11/22 13:58	en	entity	eric AND hobsbawm	10	False 	True 	500
+2/11/22 13:58	en	entity	cavell	10	False 	False 	500
+2/11/22 13:58	en	entity	Beethoven AND family	100	False 	True 	500
+2/11/22 13:58	en	entity	1900 AND Paris	10	False 	True 	500
+2/11/22 13:58	en	entity	Beethoven* AND family	100	False 	True 	500
+2/11/22 13:59	en	entity	waterloo	10	False 	False 	500
+2/11/22 13:59	en	entity	1900 AND Paris	10	False 	False 	500
+2/11/22 13:59	en	entity	Beethoven AND famil*	100	False 	True 	500
+2/11/22 13:59	it	entity	Dalmine	10	False 	False 	500
+2/11/22 13:59	de	entity	KARTE AND Napoleon	10	False 	True 	500
+2/11/22 13:59	en	entity	somme	10	False 	False 	500
+2/11/22 13:59	en	entity	berlin	10	False 	False 	500
+2/11/22 13:59	de	entity	berlin	10	False 	False 	500
+2/11/22 13:59	en	entity	Beethoven AND famil*	100	False 	True 	500
+2/11/22 14:00	en	entity	Democracy	10	False 	True 	200
+2/11/22 14:00	en	entity	Democracy	10	False 	False 	500
+2/11/22 14:00	de	entity	paris conference	10	False 	False 	500
+2/11/22 14:00	it	entity	dalmine	10	False 	False 	500
+2/11/22 14:00	en	entity	winston churchill	10	False 	False 	500
+2/11/22 14:00	fr	entity	1900 AND avril	10	False 	False 	500
+2/11/22 14:01	it	entity	rocca	10	False 	False 	500
+2/11/22 14:01	it	entity	rocca	10	True 	False 	500
+2/11/22 14:01	de	entity	Liquidation	10	True 	True 	200
+2/11/22 14:01	de	entity	Liquidation AND Deutschland	10	True 	True 	500
+2/11/22 14:01	de	entity	Liquidation	10	True 	True 	200
+2/11/22 14:01	en	entity	rocca	10	True 	False 	200
+2/11/22 14:01	en	entity	rocca	10	True 	False 	200
+2/11/22 14:01	en	entity	battle AND somme	10	False 	True 	200
+2/11/22 14:02	en	entity	Transport	10	False 	False 	200
+2/11/22 14:02	en	entity	transport	50	False 	False 	200
+2/11/22 14:03	en	entity	Rocca	10	True 	False 	200
+2/11/22 14:03	de	entity	Rocca	10	True 	False 	500
+2/11/22 14:03	es	entity	Rocca	10	True 	False 	500
+2/11/22 14:03	de	entity	transport	50	False 	False 	500
+2/11/22 14:03	es	entity	napoleon AND maps	10	False 	True 	500
+2/11/22 14:03	fi	entity	Rocca	10	True 	False 	500
+2/11/22 14:03	fr	entity	Napoleon*	10	True 	False 	200
+2/11/22 14:03	it	entity	Rocca	10	True 	False 	500
+2/11/22 14:03	it	entity	Rocca	10	False 	False 	500
+2/11/22 14:03	en	entity	napoleon AND maps	10	False 	True 	500
+2/11/22 14:04	en	entity	Rocca	10	False 	False 	200
+2/11/22 14:04	sl	entity	Prešern	10	False 	False 	200
+2/11/22 14:04	es	entity	napoleon AND maps	10	False 	True 	500
+2/11/22 14:04	it	entity	Rocca	10	False 	False 	500
+2/11/22 14:04	en	entity	Samuelson	10	False 	False 	200
+2/11/22 14:04	it	entity	Dalmine	10	False 	False 	200
+2/11/22 14:05	en	entity	Dalmine	10	False 	False 	200
+2/11/22 14:05	de	entity	Dalmine	10	False 	False 	500
+2/11/22 14:05	en	entity	franz ferdinand	10	False 	False 	500
+2/11/22 14:05	de	entity	franz ferdinand	10	False 	False 	200
+2/11/22 14:05	en	entity	cathedral AND window	10	False 	True 	500
+2/11/22 14:05	fr	entity	25 AND avril	10	False 	False 	500
+2/11/22 14:05	en	entity	napole*	10	False 	True 	200
+2/11/22 14:05	en	entity	napoleon	10	False 	True 	200
+2/11/22 14:05	en	entity	franz ferdinand	10	False 	False 	200
+2/11/22 14:06	en	entity	napoleon	10	True 	False 	500
+2/11/22 14:06	de	entity	napoleon	10	True 	False 	500
+2/11/22 14:06	en	entity	cathedral* AND window*	10	False 	True 	500
+2/11/22 14:06	it	entity	Rocca	10	False 	False 	500
+2/11/22 14:06	de	entity	Pope AND Francis	100	True 	True 	500
+2/11/22 14:06	es	entity	napoleon	10	True 	False 	500
+2/11/22 14:06	de	entity	Pope AND Francis	100	True 	True 	500
+2/11/22 14:06	en	entity	Pope AND Francis	10	False 	True 	500
+2/11/22 14:06	en	entity	archduke	10	False 	False 	500
+2/11/22 14:06	en	entity	cathedral* AND window*	10	False 	True 	500
+2/11/22 14:06	en	entity	Pope AND Francis	10	True 	True 	500
+2/11/22 14:06	en	entity	Pope AND Francis	10	False 	True 	500
+2/11/22 14:06	de	entity	Pope AND Francis	10	False 	True 	500
+2/11/22 14:07	en	entity	Marsaillaise	60	True 	False 	500
+2/11/22 14:07	fr	entity	Marsaillaise	60	True 	False 	200
+2/11/22 14:07	fr	entity	Marsaillaise	10	True 	False 	200
+2/11/22 14:07	fr	entity	Marsaillaise	10	True 	False 	200
+2/11/22 14:07	ru	entity	Pope AND Francis	10	False 	True 	500
+2/11/22 14:07	de	entity	Schlacht AND somme	10	False 	True 	500
+2/11/22 14:08	he	entity	greppi	10	False 	False 	200
+2/11/22 14:08	de	entity	Wilhelm AND Kaiser	10	True 	True 	500
+2/11/22 14:08	it	entity	greppi	10	False 	False 	500
+2/11/22 14:09	es	entity	German Democratic Republic	10	True 	False 	200
+2/11/22 14:09	ru	entity	German Democratic Republic	10	True 	False 	500
+2/11/22 14:09	fr	entity	25 AND avril	10	False 	True 	500
+2/11/22 14:09	ru	entity	German Democratic Republic	10	False 	False 	200
+2/11/22 14:09	sl	entity	Arhiv Republike Slovenije	10	False 	False 	200
+2/11/22 14:10	ru	entity	рабство	10	False 	False 	500
+2/11/22 14:10	fr	entity	25 AND avril	10	False 	False 	200
+2/11/22 14:11	fr	entity	Guerres de Coalitions	10	False 	False 	200
+2/11/22 14:11	en	entity	First AND May	10	False 	True 	200
+2/11/22 14:11	en	entity	May AND First	10	False 	True 	200
+2/11/22 14:11	it	entity	greppi	10	False 	False 	200
+2/11/22 14:11	en	entity	May OR First	10	False 	True 	200
+2/11/22 14:12	de	entity	Krankenhaus AND Germany	10	False 	True 	500
+2/11/22 14:12	it	entity	greppi	10	True 	False 	500
+2/11/22 14:12	en	entity	First OR May	10	False 	True 	200
+2/11/22 14:12	en	entity	Salazar	10	True 	False 	200
+2/11/22 14:13	fr	entity	Développement et Afrique et europe	10	False 	True 	200
+2/11/22 14:14	en	entity	Antonio Salazar	10	True 	False 	200
+2/11/22 14:14	en	entity	Portugal AND Lisbon	10	False 	True 	200
+2/11/22 14:15	en	entity	winston churchill	10	False 	False 	500
+2/11/22 14:15	fr	entity	Département de la Santé	10	False 	True 	200
+2/11/22 14:15	fr	entity	Autres instruments de recherche	10	False 	False 	200
+2/11/22 14:15	fr	entity	Département de la Santé	10	False 	True 	200
+2/11/22 14:16	fr	entity	Département de la Santé	10	False 	False 	200
+2/11/22 14:16	fr	entity	Développement and Afrique and Europe 	10	False 	True 	200
+2/11/22 14:16	fr	entity	Développement and Afrique 	10	False 	True 	200
+2/11/22 14:16	fr	entity	Développement and Afrique 	10	True 	True 	200
+2/11/22 14:16	fr	entity	Guerres de Coalitions	10	True 	True 	200
+2/11/22 14:17	de	entity	Koalitionskriege	10	True 	True 	200
+2/11/22 14:17	de	entity	Kaiser	20	False 	False 	200
+2/11/22 14:17	de	entity	Koalitionskriege	10	False 	False 	200
+2/11/22 14:17	de	entity	Familienwahlrecht	10	False 	False 	500
+2/11/22 14:18	de	entity	Familienwahlrecht	10	False 	False 	200
+2/11/22 14:18	de	entity	Kaiser AND empereur	20	True 	True 	500
+2/11/22 14:18	en	entity	Russia AND Napoleon	10	False 	False 	500
+2/11/22 14:18	de	entity	Hortense de Beauharnais	10	True 	False 	200
+2/11/22 14:19	en	entity	Russia AND Napoleon	10	False 	True 	200
+2/11/22 14:19	fr	entity	Hortense de Beauharnais	10	True 	False 	500
+2/11/22 14:19	it	entity	Luigi Barnaba Chiaramonti	10	False 	False 	200
+2/11/22 14:19	en	entity	mercedarian*	10	False 	True 	200
+2/11/22 14:19	en	entity	mercedarian*	10	False 	False 	200
+2/11/22 14:20	fr	entity	Hortense de Beauharnais	10	False 	False 	200
+2/11/22 14:21	fr	entity	rousseau	10	False 	False 	200
+2/11/22 14:21	de	entity	 Gustav Nachtigal	10	False 	False 	200
+2/11/22 14:21	de	entity	 Gustav Nachtigal	10	True 	False 	500
+2/11/22 14:21	de	entity	 Gustav Nachtigal	10	True 	False 	500
+2/11/22 14:21	de	entity	 Gustav Nachtigal	10	False 	False 	200
+2/11/22 14:23	en	entity	Right of way	10	False 	True 	200
+2/11/22 14:23	en	entity	Right of way	10	False 	True 	200
+2/11/22 14:23	fr	entity	Hortense de Beauharnais	10	False 	False 	200
+2/11/22 14:23	de	entity	Wegerecht	10	False 	False 	200
+2/11/22 14:24	de	entity	Flurbereinigung	10	False 	False 	200
+2/11/22 14:26	fr	entity	napoleon	10	True 	False 	500
+2/11/22 14:26	de	entity	winston churchill	10	False 	False 	500
+2/11/22 14:26	en	entity	winston churchill	10	False 	False 	500
+2/11/22 14:26	en	entity	dalmine	10	False 	False 	500
+2/11/22 14:27	it	entity	dalmine	10	False 	False 	500
+2/11/22 14:27	it	entity	dalmine	10	True 	False 	500
+2/11/22 14:27	en	entity	Churchillian	10	False 	False 	500
+2/11/22 14:27	it	entity	Dalmine	10	True 	False 	500
+2/11/22 14:27	it	entity	Greppi	10	True 	False 	500
+2/11/22 14:28	en	entity	napoleon	10	True 	False 	500
+2/11/22 14:28	it	entity	Luigi Barnaba Chiaramonti	10	False 	False 	200
+2/11/22 14:42	en	entity	train	10	False 	False 	200

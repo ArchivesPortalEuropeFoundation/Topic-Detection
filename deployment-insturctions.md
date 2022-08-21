@@ -1,5 +1,14 @@
 # Deployment & Development Instructions
 
+The code base has three main components:
+- the NLP backend, which has been developed as a Flask webapp. 
+- the interface
+- the preprocessing scripts.
+
+## The Preprocessing Scripts
+
+The `preprocessing` folder contains a series of scripts used at the beginning of the project to produce the dataset used. 
+
 ## Docker
 
 Remember to update `config.env` inside `volumes` folder.

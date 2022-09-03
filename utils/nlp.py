@@ -1,7 +1,5 @@
 import re
 import string
-from urllib.parse import quote, unquote
-from urllib.request import urlopen
 
 import faiss
 import nltk
@@ -14,6 +12,7 @@ from pandarallel import pandarallel
 from sklearn.metrics.pairwise import cosine_similarity as cs
 
 pandarallel.initialize(use_memory_fs=False)
+
 
 def load_models(test=False):
 
@@ -458,19 +457,21 @@ def get_redirect(lang, page, site):
     else:
         return None, None
 
-def get_url(entity,lang):
+
+def get_url(entity, lang):
     site = pywikibot.Site(lang, "wikipedia")
     page = pywikibot.Page(site, entity)
     url = page.full_url()
     return page, url, site
 
 
-def get_entity(entity,lang):
-    page, url, site = get_url(entity,lang)
-    if check_redirect(page,'de',site) != False:
+def get_entity(entity, lang):
+    page, url, site = get_url(entity, lang)
+    if check_redirect(page, "de", site) != False:
         return url
 
-def check_redirect(page,lang,site):
+
+def check_redirect(page, lang, site):
     try:
         item = pywikibot.ItemPage.fromPage(page)
         return item
@@ -483,10 +484,11 @@ def check_redirect(page,lang,site):
         except pywikibot.exceptions.NoPageError:
             return False
 
+
 def get_candidates(entity, lang, selected_langs, broad_entity_search):
-    page, url,site  = get_url(entity,lang)
+    page, url, site = get_url(entity, lang)
     candidates = set()
-    item = check_redirect(page,lang,site)
+    item = check_redirect(page, lang, site)
 
     if item == False:
         return candidates, ""

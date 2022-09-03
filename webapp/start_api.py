@@ -3,15 +3,13 @@ import os
 import pickle
 import sys
 from configparser import SafeConfigParser
-from random import randint
 from urllib.parse import unquote
 
 import flask
 
 # Add "../" to path to import utils
 sys.path.insert(0, os.path.abspath(os.path.pardir))
-from detector import detect
-from utils import nlp
+from utils import nlp, detect
 
 # Create the application.
 APP = flask.Flask(__name__)

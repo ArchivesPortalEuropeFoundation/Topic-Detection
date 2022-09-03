@@ -1,0 +1,3 @@
+### Build a Machine Readable Dataset
+
+The script`AggregateJsons.ipynb` will combine all jsons derived from the database in a single dataset.pickle file. You can collect the .jsons we used from [here](https://drive.google.com/drive/folders/1U9jZIhS-yyoqfPea4rG1kcnc37bNk3vK?usp=sharing). To run, you need to put the .json files in a common `data/` folder. A version of the .pickle file is downloadable from [here](https://drive.google.com/file/d/1EQ8Ci3zzLZf9vpKz0tHt5o7moI4gtWrZ/view?usp=sharing). To use the pickle file, just position it in the same cloned folder.

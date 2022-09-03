@@ -6,7 +6,6 @@ This repository contains the resources and code used to build:
 
 for [Archives Portal Europe](https://www.archivesportaleurope.net/). It relies on the use of cross-lingual word embeddings and entity linking technologies.
 
------
 
 ## Codebase overview
 
@@ -30,7 +29,6 @@ The tool has been developed as a Flask webapp, which communicates at port `5000`
 - `query_api`: this is the cross-lingual information retrieval tool. The main functions are inside [utils/nlp.py](utils/nlp.py)
 - `detector`:  this is the multi-lingual entity and concept detection tool. The main functions are inside [utils/detect.py](utils/detect.py)
 
------
 
 ## Development
 
@@ -63,7 +61,6 @@ curl -s -X GET 'http://0.0.0.0:5000/detect?lang=en&query=Mark+lives+in+Washingto
 ```
 You should receive as a response an HTML table with the result of the `detect` tool.
 
------
 
 ## Server Deployment
 

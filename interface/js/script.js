@@ -46,6 +46,7 @@ $(document).ready(function () {
             type: $("#type").val(),
             n_res: $("#n_res").val()
         };
+        var action = $(this).attr('action');
         if($("#broad_entity_search").prop('checked') == true) {
             formData.broad_entity_search = "True";
         }
@@ -59,7 +60,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "query.php",
+            url: action,
             data: formData,
             dataType: "html",
             encode: true,

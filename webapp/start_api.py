@@ -1,12 +1,15 @@
 import json
+import os
 import pickle
+import sys
 from configparser import SafeConfigParser
-from random import randint
 from urllib.parse import unquote
 
 import flask
 
-from utils import nlp
+# Add "../" to path to import utils
+sys.path.insert(0, os.path.abspath(os.path.pardir))
+from utils import nlp, detect
 
 # Create the application.
 APP = flask.Flask(__name__)
@@ -41,9 +44,9 @@ def query_api():
     broad_entity_search = flask.request.args["broad_entity_search"]
     boolean_search = flask.request.args["boolean_search"]
     in_quote_query = nlp.check_quotation(query)
-    
+
     # currently hardcoded cutoff
-    if n_res>100:
+    if n_res > 100:
         n_res = 100
 
     if in_quote_query:
@@ -173,45 +176,16 @@ def query_api():
 
     return response
 
-@APP.route("/registration", methods=["GET"])
-def registration():
-    f = open("../cred.json", "r")
-    cred = json.load(f)
-    f.close()
 
-    # we load the dataset
-    user = flask.request.args["user"]
-    email = flask.request.args["email"]
-    pw = flask.request.args["pw"]
-    pw = get_hashed_password(pw)
-    code = randint(100000, 999999)
-
-    if email not in cred:
-        cred[email] = {"user": user, "pw": pw, "code": code}
-        with open("../cred.json", "w") as f:
-            json.dump(cred, f)
-
-        return True
-    else:
-        return False
-
-
-@APP.route("/login", methods=["GET"])
-def login():
-    f = open("../cred.json", "r")
-    cred = json.load(f)
-    f.close()
-    # we load the dataset
-    email = flask.request.args["email"]
-    pw = flask.request.args["pw"]
-
-    print(email)
-    print(pw)
-
-    if email in cred and check_password(pw, cred[email]["pw"]):
-        return True
-    else:
-        return False
+@APP.route("/detect", methods=["GET"])
+def detector():
+    query = flask.request.args["query"]
+    lang = flask.request.args["lang"]
+    response = detect.tag_string(ner_models, query, lang)
+    if type(response) is str:
+        return response
+    response = response.to_html(classes="data", index=False, table_id="results", escape=False)
+    return response
 
 
 if __name__ == "__main__":
@@ -233,6 +207,8 @@ if __name__ == "__main__":
             print(len(df), set(df["langMaterial"]))
         model_dict = nlp.load_models(test=True)
 
+        ner_models = detect.load_tagger(test=True)
+
     else:
         print("test mode: off.")
 
@@ -242,6 +218,9 @@ if __name__ == "__main__":
         with open("data/dataset.pickle", "rb") as f:
             df = pickle.load(f)
             print(len(df))
+
+        ner_models = detect.load_tagger(test=False)
+
         model_dict = nlp.load_models(test=False)
 
     (

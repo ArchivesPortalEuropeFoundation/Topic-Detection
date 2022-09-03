@@ -4,7 +4,7 @@ This repository contains the resources and code used to build:
 - [a cross-lingual search tool](https://www.archivesportaleurope.net/topicdetection/) and
 - [a multi-lingual topic detection tool](https://www.archivesportaleurope.net/topicdetection/detect.html)
 
-for [Archives Portal Europe](https://www.archivesportaleurope.net/). It relies on the use of cross-lingual word embeddings and entity linking.
+for [Archives Portal Europe](https://www.archivesportaleurope.net/). It relies on the use of cross-lingual word embeddings and entity linking technologies.
 
 -----
 

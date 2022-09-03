@@ -1,47 +1,44 @@
-# Topic-Detection
-Using machine learning approaches for automatic topic detection and retrieval in a multilingual environment.
+# Cross-lingual Search and Multi-Lingual Topic Detection on Archives Portal Europe
 
-Two main goals:
-* tagging documents that have no topic associated, with one of the pre-defined topics
-* given a user query, retrieve documents relevant for it
+This repository contains the resources and code used to build:
+- [a cross-lingual search tool](https://www.archivesportaleurope.net/topicdetection/) and
+- [a multi-lingual topic detection tool](https://www.archivesportaleurope.net/topicdetection/detect.html)
 
-A public version of the tool in its current alpha state is available [here](http://topicdetection.archivesportaleurope.net/).
+for [Archives Portal Europe](https://www.archivesportaleurope.net/). It relies on the use of cross-lingual word embeddings and entity linking.
 
+-----
 
-## Installation
+## Codebase overview
 
-### 0. Setup on our dedicated server
+The code base has three main components:
 
-The `dev` branch of the repository currently sit inside this folder: `/data/containerdata/topic-detection` in our dedicated server. In the same folder we have the `volumes` folder, which host the full versions of the `data` and `word-embs` folders (instead of only the sample data that we host in the repo).
+- the preprocessing scripts
+- the interface
+- the NLP backend 
 
-We have two Docker images, one for the web interface (we call it `webapp`) and one for the python code (we call it `backend`). To deploy the full version of the tool, you need to change in the [config file](config/config.env) the test flag to `False`. In the same file you can change the endpoint to `http://topic-detection-webapp:5000`.
+### The Preprocessing Scripts
 
-To build the `backend` image you should run: 
-```
-docker build -t topic-detection:prod .
-```
-Then you can start the container as:
-```
-docker run -d --name topic-detection-backend -p 10.32.34.167:8091:5000 -v /data/containerdata/topicdetection/volumes/data:/webapp/data -v /data/containerdata/topicdetection/volumes/word-embs:/webapp/word-embs --network=ape --restart unless-stopped topic-detection:prod
-```
-The container will take some time to run - you can test that all runs properly by running `pytest`.
+The [`preprocessing`](preprocessing/) folder contains a series of scripts used at the beginning of the project to produce the dataset and to explore the collection.
 
-We deploy the second image, for the `webapp` as following:
-```
-docker run -d --name topic-detection-webapp -p 10.32.34.167:8090:80 -v /data/containerdata/topicdetection/Topic-Detection/interface:/var/www/html --network=ape --restart unless-stopped php:7.3-apache
-```
+### The interface
 
-The name of the container is topic-detection-webapp and is exposes the internal port of `80` to the external port `8090` on the host machine. Finally we map the port to `http://topicdetection2.archivesportaleurope.net/` 
+The [interface](interface/) folder contains the element for setting up the front-end, which relies on php to collect the query of the user.
 
-### 1. Setup Environment
+### The NLP backend
 
-Clone the repository to a dedicated folder.
+The tool has been developed as a Flask webapp, which communicates at port `5000` and given a user query returns a HTML table with the results. The tool offers two main options:
+- `query_api`: this is the cross-lingual information retrieval tool. The main functions are inside [utils/nlp.py](utils/nlp.py)
+- `detector`:  this is the multi-lingual entity and concept detection tool. The main functions are inside [utils/detect.py](utils/detect.py)
 
-### 2. Docker Setup
+-----
 
-Download and Install [Anaconda](https://www.anaconda.com/products/individual).
+## Development
 
-Open the terminal and go to the repository folder (using `cd` and the path to the folder). For instance: `cd /Users/fnanni/Projects/Topic-Detection/`
+If you want to extend the functionalities of the NLP tool, the Python backend can be set up locally using the following instructions.
+
+### The Environment
+
+To start, download and Install [Anaconda](https://www.anaconda.com/products/individual).
 
 Create a dedicated Python environment:
 
@@ -49,39 +46,38 @@ Create a dedicated Python environment:
 
 `conda activate py37ape`
 
-Run `pip install -r requirements.txt`
+Run `pip install -r requirements.txt` to install the requirements.
 
-### 2. Download Cross-Lingual Word Embeddings
+### Download Cross-Lingual Word Embeddings
 
 Download all the cross-lingual word embeddings of the languages you are planning to work with from [here](https://github.com/facebookresearch/MUSE#multilingual-word-embeddings). Move them inside the `webapp/word-embs` folder (its content is not synced with github to avoid storing large word embeddings). Note that if a multilingual word embedding is not available for a specific language you can generate it using the available [bilingual dictionary](https://github.com/facebookresearch/MUSE#ground-truth-bilingual-dictionaries) and following the documentation for [supervised learning](https://github.com/facebookresearch/MUSE#align-monolingual-word-embeddings), however bear in mind that the process is not straightforward.
 
----
+### Start the API   
 
-Below you can also find the installation instructions for the previous proof-of-concept version of the tool.
+In the [webapp/data/](`webapp/data/`) folder we have added sample versions of the resources needed. Full version of them are available on the project server and scripts to recreate them are available inside the [preprocessing/generateDataset/](preprocessing/generateDataset/) folder.
 
-## Installation of the proof-of-concept version of tool
-### 1. Setup Environment
-Clone the repository to a dedicated folder.
+When the embeddings have been downloaded, to start the API you should run `start_api.py` inside the `webapp` folder. To test that the API is running properly you can send a `curl` request at the `5000` port, for instance: 
 
-Download and install [Anaconda](https://www.anaconda.com/products/individual). [Jupyter](https://jupyter.org/) will come directly with it.
+```
+curl -s -X GET 'http://0.0.0.0:5000/detect?lang=en&query=Mark+lives+in+Washington+with+his+family
+```
+You should receive as a response an HTML table with the result of the `detect` tool.
 
-Open the terminal and go to the repository folder (using `cd` and the path to the folder). For instance: `cd /Users/fnanni/Projects/Topic-Detection/`
+-----
 
-Run `pip install -r requirements.txt`
+## Server Deployment
 
-Open Jupyter (as described in [here](https://jupyter.readthedocs.io/en/latest/running.html)) and browse to the cloned folder.
+### Docker
 
-### 2. Download Cross-Lingual Word Embeddings
-Download all the cross-lingual word embeddings of the languages you are planning to work with from [here](https://github.com/facebookresearch/MUSE#multilingual-word-embeddings). The current size is 4GB for seven languages. Move them inside the word-embs folder (its content is not synced with github to avoid storing large word embeddings).
+The `dev` branch of the repository currently sits inside this folder: `/data/containerdata/topic-detection` in our dedicated server. In the same folder we have the `volumes` folder, which host the full versions of the `data` and `word-embs` folders (instead of only the sample data that we host in the repo).
 
-### 3. Build a Machine Readable Dataset.
-The script`AggregateJsons.ipynb` will combine all jsons derived from the database in a single dataset.pickle file. You can collect the .jsons we used from [here](https://drive.google.com/drive/folders/1U9jZIhS-yyoqfPea4rG1kcnc37bNk3vK?usp=sharing). To run, you need to put the .json files in a common `data/` folder. A version of the .pickle file is downloadable from [here](https://drive.google.com/file/d/1EQ8Ci3zzLZf9vpKz0tHt5o7moI4gtWrZ/view?usp=sharing). To use the pickle file, just position it in the same cloned folder.
+We have two Docker images, one for the web interface (we call it `webapp`) and one for the python code (we call it `backend`). To deploy the full version of the tool, you need to copy the the [config folder](config/) to the `volumes` folder and change the test flag to `False` in the copied `config.env` file. In the same file you can change the endpoint to `http://topic-detection-webapp:5000`.
 
-### 4. Add Taxonomies
-Download the taxonomies for each topic from [here](https://drive.google.com/drive/folders/14t87V9MImkowDxGd0MGNMURz_KKpnrOR?usp=sharing) and add them to a `Taxonomies/` folder.
+After that, to build and start the docker containers, you should run the scripts inside the [deployment](deployment/) folder in the following order:
 
-### 5. Topic Classification
-Open the notebook named CrossLingualClassification.ipynb. To retrain the model, run each cell following the inline comments. If you plan to use the pretrained model for classifying new texts, you can use the last cell. You need to have a trained_topic_classifier.model in the same folder, that can be downloaded from here.
-
-### 6. Information Retrieval
-Open the notebook named InformationRetrieval.ipynb. Run all cells to load the dataset, the embeddings and to be able to match a query in a given language to documents and topic-words in other languages.
+```
+./docker-build-backend.sh
+./docker-run-backend.sh
+./docker-run-webapp.sh
+```
+To check the status of the running script you can use `docker logs -f topic-detection-backend`

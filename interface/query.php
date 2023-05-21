@@ -17,6 +17,7 @@ $_SESSION["text"] = $_POST['text'];
 $_SESSION["n_res"] = $_POST['n_res'];
 $_SESSION["broad_entity_search"] = isset($_POST['broad_entity_search']) ? "True" : "False";
 $_SESSION["boolean_search"] = isset($_POST['boolean_search']) ? "True" : "False";
+$_SESSION["topic"] = $_POST['topic'];
 
 $url= $ENV['URI_API_BACKEND'].'/query?';
 
@@ -25,8 +26,8 @@ $data = array('lang' => $_SESSION['lang'],
               'text' => $_SESSION['text'],
               'n_res' => $_SESSION['n_res'],
               'broad_entity_search' => $_SESSION['broad_entity_search'],
-              'boolean_search' => $_SESSION['boolean_search']
-
+              'boolean_search' => $_SESSION['boolean_search'],
+              'topic' => $_SESSION['topic']
             );
 
 $msg = http_build_query($data);

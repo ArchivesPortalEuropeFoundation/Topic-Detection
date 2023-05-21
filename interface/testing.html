@@ -1,0 +1,120 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cross-lingual Search on Archives Portal Europe</title>
+
+    <!--    Stylesheets-->
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!--    Javascript-->
+    <script type="text/javascript" src="js/jQuery/jquery-3.6.0.min.js" ></script>
+    <script type="text/javascript" src="js/bootstrap/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="js/script.js" ></script>
+</head>
+
+<body>
+
+<div class="container-fluid p-3">
+    <div class="row justify-content-lg-between justify-content-center header">
+        <div class="col-auto" style="text-align: center">
+            <h1>Cross-lingual Search on Archives Portal Europe</h1>
+        </div>
+        <div class="col-auto order-first order-lg-last" style="text-align: right">
+            <a href="http://www.archivesportaleurope.net/">
+                <img src="img/logo.png" class="logo"/>
+            </a>
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-center">
+        <div class="col-auto" style="text-align: center">
+            <p>Welcome<span id="username"></span>! This is the beta version of a cross-lingual search tool for concepts and entities across the entire APE collection.</p>
+            <p>To know more about the project, visit <a href="https://github.com/ArchivesPortalEuropeFoundation/Topic-Detection/">our GitHub</a></p>
+        </div>
+    </div>
+
+
+
+    <div class="row justify-content-center">
+        <div class="col-auto" style="text-align: center">
+
+            <form method="POST" action="query.php">
+
+                <div id="usernameDiv" class="row justify-content-center mt-3">
+                    <div class="col-auto" style="text-align: center">
+                        Your name <input id="name" name="name" type="text" placeholder="name" style="width: 400px;">
+                    </div>
+                </div>
+
+                <div class="row justify-content-center mt-1">
+                    <div class="col-auto" style="text-align: center">
+                        Please, select the topic of the search term(s)
+                        <select id="topic" name= topic>
+                            <option value="" SELECTED >-- Please choose --</option>
+                            <option value="Catholicism">Catholicism</option>
+                            <option value="Democracy">Democracy</option>
+                            <option value="Economics">Economics</option>
+                            <option value="First World War">First World War</option>
+                            <option value="Genealogy">Genealogy</option>
+                            <option value="German Democratic Republic">German Democratic Republic</option>
+                            <option value="Health">Health</option>
+                            <option value="Maps">Maps</option>
+                            <option value="Napoleon I">Napoleon I</option>
+                            <option value="Notaries">Notaries</option>
+                            <option value="Slavery">Slavery</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <input id="query" name="text" type="text" placeholder="Your query" style="width: 400px;">
+
+                <select id="lang" name= lang>
+
+                    <option value= "en" SELECTED >en</option>
+                    <option value= "de">de</option>
+                    <option value= "es">es</option>
+                    <option value= "fi">fi</option>
+                    <option value= "fr">fr</option>
+                    <option value= "he">he</option>
+                    <option value= "it">it</option>
+                    <option value= "lv">lv</option>
+                    <option value= "pl">pl</option>
+                    <option value= "ru">ru</option>
+                    <option value= "sl">sl</option>
+                    <option value= "sv">sv</option>
+
+                </select>
+                <select id="type" name= "type">
+                    <option value= "concept" SELECTED >concept</option>
+                    <option value= "entity">entity</option>
+                </select>
+                <input id="n_res" name="n_res" type="number" value="10">
+                <input type="submit">
+                </br>
+                <input type="checkbox" id="broad_entity_search" name="broad_entity_search" value="broad_entity_search">
+                <label for="broad_entity_search">Broad Entity Mention Search</label><br>
+                <input type="checkbox" id="boolean_search" name="boolean_search" value="boolean_search">
+                <label for="boolean_search">Boolean Search</label><br>
+            </form>
+
+            <div id="loader" class="col-auto" style="display:none">
+                <img src="img/loader.gif"/>
+            </div>
+
+            <div id="send-feedback" class="mt-5 mb-5" style="display: none">
+                <a style="background-color: #B23063;padding: 20px;color: #fff;" href="#" target="_blank">SEND FEEDBACK ABOUT THE RESULTS</a>
+            </div>
+
+            <p id="download_csv" style="display: none"><a href="#" onclick="download_table_as_csv('results','result');">(Download results as CSV)</a></p>
+
+            <div id="no-more-tables">
+                <table></table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

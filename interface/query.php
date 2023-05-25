@@ -35,8 +35,13 @@ $msg = http_build_query($data);
 $url .= $msg;
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_HEADER, true);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $result = curl_exec($ch);
+$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-echo $result;  
+error_log('TopicDetection: lang:'.$data['lang']. '@type:'.$data['type']. '@text:'.$data['text']. '@n_res:'.$data['n_res']. '@broad_entity_search:'.$data['broad_entity_search']. '@boolean_search:'.$data['boolean_search']. '@type:'.$data['topic'].'@status:'.$httpcode);
+
+$whatIWant = substr($result, strpos($result, " GMT") +4);
+echo $whatIWant;
 ?>

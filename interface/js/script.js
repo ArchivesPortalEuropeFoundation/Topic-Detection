@@ -67,6 +67,7 @@ $(document).ready(function () {
         $("#download_csv").hide();
         $("#no-more-tables").hide();
         $("#send-feedback").hide();
+        $("#noofresults").hide();
 
         $.ajax({
             type: "POST",
@@ -81,6 +82,7 @@ $(document).ready(function () {
             $("#no-more-tables").show();
 
             $("#send-feedback").show();
+            $("#noofresults").show();
 
             var query_string = $("#query").val().replace(" ","+") +"_"+$("#lang").val()+"_"+$("#type").val()+"_"+"boolean_search:"+($("#boolean_search").prop('checked') == true ? "True": "False")+"_"+"broad_entity_search:"+($("#broad_entity_search").prop('checked') == true ? "True": "False")
             $("#download_csv a").attr("onclick","download_table_as_csv('results','"+query_string+"');")
@@ -241,7 +243,14 @@ function handleResults(formData) {
     var transportCounter = 0;
     var otherCounter = 0;
     var genealogyCounter = 0;
+    var rowCounter = 1;
+    $(".data > thead > tr").each(function () {
+        $(this).prepend($('<th style="width:66px;">Row #</th>'));
+    });
     $(".data > tbody > tr").each(function () {
+        $(this).prepend($('<td style="text-align:center">'+rowCounter+'</td>'));
+
+        rowCounter++;
         var topic = $(this).find('td').eq(1).text();
         var content = $(this).find('td').eq(2).text();
         var country = $(this).find('td').eq(3).text();
@@ -315,6 +324,7 @@ function handleResults(formData) {
 
 
     $("#send-feedback a").attr("href", link);
+    $("#noofresultsdisplay").html(noOfResults);
 }
 
 function getCookie(name) {
